@@ -11,6 +11,13 @@ class DaftarGenerus extends Component
     use WithPagination;
 
     public $search = '';
+    public $kelompok = '';
+    
+    public $perPage = 10;
+
+    public function delete(Generus $generus) {
+        $generus->delete();
+    }
 
     public function render()
     {
@@ -18,9 +25,9 @@ class DaftarGenerus extends Component
             ->where('nama', 'like', '%' . $this->search . '%')
             ->orWhere('jenis_kelamin', 'like', '%' . $this->search . '%')
             ->orWhereHas('kelompok', function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%');
+                $query->where('nama', 'like', '%' . $this->kelompok . '%');
             })
-            ->paginate(10);
+            ->paginate($this->perPage);
 
         return view('livewire.daftar-generus', [
             'generuses' => $generuses,
