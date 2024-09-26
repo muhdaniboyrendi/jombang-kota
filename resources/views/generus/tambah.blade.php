@@ -11,7 +11,7 @@
                 </div>
             @endif
 
-            <livewire:daftar-generus />
+            <livewire:tambah-generus />
 
         </div>
 	</div>

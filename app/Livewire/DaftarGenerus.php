@@ -42,6 +42,7 @@ class DaftarGenerus extends Component
         $generuses = Generus::with('kelompok')
             ->where('nama', 'like', '%' . $this->search . '%')
             ->orWhere('jenis_kelamin', 'like', '%' . $this->search . '%')
+            ->orWhere('kelompok_id', 'like', '%' . $this->kelompok . '%')
             ->orWhereHas('kelompok', function ($query) {
                 $query->where('nama', 'like', '%' . $this->kelompok . '%');
             })
