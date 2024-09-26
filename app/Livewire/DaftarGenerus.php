@@ -11,6 +11,9 @@ class DaftarGenerus extends Component
 {
     use WithPagination;
 
+    public $dataId;
+    public $dataDetails;
+
     public $search = '';
     public $kelompok = '';
 
@@ -33,17 +36,23 @@ class DaftarGenerus extends Component
         $this->resetPage();
     }
 
+    public function modal($id)
+    {
+        $this->dataId = $id;
+        $this->dataDetails = Generus::find($id);
+    }
+
     public function delete(Generus $generus) {
         $generus->delete();
+
+        session()->flash('message', 'Data generus berhasil dihapus.');
     }
 
     public function render()
     {
         $generuses = Generus::with('kelompok')
             ->where('nama', 'like', '%' . $this->search . '%')
-            ->orWhere('jenis_kelamin', 'like', '%' . $this->search . '%')
-            ->orWhere('kelompok_id', 'like', '%' . $this->kelompok . '%')
-            ->orWhereHas('kelompok', function ($query) {
+            ->whereHas('kelompok', function($query) {
                 $query->where('nama', 'like', '%' . $this->kelompok . '%');
             })
             ->orderBy($this->sortBy, $this->sortDir)
@@ -53,7 +62,7 @@ class DaftarGenerus extends Component
 
         return view('livewire.daftar-generus', [
             'generuses' => $generuses,
-            'kelompoks' => $kelompoks
+            'kelompoks' => $kelompoks,
         ]);
     }
 }

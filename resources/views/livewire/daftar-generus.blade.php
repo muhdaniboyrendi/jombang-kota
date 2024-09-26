@@ -3,6 +3,14 @@
     <div class="card">
 
         <div class="card-body">
+
+            @if (session()->has('message'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session('message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
             <div class="col-auto">
                 <div class="page-utilities">
                     <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
@@ -45,7 +53,7 @@
                                         'name' => 'nama',
                                         'displayName' => 'Nama'
                                     ])
-                                    <th>Umur</th>
+                                    <th>Kelas/Status</th>
                                     @include('livewire.includes.table-sort-th', [
                                         'name' => 'kelompok_id',
                                         'displayName' => 'Kelompok'
@@ -58,14 +66,14 @@
                                 @foreach ($generuses as $generus)
                                     <tr wire:key="{{ $generus->id }}">
                                         <td class="align-middle">{{ $generus->nama }}</td>
-                                        <td class="align-middle">{{ $generus->tanggal_lahir }}</td>
+                                        <td class="align-middle">{{ $generus->kelas }}</td>
                                         <td class="align-middle">{{ $generus->kelompok->nama }}</td>
                                         <td class="align-middle">{{ $generus->jenis_kelamin }}</td>
                                         <td class="align-middle">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-sm app-btn-primary">Info</button>
+                                                <button type="button" wire:click="modal({{ $generus->id }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
                                                 <button type="button" class="btn btn-sm app-btn-secondary">Edit</button>
-                                                <button type="button" wire:click="delete({{ $generus->id }})" class="btn btn-sm app-btn-secondary">Delete</button>
+                                                <button type="button" wire:click="modal({{ $generus->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -79,7 +87,7 @@
             </div>
 
             <div class="mt-3">
-                <div class="row mb-3">
+                <div class="row">
                     <label for="perPage" class="col-sm-1 col-form-label">Per Page</label>
                     <div class="col-sm-2">
                         <select wire:model.live='perPage' class="form-select" id="perPage">
@@ -97,4 +105,97 @@
         </div>
 
     </div>
+
+
+    <!-- Modal -->
+    {{-- Delete Modal --}}
+    <div>
+        <div wire:ignore.self class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Hapus Generus</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if($dataDetails)
+                            <p>Anda yakin ingin menghapus data {{ $dataDetails->nama }}?</p>
+                        @else
+                            <p>Loading data...</p>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Hapus</button>
+                        <button type="button" class="btn btn-sm app-btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Info Modal --}}
+    <div>
+        <div wire:ignore.self class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="infoModalLabel">Detail Generus</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if($dataDetails)
+							<div class="table-responsive">
+								<table class="table mb-0 table-hover">
+                                    <tr>
+                                        <td>Nama</td>
+                                        <th>{{ $dataDetails->nama }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Tempat dan Tanggal Lahir</td>
+                                        <th>{{ $dataDetails->tempat_lahir }}, {{ $dataDetails->tanggal_lahir }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Jenis Kelamin</td>
+                                        <th>{{ $dataDetails->jenis_kelamin }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Kelas / Status</td>
+                                        <th>{{ $dataDetails->kelas }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sekolah</td>
+                                        <th>{{ $dataDetails->sekolah }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Pekerjaan</td>
+                                        <th>{{ $dataDetails->pekerjaan }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama Ayah</td>
+                                        <th>{{ $dataDetails->bapak }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama Ibu</td>
+                                        <th>{{ $dataDetails->ibu }}</th>
+                                    </tr>
+								</table>
+							</div><!--//table-responsive-->
+                        @else
+                            <p>Loading data...</p>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Hapus</button>
+                        <button type="button" class="btn btn-sm app-btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- End Modal --}}
+
 </div>
+
+
+
