@@ -14,7 +14,9 @@
                                 <div class="col-auto">
                                     <select wire:model.live="kelompok" class="form-select w-auto" >
                                         <option value="">All</option>
-                                        <option value="Matesih">Matesih</option>
+                                        @foreach ($kelompoks as $kelompok)
+                                            <option value="{{ $kelompok->nama }}">{{ $kelompok->nama }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -39,9 +41,15 @@
                         <table class="table app-table-hover text-left">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
+                                    @include('livewire.includes.table-sort-th', [
+                                        'name' => 'nama',
+                                        'displayName' => 'Nama'
+                                    ])
                                     <th>Umur</th>
-                                    <th>Kelompok</th>
+                                    @include('livewire.includes.table-sort-th', [
+                                        'name' => 'kelompok_id',
+                                        'displayName' => 'Kelompok'
+                                    ])
                                     <th>Jenis Kelamin</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -95,7 +103,7 @@
 
             <div class="mt-3">
                 <div class="row mb-3">
-                    <label for="perPage" class="col-sm-1 col-form-label">perPage</label>
+                    <label for="perPage" class="col-sm-1 col-form-label">Per Page</label>
                     <div class="col-sm-2">
                         <select wire:model.live='perPage' class="form-select" id="perPage">
                             <option value="10">10</option>
