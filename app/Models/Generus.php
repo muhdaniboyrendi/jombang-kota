@@ -15,4 +15,8 @@ class Generus extends Model
     public function kelompok(): BelongsTo{
         return $this->belongsTo(Kelompok::class);
     }
+
+    public function desa(): BelongsTo{
+        return $this->belongsTo(Desa::class);
+    }
 }

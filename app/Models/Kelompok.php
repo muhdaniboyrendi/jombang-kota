@@ -13,11 +13,11 @@ class Kelompok extends Model
 
     protected $guarded = [];
 
-    public function products(): HasMany{
+    public function generuses(): HasMany{
         return $this->hasMany(Generus::class, 'kelompok_id');
     }
 
-    public function kelompok(): BelongsTo{
+    public function desa(): BelongsTo{
         return $this->belongsTo(Desa::class);
     }
 }

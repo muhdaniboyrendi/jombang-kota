@@ -121,7 +121,7 @@
                         @if($dataDetails)
                             <span>Anda yakin ingin menghapus data <strong>{{ $dataDetails->nama }}</strong>?</span>
                         @else
-                            <span>Loading data...</span>
+                            <span>Loading...</span>
                         @endif
                     </div>
                     <div class="modal-footer">
@@ -178,10 +178,18 @@
                                         <td>Nama Ibu</td>
                                         <th>{{ $dataDetails->ibu }}</th>
                                     </tr>
+                                    <tr>
+                                        <td>Desa</td>
+                                        <th>{{ $dataDetails->desa->nama }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Kelompok</td>
+                                        <th>{{ $dataDetails->kelompok->nama }}</th>
+                                    </tr>
 								</table>
 							</div><!--//table-responsive-->
                         @else
-                            <p>Loading data...</p>
+                            <span>Loading...</span>
                         @endif
                     </div>
                     <div class="modal-footer">
@@ -216,22 +224,22 @@
                                         <div class="mb-3">
                                             <label for="kelas" class="form-label">Kelas / Status</label>
                                             <select class="form-select  @error('kelas') is-invalid @enderror" name="kelas" id="kelas" wire:model.lazy="kelas">
-                                                <option value="PAUD">PAUD</option>
-                                                <option value="1 SD">1 SD</option>
-                                                <option value="2 SD">2 SD</option>
-                                                <option value="3 SD">3 SD</option>
-                                                <option value="4 SD">4 SD</option>
-                                                <option value="5 SD">5 SD</option>
-                                                <option value="6 SD">6 SD</option>
-                                                <option value="1 SMP">1 SMP</option>
-                                                <option value="2 SMP">2 SMP</option>
-                                                <option value="3 SMP">3 SMP</option>
-                                                <option value="1 SMA/SMK">1 SMA/SMK</option>
-                                                <option value="2 SMA/SMK">2 SMA/SMK</option>
-                                                <option value="3 SMA/SMK">3 SMA/SMK</option>
+                                                <option value="PAUD" {{ $dataDetails->kelas == 'PAUD' ? 'selected' : '' }}>PAUD</option>
+                                                <option value="1 SD" {{ $dataDetails->kelas == '1 SD' ? 'selected' : '' }}>1 SD</option>
+                                                <option value="2 SD" {{ $dataDetails->kelas == '2 SD' ? 'selected' : '' }}>2 SD</option>
+                                                <option value="3 SD" {{ $dataDetails->kelas == '3 SD' ? 'selected' : '' }}>3 SD</option>
+                                                <option value="4 SD" {{ $dataDetails->kelas == '4 SD' ? 'selected' : '' }}>4 SD</option>
+                                                <option value="5 SD" {{ $dataDetails->kelas == '5 SD' ? 'selected' : '' }}>5 SD</option>
+                                                <option value="6 SD" {{ $dataDetails->kelas == '6 SD' ? 'selected' : '' }}>6 SD</option>
+                                                <option value="1 SMP" {{ $dataDetails->kelas == '1 SMP' ? 'selected' : '' }}>1 SMP</option>
+                                                <option value="2 SMP" {{ $dataDetails->kelas == '2 SMP' ? 'selected' : '' }}>2 SMP</option>
+                                                <option value="3 SMP" {{ $dataDetails->kelas == '3 SMP' ? 'selected' : '' }}>3 SMP</option>
+                                                <option value="1 SMA/SMK" {{ $dataDetails->kelas == '1 SMA/SMK' ? 'selected' : '' }}>1 SMA/SMK</option>
+                                                <option value="2 SMA/SMK" {{ $dataDetails->kelas == '2 SMA/SMK' ? 'selected' : '' }}>2 SMA/SMK</option>
+                                                <option value="3 SMA/SMK" {{ $dataDetails->kelas == '3 SMA/SMK' ? 'selected' : '' }}>3 SMA/SMK</option>
                                                 <option value="Kuliah" {{ $dataDetails->kelas == 'Kuliah' ? 'selected' : '' }}>Kuliah</option>
-                                                <option value="Bekerja">Bekerja</option>
-                                                <option value="Mondok">Mondok</option>
+                                                <option value="Bekerja" {{ $dataDetails->kelas == 'Bekerja' ? 'selected' : '' }}>Bekerja</option>
+                                                <option value="Mondok" {{ $dataDetails->kelas == 'Mondok' ? 'selected' : '' }}>Mondok</option>
                                             </select>
                                             @error('kelas') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                         </div>
@@ -292,7 +300,7 @@
                                             <select class="form-select" id="desa" wire:model.live="desa_id">
                                                 <option value="">Pilih Desa</option>
                                                 @foreach ($editDesas as $desa)
-                                                    <option value="{{ $desa->id }}" {{ $desa->id == $dataDesa->desa_id ? 'selected' : '' }}>{{ $desa->nama }}</option>
+                                                    <option value="{{ $desa->id }}" {{ $desa->id === $dataDetails->desa_id ? 'selected' : '' }}>{{ $desa->nama }}</option>
                                                 @endforeach
                                             </select>
                                             @error('desa_id') <div class="invalid-feedback">{{ $message }}</div> @enderror

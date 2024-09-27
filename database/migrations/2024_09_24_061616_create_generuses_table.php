@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('pekerjaan')->nullable();
             $table->string('bapak');
             $table->string('ibu');
+            $table->foreignId('desa_id')->constrained()->onDelete('cascade');
             $table->foreignId('kelompok_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

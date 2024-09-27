@@ -96,8 +96,8 @@
                     <div class="col-md">
                         <div class="mb-3">
                             <label for="desa" class="form-label">Desa</label>
-                            <select class="form-select" id="desa" wire:model.live="desa_id">
-                                <option value="" selected>Pilih Desa</option>
+                            <select class="form-select @error('desa_id') is-invalid @enderror" name="desa_id" id="desa" wire:model.live="desa_id">
+                                <option value="">Pilih Desa</option>
                                 @foreach ($desas as $desa)
                                     <option value="{{ $desa->id }}">{{ $desa->nama }}</option>
                                 @endforeach

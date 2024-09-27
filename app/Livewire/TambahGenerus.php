@@ -19,9 +19,9 @@ class TambahGenerus extends Component
     public $pekerjaan;
     public $bapak;
     public $ibu;
+    public $desa_id;
     public $kelompok_id;
 
-    public $desa_id;
 
     protected $rules = [
         'nama' => 'required|string|max:255|min:3',
@@ -33,6 +33,7 @@ class TambahGenerus extends Component
         'pekerjaan' => 'nullable|string|max:255|min:3',
         'bapak' => 'required|string|max:255|min:3',
         'ibu' => 'required|string|max:255|min:3',
+        'desa_id' => 'required',
         'kelompok_id' => 'required',
     ];
 
@@ -55,6 +56,7 @@ class TambahGenerus extends Component
             'pekerjaan' => $this->pekerjaan,
             'bapak' => $this->bapak,
             'ibu' => $this->ibu,
+            'desa_id' => $this->desa_id,
             'kelompok_id' => $this->kelompok_id,
         ]);
 

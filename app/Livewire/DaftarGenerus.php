@@ -15,8 +15,8 @@ class DaftarGenerus extends Component
     // menangkap data
     public $dataId;
     public $dataDetails;
-    public $dataDesa;
-    public $idDesa;
+
+    public $nama;
 
     public $desa_id;
 
@@ -47,9 +47,9 @@ class DaftarGenerus extends Component
     public function modal($id)
     {
         $this->dataId = $id;
-        $this->dataDetails = Generus::find($id);
-        $this->dataDesa = Kelompok::where('id', $this->dataDetails->kelompok_id)->get();
-        $idDesa = $this->dataDesa->desa_id;
+        $this->dataDetails = Generus::with(['kelompok', 'desa'])->find($id);
+        // $this->dataDesa = Kelompok::where('id', $this->dataDetails->kelompok_id)->get();
+        // $idDesa = $this->dataDesa->desa_id;
     }
 
     public function delete($id) {
@@ -60,7 +60,7 @@ class DaftarGenerus extends Component
     }
 
     public function update() {
-        $dataDesa = Kelompok::where('id', $this->dataDetails->kelompok_id)->get();
+
     }
 
     public function render()

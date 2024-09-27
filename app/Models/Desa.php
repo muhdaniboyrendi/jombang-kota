@@ -12,7 +12,11 @@ class Desa extends Model
 
     protected $guarded = [];
 
-    public function products(): HasMany{
+    public function kelompoks(): HasMany{
         return $this->hasMany(Kelompok::class, 'desa_id');
+    }
+
+    public function generuses(): HasMany{
+        return $this->hasMany(Generus::class, 'desa_id');
     }
 }
