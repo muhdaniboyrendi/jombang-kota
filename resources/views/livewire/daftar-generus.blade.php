@@ -72,7 +72,7 @@
                                         <td class="align-middle">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button type="button" wire:click="modal({{ $generus->id }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
-                                                <button type="button" class="btn btn-sm app-btn-secondary">Edit</button>
+                                                <button type="button" wire:click="modal({{ $generus->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                                                 <button type="button" wire:click="modal({{ $generus->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                             </div>
                                         </td>
@@ -112,16 +112,16 @@
     <div>
         <div wire:ignore.self class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content border border-danger">
                     <div class="modal-header">
                         <h5 class="modal-title" id="deleteModalLabel">Hapus Generus</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         @if($dataDetails)
-                            <p>Anda yakin ingin menghapus data {{ $dataDetails->nama }}?</p>
+                            <span>Anda yakin ingin menghapus data <strong>{{ $dataDetails->nama }}</strong>?</span>
                         @else
-                            <p>Loading data...</p>
+                            <span>Loading data...</span>
                         @endif
                     </div>
                     <div class="modal-footer">
@@ -185,8 +185,162 @@
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Hapus</button>
-                        <button type="button" class="btn btn-sm app-btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="button" wire:click="modal({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Edit Modal --}}
+    <div>
+        <div wire:ignore.self class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Detail Generus</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if($dataDetails)
+                            <form wire:submit.prevent="store">
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="nama" class="form-label">Nama Lengkap</label>
+                                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" wire:model.lazy="nama" value="{{ $dataDetails->nama }}">
+                                            @error('nama') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="kelas" class="form-label">Kelas / Status</label>
+                                            <select class="form-select  @error('kelas') is-invalid @enderror" name="kelas" id="kelas" wire:model.lazy="kelas">
+                                                <option value="PAUD">PAUD</option>
+                                                <option value="1 SD">1 SD</option>
+                                                <option value="2 SD">2 SD</option>
+                                                <option value="3 SD">3 SD</option>
+                                                <option value="4 SD">4 SD</option>
+                                                <option value="5 SD">5 SD</option>
+                                                <option value="6 SD">6 SD</option>
+                                                <option value="1 SMP">1 SMP</option>
+                                                <option value="2 SMP">2 SMP</option>
+                                                <option value="3 SMP">3 SMP</option>
+                                                <option value="1 SMA/SMK">1 SMA/SMK</option>
+                                                <option value="2 SMA/SMK">2 SMA/SMK</option>
+                                                <option value="3 SMA/SMK">3 SMA/SMK</option>
+                                                <option value="Kuliah" {{ $dataDetails->kelas == 'Kuliah' ? 'selected' : '' }}>Kuliah</option>
+                                                <option value="Bekerja">Bekerja</option>
+                                                <option value="Mondok">Mondok</option>
+                                            </select>
+                                            @error('kelas') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                            <input type="text" class="form-control @error('tempat_lahir') is-invalid @enderror" id="tempat_lahir" wire:model.lazy="tempat_lahir" value="{{ $dataDetails->tempat_lahir }}">
+                                            @error('tempat_lahir') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                                            <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" wire:model.lazy="tanggal_lahir" value="{{ $dataDetails->tanggal_lahir }}">
+                                            @error('tanggal_lahir') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="sekolah" class="form-label">Sekolah (opsional)</label>
+                                            <input type="text" class="form-control @error('sekolah') is-invalid @enderror" id="sekolah" wire:model.lazy="sekolah" value="{{ $dataDetails->sekolah }}">
+                                            @error('sekolah') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="pekerjaan" class="form-label">Pekerjaan (opsional)</label>
+                                            <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" wire:model.lazy="pekerjaan" value="{{ $dataDetails->pekerjaan }}">
+                                            @error('pekerjaan') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="bapak" class="form-label">Nama Bapak</label>
+                                            <input type="text" class="form-control @error('bapak') is-invalid @enderror" id="bapak" wire:model.lazy="bapak" value="{{ $dataDetails->bapak }}">
+                                            @error('bapak') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="ibu" class="form-label">Nama Ibu</label>
+                                            <input type="text" class="form-control @error('ibu') is-invalid @enderror" id="ibu" wire:model.lazy="ibu" value="{{ $dataDetails->ibu }}">
+                                            @error('ibu') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="desa" class="form-label">Desa</label>
+                                            <select class="form-select" id="desa" wire:model.live="desa_id">
+                                                <option value="">Pilih Desa</option>
+                                                @foreach ($editDesas as $desa)
+                                                    <option value="{{ $desa->id }}" {{ $desa->id == $dataDesa->desa_id ? 'selected' : '' }}>{{ $desa->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('desa_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="kelompok" class="form-label">Kelompok</label>
+                                            <select class="form-select @error('kelompok_id') is-invalid @enderror" name="kelompok_id" id="kelompok" wire:model.live="kelompok_id">
+                                                <option value="">Pilih Kelompok</option>
+                                                @foreach ($editKelompoks as $kelompok)
+                                                    <option value="{{ $kelompok->id }}" {{ $kelompok->id == $dataDetails->kelompok_id ? 'selected' : '' }}>{{ $kelompok->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('kelompok_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-4">
+                                        <div>
+                                            <label for="jenis_kelamin">Jenis Kelamin</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin" {{ $dataDetails->jenis_kelamin == 'Laki-laki' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="laki-laki">
+                                                Laki-laki
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin" {{ $dataDetails->jenis_kelamin == 'Perempuan' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="perempuan">
+                                                Perempuan
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn app-btn-primary">Simpan</button>
+                                    <a href="/generus" class="btn app-btn-secondary">Kembali</a>
+                                </div>
+                            </form>
+                        @else
+                            <p>Loading data...</p>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" wire:click="modal({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                     </div>
                 </div>
             </div>

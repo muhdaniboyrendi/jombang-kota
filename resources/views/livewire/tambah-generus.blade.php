@@ -109,6 +109,7 @@
                         <div class="mb-3">
                             <label for="kelompok" class="form-label">Kelompok</label>
                             <select class="form-select @error('kelompok_id') is-invalid @enderror" name="kelompok_id" id="kelompok" wire:model.live="kelompok_id">
+                                <option value="">Pilih Kelompok</option>
                                 @foreach ($kelompoks as $kelompok)
                                     <option value="{{ $kelompok->id }}">{{ $kelompok->nama }}</option>
                                 @endforeach

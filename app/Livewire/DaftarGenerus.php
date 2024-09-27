@@ -2,21 +2,29 @@
 
 namespace App\Livewire;
 
+use App\Models\Desa;
 use App\Models\Generus;
-use App\Models\Kelompok;
 use Livewire\Component;
+use App\Models\Kelompok;
 use Livewire\WithPagination;
 
 class DaftarGenerus extends Component
 {
     use WithPagination;
 
+    // menangkap data
     public $dataId;
     public $dataDetails;
+    public $dataDesa;
+    public $idDesa;
 
+    public $desa_id;
+
+    // search
     public $search = '';
     public $kelompok = '';
 
+    // table
     public $sortBy = 'created_at';
     public $sortDir  = 'DESC';
 
@@ -40,12 +48,19 @@ class DaftarGenerus extends Component
     {
         $this->dataId = $id;
         $this->dataDetails = Generus::find($id);
+        $this->dataDesa = Kelompok::where('id', $this->dataDetails->kelompok_id)->get();
+        $idDesa = $this->dataDesa->desa_id;
     }
 
-    public function delete(Generus $generus) {
+    public function delete($id) {
+        $generus = Generus::find($id);
         $generus->delete();
 
-        session()->flash('message', 'Data generus berhasil dihapus.');
+        return redirect('/generus')->with('message', ' Data Generus berhasil dihapus!');
+    }
+
+    public function update() {
+        $dataDesa = Kelompok::where('id', $this->dataDetails->kelompok_id)->get();
     }
 
     public function render()
@@ -60,9 +75,14 @@ class DaftarGenerus extends Component
 
         $kelompoks = Kelompok::all();
 
+        $editDesas = Desa::all();
+        $editKelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
+
         return view('livewire.daftar-generus', [
             'generuses' => $generuses,
             'kelompoks' => $kelompoks,
+            'editDesas' => $editDesas,
+            'editKelompoks' => $editKelompoks,
         ]);
     }
 }
