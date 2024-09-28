@@ -28,7 +28,7 @@ class TambahGenerus extends Component
         'tanggal_lahir' => 'required|date',
         'tempat_lahir' => 'required|string|max:255|min:3',
         'jenis_kelamin' => 'required',
-        'kelas' => 'required|string|max:50',
+        'kelas' => 'required',
         'sekolah' => 'nullable|string|max:255|min:3',
         'pekerjaan' => 'nullable|string|max:255|min:3',
         'bapak' => 'required|string|max:255|min:3',
