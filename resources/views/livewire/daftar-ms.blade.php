@@ -1,5 +1,5 @@
 <div>
-    <h2>Generus</h2>
+    <h2>MS</h2>
     <div class="card">
 
         <div class="card-body">
@@ -17,7 +17,7 @@
                         <div class="col-auto">
                             <div class="row gx-1 row-md gy-1">
                                 <div class="col-md">
-                                    <input wire:model.live.debounce.300ms="search" type="text" class="form-control" placeholder="Cari Generus...">
+                                    <input wire:model.live.debounce.300ms="search" type="text" class="form-control" placeholder="Cari MS...">
                                 </div>
                                 <div class="col-md">
                                     <select wire:model.live="kelompok" class="form-select" >
@@ -28,12 +28,12 @@
                                     </select>
                                 </div>
                                 <div class="col-auto">						    
-                                    <a class="btn app-btn-primary" href="/generus-tambah">
+                                    <a class="btn app-btn-primary" href="/ms-tambah">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
                                             <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                                             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
                                         </svg>
-                                        Tambah Generus
+                                        Tambah MS
                                     </a>
                                 </div>
                             </div>
@@ -55,10 +55,6 @@
                                         'displayName' => 'Nama'
                                     ])
                                     @include('livewire.includes.table-sort-th', [
-                                        'name' => 'kelas',
-                                        'displayName' => 'Kelas/Status'
-                                    ])
-                                    @include('livewire.includes.table-sort-th', [
                                         'name' => 'kelompok_id',
                                         'displayName' => 'Kelompok'
                                     ])
@@ -70,17 +66,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($generuses as $generus)
-                                    <tr wire:key="{{ $generus->id }}">
-                                        <td class="align-middle">{{ $generus->nama }}</td>
-                                        <td class="align-middle">{{ $generus->kelas }}</td>
-                                        <td class="align-middle">{{ $generus->kelompok->nama }}</td>
-                                        <td class="align-middle">{{ $generus->jenis_kelamin }}</td>
+                                @foreach ($mses as $ms)
+                                    <tr wire:key="{{ $ms->id }}">
+                                        <td class="align-middle">{{ $ms->nama }}</td>
+                                        <td class="align-middle">{{ $ms->kelompok->nama }}</td>
+                                        <td class="align-middle">{{ $ms->jenis_kelamin }}</td>
                                         <td class="align-middle">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" wire:click="modal({{ $generus->id }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
-                                                <button type="button" wire:click="edit({{ $generus->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
-                                                <button type="button" wire:click="delete({{ $generus->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                                <button type="button" wire:click="modal({{ $ms->id }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
+                                                <button type="button" wire:click="edit({{ $ms->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                                                <button type="button" wire:click="delete({{ $ms->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -107,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            {{ $generuses->links() }}
+            {{ $mses->links() }}
 
         </div>
 
@@ -121,7 +116,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border border-danger">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Hapus Generus</h5>
+                        <h5 class="modal-title" id="deleteModalLabel">Hapus MS</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -142,7 +137,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="infoModalLabel">Detail Generus</h5>
+                        <h5 class="modal-title" id="infoModalLabel">Detail Data MS</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -162,24 +157,8 @@
                                         <th>{{ $dataDetails->jenis_kelamin }}</th>
                                     </tr>
                                     <tr>
-                                        <td>Kelas / Status</td>
-                                        <th>{{ $dataDetails->kelas }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Sekolah</td>
-                                        <th>{{ $dataDetails->sekolah }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Pekerjaan</td>
-                                        <th>{{ $dataDetails->pekerjaan }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Nama Ayah</td>
-                                        <th>{{ $dataDetails->bapak }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Nama Ibu</td>
-                                        <th>{{ $dataDetails->ibu }}</th>
+                                        <td>Nomor HP</td>
+                                        <th>{{ $dataDetails->no_hp }}</th>
                                     </tr>
                                     <tr>
                                         <td>Desa</td>
@@ -210,7 +189,7 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Data Generus</h5>
+                        <h5 class="modal-title" id="editModalLabel">Edit Data MS</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -233,26 +212,9 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="mb-3">
-                                        <label for="kelas" class="form-label">Kelas / Status</label>
-                                        <select class="form-select  @error('kelas') is-invalid @enderror" name="kelas" id="kelas" wire:model.lazy="kelas">
-                                            <option value="PAUD">PAUD</option>
-                                            <option value="1 SD">1 SD</option>
-                                            <option value="2 SD">2 SD</option>
-                                            <option value="3 SD">3 SD</option>
-                                            <option value="4 SD">4 SD</option>
-                                            <option value="5 SD">5 SD</option>
-                                            <option value="6 SD">6 SD</option>
-                                            <option value="1 SMP">1 SMP</option>
-                                            <option value="2 SMP">2 SMP</option>
-                                            <option value="3 SMP">3 SMP</option>
-                                            <option value="1 SMA/SMK">1 SMA/SMK</option>
-                                            <option value="2 SMA/SMK">2 SMA/SMK</option>
-                                            <option value="3 SMA/SMK">3 SMA/SMK</option>
-                                            <option value="Kuliah">Kuliah</option>
-                                            <option value="Bekerja">Bekerja</option>
-                                            <option value="Mondok">Mondok</option>
-                                        </select>
-                                        @error('kelas') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        <label for="no_hp" class="form-label">Nomor HP</label>
+                                        <input type="text" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" wire:model.lazy="no_hp">
+                                        @error('no_hp') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
                             </div>
@@ -269,38 +231,6 @@
                                         <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
                                         <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" wire:model.lazy="tanggal_lahir">
                                         @error('tanggal_lahir') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="mb-3">
-                                        <label for="sekolah" class="form-label">Sekolah (opsional)</label>
-                                        <input type="text" class="form-control @error('sekolah') is-invalid @enderror" id="sekolah" wire:model.lazy="sekolah">
-                                        @error('sekolah') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="mb-3">
-                                        <label for="pekerjaan" class="form-label">Pekerjaan (opsional)</label>
-                                        <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" wire:model.lazy="pekerjaan">
-                                        @error('pekerjaan') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="mb-3">
-                                        <label for="bapak" class="form-label">Nama Bapak</label>
-                                        <input type="text" class="form-control @error('bapak') is-invalid @enderror" id="bapak" wire:model.lazy="bapak">
-                                        @error('bapak') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="mb-3">
-                                        <label for="ibu" class="form-label">Nama Ibu</label>
-                                        <input type="text" class="form-control @error('ibu') is-invalid @enderror" id="ibu" wire:model.lazy="ibu">
-                                        @error('ibu') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
                             </div>
@@ -330,9 +260,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col mb-4">
-                                    <div>
+                            <div class="row mb-4">
+                                <div class="col-md">
+                                    <div class="mb-3">
                                         <label for="jenis_kelamin">Jenis Kelamin</label>
                                     </div>
                                     <div class="form-check form-check-inline">
