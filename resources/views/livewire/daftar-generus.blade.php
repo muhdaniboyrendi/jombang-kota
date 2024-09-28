@@ -124,11 +124,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        {{-- @if($dataDetails) --}}
-                            <span>Anda yakin ingin menghapus data <strong>{{ $nama }}</strong>?</span>
-                        {{-- @else
-                            <span>Loading...</span>
-                        @endif --}}
+                        <span>Anda yakin ingin menghapus data <strong>{{ $nama }}</strong> ?</span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" wire:click="destroy" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Hapus</button>
@@ -217,6 +213,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+
+                        @if (session()->has('updated'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                {{ session('updated') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
                         <form wire:submit.prevent="update">
                             <div class="row">
                                 <div class="col-md">

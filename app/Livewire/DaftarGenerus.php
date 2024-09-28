@@ -132,7 +132,7 @@ class DaftarGenerus extends Component
             ]
         );
 
-        session()->flash('message', 'Data generus berhasil diperbarui.');
+        session()->flash('updated', 'Data generus berhasil diperbarui.');
     }
 
     public function render()
