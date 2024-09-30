@@ -1,0 +1,90 @@
+<div>
+    <h2>Tambah Admin</h2>
+    <div class="card">
+        <div class="card-body">
+
+            @if (session()->has('message'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session('message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            <form wire:submit.prevent="store">
+                <div class="row">
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" wire:model.lazy="name">
+                            @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>    
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" wire:model.lazy="email">
+                            @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" wire:model="password">
+                            @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password_confirmation" wire:model="password_confirmation">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label for="desa" class="form-label">Desa</label>
+                            <select class="form-select @error('desa_id') is-invalid @enderror" name="desa_id" id="desa" wire:model.live="desa_id">
+                                <option value="">Pilih Desa</option>
+                                @foreach ($desas as $desa)
+                                    <option value="{{ $desa->id }}">{{ $desa->nama }}</option>
+                                @endforeach
+                            </select>
+                            @error('desa_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label for="kelompok" class="form-label">Kelompok</label>
+                            <select class="form-select @error('kelompok_id') is-invalid @enderror" name="kelompok_id" id="kelompok" wire:model.live="kelompok_id">
+                                <option value="">Pilih Kelompok</option>
+                                @foreach ($kelompoks as $kelompok)
+                                    <option value="{{ $kelompok->id }}">{{ $kelompok->nama }}</option>
+                                @endforeach
+                            </select>
+                            @error('kelompok_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md">
+                        <div class="form-check">
+                            <input wire:model="is_admin" class="form-check-input @error('is_admin') is-invalid @enderror" type="checkbox" value="1" id="is_admin">
+                            <label class="form-check-label" for="is_admin">
+                                Super Admin
+                            </label>
+                            @error('is_admin') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn app-btn-primary">Simpan</button>
+                    <a href="/admin" class="btn app-btn-secondary">Kembali</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

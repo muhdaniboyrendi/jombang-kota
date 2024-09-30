@@ -20,4 +20,8 @@ class Kelompok extends Model
     public function desa(): BelongsTo{
         return $this->belongsTo(Desa::class);
     }
+
+    public function users(): HasMany{
+        return $this->hasMany(User::class, 'kelompok_id');
+    }
 }

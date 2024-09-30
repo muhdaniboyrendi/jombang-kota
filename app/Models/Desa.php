@@ -19,4 +19,8 @@ class Desa extends Model
     public function generuses(): HasMany{
         return $this->hasMany(Generus::class, 'desa_id');
     }
+
+    public function users(): HasMany{
+        return $this->hasMany(User::class, 'desa_id');
+    }
 }

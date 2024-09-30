@@ -4,12 +4,14 @@ use App\Livewire\DaftarMs;
 use App\Livewire\DaftarMt;
 use App\Livewire\TambahMs;
 use App\Livewire\TambahMt;
+use App\Livewire\DaftarAdmin;
+use App\Livewire\TambahAdmin;
 use App\Livewire\DaftarGenerus;
 use App\Livewire\TambahGenerus;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
-Route::get('/', [DashboardController::class, 'index']);
+Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified']);
 
 
 // generus
@@ -43,3 +45,14 @@ Route::get('/ms-tambah', function () {
     return view('ms.tambah', ['title' => 'Tambah MS', 'active' => 'ms']);
 });
 Route::get('/tambah-ms', TambahMs::class);
+
+
+// ADMIN
+Route::get('/admin', function () {
+    return view('admin.index', ['title' => 'Admin', 'active' => 'admin']);
+});
+Route::get('/daftar-admin', DaftarAdmin::class);
+Route::get('/admin-tambah', function () {
+    return view('admin.tambah', ['title' => 'Tambah Admin', 'active' => 'admin']);
+});
+Route::get('/tambah-admin', TambahAdmin::class);

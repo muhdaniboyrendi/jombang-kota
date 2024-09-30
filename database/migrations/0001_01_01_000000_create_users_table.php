@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('is_admin')->default(false);
+            $table->foreignId('desa_id')->constrained()->onDelete('cascade');
+            $table->foreignId('kelompok_id')->constrained()->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
