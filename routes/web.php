@@ -14,45 +14,43 @@ use App\Http\Controllers\DashboardController;
 Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified']);
 
 
-// generus
+// AUTH
+Route::get('/login', function () {
+    return view('auth.login', ['title' => 'Login', 'active' => 'login']);
+});
+
+
+// GENERUS
 Route::get('/generus', function () {
     return view('generus.index', ['title' => 'Generus', 'active' => 'generus']);
 });
-Route::get('/daftar-generus', DaftarGenerus::class);
 Route::get('/generus-tambah', function () {
     return view('generus.tambah', ['title' => 'Tambah Generus', 'active' => 'generus']);
 });
-Route::get('/tambah-generus', TambahGenerus::class);
 
 
 // MT
 Route::get('/mt', function () {
     return view('mt.index', ['title' => 'MT', 'active' => 'mt']);
 });
-Route::get('/daftar-mt', DaftarMt::class);
 Route::get('/mt-tambah', function () {
     return view('mt.tambah', ['title' => 'Tambah MT', 'active' => 'mt']);
 });
-Route::get('/tambah-mt', TambahMt::class);
 
 
 // MS
 Route::get('/ms', function () {
     return view('ms.index', ['title' => 'MS', 'active' => 'ms']);
 });
-Route::get('/daftar-ms', DaftarMs::class);
 Route::get('/ms-tambah', function () {
     return view('ms.tambah', ['title' => 'Tambah MS', 'active' => 'ms']);
 });
-Route::get('/tambah-ms', TambahMs::class);
 
 
 // ADMIN
 Route::get('/admin', function () {
     return view('admin.index', ['title' => 'Admin', 'active' => 'admin']);
 });
-Route::get('/daftar-admin', DaftarAdmin::class);
 Route::get('/admin-tambah', function () {
     return view('admin.tambah', ['title' => 'Tambah Admin', 'active' => 'admin']);
 });
-Route::get('/tambah-admin', TambahAdmin::class);

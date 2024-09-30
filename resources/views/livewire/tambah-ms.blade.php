@@ -90,7 +90,7 @@
                 </div>
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn app-btn-primary">Simpan</button>
-                    <a href="/generus" class="btn app-btn-secondary">Kembali</a>
+                    <a href="/ms" class="btn app-btn-secondary">Kembali</a>
                 </div>
             </form>
 

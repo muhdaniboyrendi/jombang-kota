@@ -74,8 +74,10 @@
                                         <td class="align-middle">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button type="button" wire:click="modal({{ $user->id }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
-                                                <button type="button" wire:click="edit({{ $user->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
-                                                <button type="button" wire:click="delete({{ $user->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                                @if ($user->is_admin == 0)
+                                                    <button type="button" wire:click="edit({{ $user->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Set Super Admin</button>
+                                                    <button type="button" wire:click="delete({{ $user->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -110,6 +112,57 @@
 
 
     <!-- Modal -->
+    {{-- Info Modal --}}
+    <div>
+        <div wire:ignore.self class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="infoModalLabel">Detail Data Admin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if($dataDetails)
+							<div class="table-responsive">
+								<table class="table mb-0 table-hover">
+                                    <tr>
+                                        <td>Nama</td>
+                                        <th>{{ $dataDetails->name }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <th>{{ $dataDetails->email }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Role</td>
+                                        <th>{{ $dataDetails->is_admin == 1 ? 'Super Admin' : 'Admin' }}</th>
+                                    </tr>
+                                        <td>Desa</td>
+                                        <th>{{ $dataDetails->desa->nama }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Kelompok</td>
+                                        <th>{{ $dataDetails->kelompok->nama }}</th>
+                                    </tr>
+								</table>
+							</div><!--//table-responsive-->
+                        @else
+                            <span>Loading...</span>
+                        @endif
+                    </div>
+                    @if ($dataDetails)
+                        @if ($dataDetails->is_admin == 0)
+                            <div class="modal-footer">
+                                <button type="button" wire:click="edit({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Set Super Admin</button>
+                                <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                            </div>
+                        @endif
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Delete Modal --}}
     <div>
         <div wire:ignore.self class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -125,6 +178,44 @@
                     <div class="modal-footer">
                         <button type="button" wire:click="destroy" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Hapus</button>
                         <button type="button" class="btn btn-sm app-btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Edit Modal --}}
+    <div>
+        <div wire:ignore.self class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Super Admin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        @if (session()->has('updated'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                {{ session('updated') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        <form wire:submit.prevent="update">
+                            <span>Anda yakin ingin menjadikan <strong>{{ $name }}</strong> sebagai Super Admin?</span>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" value="1" id="is_admin" checked disabled>
+                                <label class="form-check-label" for="is_admin">
+                                    Super Admin
+                                </label>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn app-btn-primary">Yes</button>
+                                <button type="submit" class="btn app-btn-secondary" data-bs-dismiss="modal">No</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

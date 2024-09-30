@@ -74,19 +74,10 @@ class DaftarAdmin extends Component
     {
         $this->dataId = $id;
         $this->name = User::find($id)->name;
-        $this->email = User::find($id)->email;
         $this->is_admin = User::find($id)->is_admin;
-        $this->desa_id = User::find($id)->desa_id;
-        $this->kelompok_id = User::find($id)->kelompok_id;
     }
 
-    protected $rules = [
-        'name' => 'required|string|max:255|min:3',
-        'email' => 'required|email|unique|max:255|min:3',
-        'is_admin' => 'boolean',
-        'desa_id' => 'required',
-        'kelompok_id' => 'required',
-    ];
+    protected $rules = ['is_admin' => 'boolean'];
 
     public function updated($propertyName)
     {
@@ -97,17 +88,9 @@ class DaftarAdmin extends Component
     {
         $this->validate();
 
-        User::find($this->dataId)->update(
-            [
-                'name' => $this->name,
-                'email' => $this->email,
-                'is_admin' => $this->is_admin,
-                'desa_id' => $this->desa_id,
-                'kelompok_id' => $this->kelompok_id,
-            ]
-        );
+        User::find($this->dataId)->update(['is_admin' => true]);
 
-        session()->flash('updated', 'Data Admin berhasil diperbarui.');
+        session()->flash('updated', 'Berhasil dijadikan Super Admin.');
     }
 
     public function render()
@@ -122,14 +105,9 @@ class DaftarAdmin extends Component
 
         $kelompoks = Kelompok::all();
 
-        $editDesas = Desa::all();
-        $editKelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
-
         return view('livewire.daftar-admin', [
             'users' => $users,
             'kelompoks' => $kelompoks,
-            'editDesas' => $editDesas,
-            'editKelompoks' => $editKelompoks,
             'name' => $this->name
         ]);
     }
