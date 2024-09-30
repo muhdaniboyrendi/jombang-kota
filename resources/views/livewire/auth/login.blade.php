@@ -3,17 +3,18 @@
         <div class="col-md-5">
             <div class="card">
                 <div class="container">
-                    <h2 class="text-center my-3">Login</h2>
                     <div class="card-body">
+                        <h2 class="text-center mt-2">Login</h2>
 
                         @if (session()->has('error'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
                         <form wire:submit.prevent="login">
-                            <div class="mb-3">
+                            <div class="my-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" wire:model="email" class="form-control" id="email" required>
                                 @error('email') <span class="text-danger">{{ $message }}</span> @enderror

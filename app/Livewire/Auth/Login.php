@@ -11,7 +11,7 @@ class Login extends Component
 
     protected $rules = [
         'email' => 'required|email',
-        'password' => 'required|min:6',
+        'password' => 'required|min:8',
     ];
 
     public function login()
@@ -19,8 +19,14 @@ class Login extends Component
         $credentials = $this->validate();
 
         if (Auth::attempt($credentials)) {
+            if (Auth::user()->email_verified_at === null) {
+                Auth::logout();
+                session()->flash('error', 'You need to verify your email before logging in.');
+                return redirect()->route('verification.notice');
+            }
+
             session()->regenerate();
-            return redirect()->route('home');
+            return redirect('/');
         } else {
             session()->flash('error', 'Email or password is incorrect.');
         }
