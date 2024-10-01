@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GenerusController;
 use App\Http\Controllers\DashboardController;
 
 Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
@@ -10,7 +11,7 @@ Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
 // AUTH
 Route::get('/login', function () {
     return view('auth.login', ['title' => 'Login', 'active' => 'login']);
-})->middleware('guest');
+})->middleware('guest')->name('login');
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
@@ -23,6 +24,8 @@ Route::get('/generus', function () {
 Route::get('/generus-tambah', function () {
     return view('generus.tambah', ['title' => 'Tambah Generus', 'active' => 'generus']);
 })->middleware('auth');
+
+Route::get('/print-generus-data/{generus:id}', [GenerusController::class, 'print'])->middleware('auth');
 
 
 // MT
@@ -48,8 +51,8 @@ Route::get('/ms-tambah', function () {
 // ADMIN
 Route::get('/admin', function () {
     return view('admin.index', ['title' => 'Admin', 'active' => 'admin']);
-})->middleware('auth');
+});
 
 Route::get('/admin-tambah', function () {
     return view('admin.tambah', ['title' => 'Tambah Admin', 'active' => 'admin']);
-})->middleware('auth');
+});

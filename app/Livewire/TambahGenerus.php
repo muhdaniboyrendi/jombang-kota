@@ -7,6 +7,7 @@ use App\Models\Generus;
 use Livewire\Component;
 use App\Models\Kelompok;
 use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TambahGenerus extends Component
 {
@@ -46,7 +47,7 @@ class TambahGenerus extends Component
     {
         $this->validate();
 
-        Generus::create([
+        $generus = Generus::create([
             'nama' => $this->nama,
             'tanggal_lahir' => $this->tanggal_lahir,
             'tempat_lahir' => $this->tempat_lahir,

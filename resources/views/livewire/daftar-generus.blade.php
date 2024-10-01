@@ -139,63 +139,76 @@
     {{-- Info Modal --}}
     <div>
         <div wire:ignore.self class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="infoModalLabel">Detail Generus</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+
                         @if($dataDetails)
-							<div class="table-responsive">
-								<table class="table mb-0 table-hover">
-                                    <tr>
-                                        <td>Nama</td>
-                                        <th>{{ $dataDetails->nama }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Tempat dan Tanggal Lahir</td>
-                                        <th>{{ $dataDetails->tempat_lahir }}, {{ $dataDetails->tanggal_lahir }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Jenis Kelamin</td>
-                                        <th>{{ $dataDetails->jenis_kelamin }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Kelas / Status</td>
-                                        <th>{{ $dataDetails->kelas }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Sekolah</td>
-                                        <th>{{ $dataDetails->sekolah }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Pekerjaan</td>
-                                        <th>{{ $dataDetails->pekerjaan }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Nama Ayah</td>
-                                        <th>{{ $dataDetails->bapak }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Nama Ibu</td>
-                                        <th>{{ $dataDetails->ibu }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Desa</td>
-                                        <th>{{ $dataDetails->desa->nama }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Kelompok</td>
-                                        <th>{{ $dataDetails->kelompok->nama }}</th>
-                                    </tr>
-								</table>
-							</div><!--//table-responsive-->
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0 table-hover">
+                                            <tr>
+                                                <td>Nama</td>
+                                                <th>{{ $dataDetails->nama }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Tempat dan Tanggal Lahir</td>
+                                                <th>{{ $dataDetails->tempat_lahir }}, {{ $dataDetails->tanggal_lahir }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Jenis Kelamin</td>
+                                                <th>{{ $dataDetails->jenis_kelamin }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Kelas / Status</td>
+                                                <th>{{ $dataDetails->kelas }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Sekolah</td>
+                                                <th>{{ $dataDetails->sekolah }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Pekerjaan</td>
+                                                <th>{{ $dataDetails->pekerjaan }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Nama Ayah</td>
+                                                <th>{{ $dataDetails->bapak }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Nama Ibu</td>
+                                                <th>{{ $dataDetails->ibu }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Desa</td>
+                                                <th>{{ $dataDetails->desa->nama }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Kelompok</td>
+                                                <th>{{ $dataDetails->kelompok->nama }}</th>
+                                            </tr>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div>
+                                <div class="col-md-4">
+                                    {{-- <img src="data:image/png;base64,{{ $dataDetails->qr_code }}" alt="QR Code"> --}}
+                                    <div>{!! $dataDetails->qr_code_image !!}</div>
+                                </div>
+                            </div>
+							
                         @else
                             <span>Loading...</span>
                         @endif
                     </div>
                     <div class="modal-footer">
+                        <button onclick="window.print()" class="btn btn-primary mt-3">Print QR Code</button>
+                        {{-- <a href="/print-generus-data/{{ $dataId }}" class="btn btn-sm app-btn-primary">Cetak</a> --}}
                         <button type="button" wire:click="edit({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                         <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                     </div>
