@@ -56,3 +56,13 @@ Route::get('/admin', function () {
 Route::get('/admin-tambah', function () {
     return view('admin.tambah', ['title' => 'Tambah Admin', 'active' => 'admin']);
 });
+
+
+// ACARA
+Route::get('/acara', function () {
+    return view('acara.index', ['title' => 'Acara', 'active' => 'acara']);
+});
+
+Route::get('/event/{eventId}/attendance', function ($eventId) {
+    return view('acara.index', ['title' => 'Acara', 'active' => 'acara', 'eventId' => $eventId]);
+});
