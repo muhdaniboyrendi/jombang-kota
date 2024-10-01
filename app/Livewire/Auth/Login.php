@@ -19,13 +19,8 @@ class Login extends Component
         $credentials = $this->validate();
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->email_verified_at === null) {
-                Auth::logout();
-                session()->flash('error', 'You need to verify your email before logging in.');
-                return redirect()->route('verification.notice');
-            }
-
             session()->regenerate();
+            
             return redirect('/');
         } else {
             session()->flash('error', 'Email or password is incorrect.');
