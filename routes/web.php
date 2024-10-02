@@ -63,6 +63,10 @@ Route::get('/acara', function () {
     return view('acara.index', ['title' => 'Acara', 'active' => 'acara']);
 });
 
-Route::get('/event/{eventId}/attendance', function ($eventId) {
-    return view('acara.index', ['title' => 'Acara', 'active' => 'acara', 'eventId' => $eventId]);
+Route::get('/acara-tambah', function () {
+    return view('acara.tambah', ['title' => 'Tambah Acara', 'active' => 'acara']);
 });
+
+Route::get('/acara/{eventId}', function ($eventId) {
+    return view('acara.kehadiran', ['title' => 'Acara', 'active' => 'acara', 'eventId' => $eventId]);
+})->name('event.attendance');

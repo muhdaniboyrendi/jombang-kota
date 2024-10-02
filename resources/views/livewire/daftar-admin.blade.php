@@ -213,7 +213,7 @@
                             </div>
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn app-btn-primary">Yes</button>
-                                <button type="submit" class="btn app-btn-secondary" data-bs-dismiss="modal">No</button>
+                                <button type="button" class="btn app-btn-secondary" data-bs-dismiss="modal">No</button>
                             </div>
                         </form>
                     </div>
