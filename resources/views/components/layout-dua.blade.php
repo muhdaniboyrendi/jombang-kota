@@ -43,6 +43,11 @@
     <x-logout></x-logout>
 
     @livewireScripts
+
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.3.1/dist/jsQR.min.js"></script>
+
+    {{-- <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> --}}
+
     <!-- Javascript -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="../assets/plugins/popper.min.js"></script>
@@ -63,6 +68,7 @@
 
     {{-- my script --}}
     <script src="js/script.js"></script>
+    
 
 </body>
 </html> 

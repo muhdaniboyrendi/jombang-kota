@@ -24,7 +24,13 @@ class KehadiranAcara extends Component
         $this->attendances = $this->event->attendances()->with('generus')->latest()->get();
     }
 
-    public function scanQrCode()
+    public function scanQrCode($code)
+    {
+        $this->scannedCode = $code;
+        $this->recordAttendance();
+    }
+
+    public function recordAttendance()
     {
         $generus = Generus::where('qr_code', $this->scannedCode)->first();
 
