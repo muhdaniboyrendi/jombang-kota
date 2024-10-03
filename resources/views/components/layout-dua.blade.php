@@ -5,6 +5,7 @@
     
     <!-- Meta -->
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -19,7 +20,9 @@
     <link id="theme-style" rel="stylesheet" href="../assets/css/portal.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     @livewireStyles
+
 </head> 
 
 <body class="app">   	
@@ -44,10 +47,6 @@
 
     @livewireScripts
 
-    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.3.1/dist/jsQR.min.js"></script>
-
-    {{-- <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> --}}
-
     <!-- Javascript -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="../assets/plugins/popper.min.js"></script>
@@ -69,6 +68,7 @@
     {{-- my script --}}
     <script src="js/script.js"></script>
     
+    @stack('scripts')
 
 </body>
 </html> 

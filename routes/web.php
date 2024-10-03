@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\GenerusController;
 use App\Http\Controllers\DashboardController;
 
@@ -67,6 +68,9 @@ Route::get('/acara-tambah', function () {
     return view('acara.tambah', ['title' => 'Tambah Acara', 'active' => 'acara']);
 });
 
-Route::get('/acara/{eventId}', function ($eventId) {
-    return view('acara.kehadiran', ['title' => 'Acara', 'active' => 'acara', 'eventId' => $eventId]);
-})->name('event.attendance');
+// Route::get('/acara/{eventId}', function ($eventId) {
+//     return view('acara.kehadiran', ['title' => 'Acara', 'active' => 'acara', 'eventId' => $eventId]);
+// })->name('event.attendance');
+
+Route::get('/acara/{event}', [EventController::class, 'showAttendance'])->name('event.attendance');
+Route::post('/acara/{event}/absensi', [EventController::class, 'recordAttendance'])->name('acara.absensi');
