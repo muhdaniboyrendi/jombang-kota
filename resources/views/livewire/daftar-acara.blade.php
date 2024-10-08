@@ -61,7 +61,7 @@
                                         <td class="align-middle">{{ $event->date }}</td>
                                         <td class="align-middle">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ route('event.attendance', $event->id) }}" class="btn btn-sm app-btn-primary">Absensi</a>
+                                                <a href="{{ route('acara.kehadiran', $event->id) }}" class="btn btn-sm app-btn-primary">Absensi</a>
                                                 <button type="button" wire:click="delete({{ $event->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                             </div>
                                         </td>

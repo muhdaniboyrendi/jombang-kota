@@ -11,18 +11,26 @@
             
                 <div class="row">
                     <div class="col-md-6">
-                        <video id="video" class="w-100" autoplay></video>
-                        <canvas id="canvas" style="display:none;"></canvas>
-                        <button id="startButton" class="btn btn-primary mt-2">Mulai Kamera</button>
-                        <button id="stopButton" class="btn btn-danger mt-2" style="display:none;">Hentikan Kamera</button>
+                        <div class="card">
+                            <div class="card-body">
+                                <video id="video" class="w-100" autoplay></video>
+                                <canvas id="canvas" style="display:none;"></canvas>
+                                <div class="d-grid gap-2">
+                                    <button id="startButton" class="btn app-btn-primary mt-2">Mulai Kamera</button>
+                                    <button id="stopButton" class="btn app-btn-secondary mt-2" style="display:none;">Hentikan Kamera</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-3">
                         <form id="manualForm">
-                            <div class="form-group">
+                            <div class="form-group mb-2">
                                 <label for="scannedCode">Kode QR</label>
                                 <input type="text" class="form-control" id="scannedCode" name="qr_code">
                             </div>
-                            <button type="submit" class="btn btn-primary">Catat Absensi Manual</button>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn app-btn-primary">Catat Absensi Manual</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -125,7 +133,9 @@
                     recordAttendance(code.data);
                 }
             }
-            requestAnimationFrame(scanQRCode);
+            setTimeout(() => {
+                requestAnimationFrame(scanQRCode);
+            }, 1500);
         }
 
         function handleManualSubmit(e) {
@@ -143,23 +153,19 @@
                 },
                 body: JSON.stringify({ qr_code: qrCode })
             })
-            .then(response => {
-                // if (!response.ok) {
-                //     throw new Error('Network response was not ok');
-                // }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.error) {
                     showMessage(data.error, 'danger');
                 } else {
                     showMessage(data.message, 'success');
-                    updateAttendanceList(data.student_name, data.attendance_time);
+                    updateAttendanceList(data.generus_nama, data.attendance_time);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 showMessage('Terjadi kesalahan saat mencatat absensi.', 'danger');
+                isScanning = true;
             });
         }
 
@@ -169,19 +175,20 @@
             messageDiv.style.display = 'block';
             setTimeout(() => {
                 messageDiv.style.display = 'none';
-            }, 5000);
+            }, 3000);
         }
 
-        function updateAttendanceList(studentName) {
+        function updateAttendanceList(generusName, attendanceTime) {
             const attendanceList = document.getElementById('attendanceList');
             const newRow = attendanceList.insertRow(0);
             const nameCell = newRow.insertCell(0);
             const timeCell = newRow.insertCell(1);
-            nameCell.textContent = studentName;
-            timeCell.textContent = new Date().toLocaleTimeString();
+            nameCell.textContent = generusName;
+            timeCell.textContent = attendanceTime;
         }
     });
     </script>
     @endpush
+    
 
 </x-layout-dua>
