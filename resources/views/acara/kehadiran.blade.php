@@ -5,11 +5,11 @@
     <div class="app-content pt-3 p-md-3 p-lg-4">
 
             <div class="container">
-                <h2>Presensi - {{ $event->name }}</h2>
+                <h2>{{ $event->name }}</h2>
                 <h6>Tanggal: {{ $event->date }}</h6>
             
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <div class="card">
                             <div class="card-body">
                                 <video id="video" class="w-100" autoplay></video>
@@ -21,7 +21,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mt-3">
+                    <div class="col-md-6 mb-3">
                         <form id="manualForm">
                             <div class="form-group mb-2">
                                 <label for="scannedCode">Kode QR</label>
@@ -36,23 +36,33 @@
             
                 <div id="message" class="alert mt-3" style="display:none;"></div>
             
-                <h3 class="mt-4">Daftar Absensi</h3>
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>Nama Siswa</th>
-                            <th>Waktu Absensi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="attendanceList">
-                        @foreach($attendances as $attendance)
-                        <tr>
-                            <td>{{ $attendance->generus->nama }}</td>
-                            <td>{{ $attendance->created_at }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Daftar Kehadiran</h3>
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Siswa</th>
+                                            <th>Kelompok</th>
+                                            <th>Waktu Absensi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="attendanceList">
+                                        @foreach($attendances as $attendance)
+                                        <tr>
+                                            <td>{{ $attendance->generus->nama }}</td>
+                                            <td>{{ $attendance->generus->kelompok_id }}</td>
+                                            <td>{{ $attendance->created_at }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 	</div>

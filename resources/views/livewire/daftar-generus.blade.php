@@ -44,7 +44,7 @@
                 </div><!--//table-utilities-->
             </div><!--//col-auto-->
 
-            <div class="card mt-3">
+            <div class="card my-3">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table app-table-hover text-left">
@@ -93,10 +93,14 @@
                 </div>
             </div>
 
-            <div class="mt-3">
-                <div class="row">
-                    <label for="perPage" class="col-sm-1 col-form-label">Per Page</label>
-                    <div class="col-sm-2">
+            {{ $generuses->links('vendor.pagination.bootstrap-5') }}
+
+            <div class="my-0">
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="perPage" class="col-form-label">Per Page</label>
+                    </div>
+                    <div class="col-auto">
                         <select wire:model.live='perPage' class="form-select" id="perPage">
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -107,7 +111,6 @@
                     </div>
                 </div>
             </div>
-            {{ $generuses->links() }}
 
         </div>
 
@@ -207,10 +210,10 @@
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <button onclick="window.print()" class="btn btn-primary mt-3">Print QR Code</button>
+                        <button onclick="window.print()" class="btn app-btn-primary">Print QR Code</button>
                         {{-- <a href="/print-generus-data/{{ $dataId }}" class="btn btn-sm app-btn-primary">Cetak</a> --}}
-                        <button type="button" wire:click="edit({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
-                        <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                        <button type="button" wire:click="edit({{ $dataId }})" class="btn app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                        <button type="button" wire:click="delete({{ $dataId }})" class="btn app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                     </div>
                 </div>
             </div>

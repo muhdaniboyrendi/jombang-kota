@@ -3,12 +3,6 @@
     <p>Tanggal: {{ $event->date }}</p>
 
     <div class="row">
-        {{-- <div class="col-md-6">
-            <video id="video" class="w-100" autoplay></video>
-            <canvas id="canvas" style="display:none;"></canvas>
-            <button id="startButton" class="btn btn-primary mt-2">Mulai Kamera</button>
-            <button id="stopButton" class="btn btn-danger mt-2" style="display:none;">Hentikan Kamera</button>
-        </div> --}}
         
         <div class="col-md-6">
             <form wire:submit.prevent="recordAttendance">

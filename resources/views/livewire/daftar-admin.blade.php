@@ -44,7 +44,7 @@
                 </div><!--//table-utilities-->
             </div><!--//col-auto-->
 
-            <div class="card mt-3">
+            <div class="card my-3">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table app-table-hover text-left">
@@ -90,10 +90,14 @@
                 </div>
             </div>
 
-            <div class="mt-3">
-                <div class="row">
-                    <label for="perPage" class="col-sm-1 col-form-label">Per Page</label>
-                    <div class="col-sm-2">
+            {{ $users->links('vendor.pagination.bootstrap-5') }}
+
+            <div class="my-0">
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="perPage" class="col-form-label">Per Page</label>
+                    </div>
+                    <div class="col-auto">
                         <select wire:model.live='perPage' class="form-select" id="perPage">
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -104,7 +108,6 @@
                     </div>
                 </div>
             </div>
-            {{ $users->links() }}
 
         </div>
 

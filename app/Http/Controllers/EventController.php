@@ -12,6 +12,8 @@ class EventController extends Controller
     public function showAttendance(Event $event)
     {
         $attendances = $event->attendances()->with('generus')->latest()->get();
+        // $kelompok = Generus::with('kelompok')->where('kelompok_id', $attendances->generus->kelompok_id)->get();
+
         return view('acara.kehadiran', ['title' => 'Acara', 'active' => 'acara'], compact('event', 'attendances'));
     }
 
