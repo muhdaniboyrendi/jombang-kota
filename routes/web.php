@@ -64,9 +64,5 @@ Route::get('/acara', function () {
     return view('acara.index', ['title' => 'Acara', 'active' => 'acara']);
 });
 
-Route::get('/acara-tambah', function () {
-    return view('acara.tambah', ['title' => 'Tambah Acara', 'active' => 'acara']);
-});
-
 Route::get('/acara/{event}', [EventController::class, 'showAttendance'])->name('acara.kehadiran');
 Route::post('/acara/{event}/absensi', [EventController::class, 'recordAttendance'])->name('acara.absensi');

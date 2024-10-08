@@ -21,13 +21,7 @@
                                 </div>
                                 <div class="col-auto">	
                                     <!-- Button trigger modal -->
-                                    <a href="acara-tambah" class="btn app-btn-primary" data-bs-toggle="modal" data-bs-target="#inputModal">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
-                                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
-                                        </svg>
-                                        Tambah Acara
-                                    </a>
+                                    <a href="/acara-tambah" class="btn app-btn-primary" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Acara</a>
                                 </div>
                             </div>
                                 
@@ -97,50 +91,6 @@
 
 
     <!-- Modal -->
-    {{-- Tambah Modal --}}
-    <div>
-        <div wire:ignore.self class="modal fade" id="inputModal" tabindex="-1" aria-labelledby="inputModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="inputModalLabel">Tambah Acara</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        @if (session()->has('message'))
-                            <div class="alert alert-success alert-dismissible fade show">
-                                {{ session('message') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
-
-                        <form wire:submit.prevent="store">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama Acara</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" wire:model.lazy="name">
-                                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="date" class="form-label">Tanggal Acara</label>
-                                <input type="text" class="form-control @error('date') is-invalid @enderror" id="date" wire:model.lazy="date">
-                                @error('date') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Deskripsi Acara</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" wire:model.lazy="description">
-                                @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn app-btn-primary">Simpan</button>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     {{-- Delete Modal --}}
     <div>
@@ -157,6 +107,49 @@
                     <div class="modal-footer">
                         <button type="button" wire:click="destroy" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Hapus</button>
                         <button type="button" class="btn btn-sm app-btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Tambah Modal --}}
+    <div>
+        <div wire:ignore.self class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border border-danger">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tambahModalLabel">Tambah Acara</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if (session()->has('message'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                {{ session('message') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        <form wire:submit.prevent="store">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Acara</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" wire:model.lazy="name">
+                                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="date" class="form-label">Tanggal Acara</label>
+                                <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" wire:model.lazy="date">
+                                @error('date') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Deskripsi Acara</label>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" wire:model.lazy="description" rows="3"></textarea>
+                                @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn app-btn-primary">Simpan</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

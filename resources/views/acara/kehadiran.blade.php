@@ -3,11 +3,10 @@
     <x-slot:active>{{ $active }}</x-slot>
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
-	    <div class="container-xl">
 
             <div class="container">
-                <h2>{{ $event->name }} - Absensi</h2>
-                <p>Tanggal: {{ $event->date }}</p>
+                <h2>Presensi - {{ $event->name }}</h2>
+                <h6>Tanggal: {{ $event->date }}</h6>
             
                 <div class="row">
                     <div class="col-md-6">
@@ -56,7 +55,6 @@
                 </table>
             </div>
 
-        </div>
 	</div>
 
     @push('scripts')

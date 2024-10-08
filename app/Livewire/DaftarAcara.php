@@ -20,15 +20,38 @@ class DaftarAcara extends Component
     public $date;
     public $description;
 
-    // public $desaId;
-
     // search
     public $search = '';
-    // public $kelompok = '';
 
     // table
     public $sortBy = 'created_at';
     public $sortDir  = 'DESC';
+
+    protected $rules = [
+        'name' => 'required|string|max:255|min:3',
+        'date' => 'required|date',
+        'description' => 'required|string|max:255|min:3',
+    ];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    public function store()
+    {
+        $this->validate();
+
+        Event::create([
+            'name' => $this->name,
+            'date' => $this->date,
+            'description' => $this->description,
+        ]);
+
+        session()->flash('message', 'Acara baru berhasil ditambahkan.');
+
+        $this->reset();
+    }
 
     public function setSortBy($sortByField) 
     {
@@ -46,12 +69,6 @@ class DaftarAcara extends Component
     public function updatedSearch() 
     {
         $this->resetPage();
-    }
-
-    public function modal($id)
-    {
-        $this->dataId = $id;
-        $this->dataDetails = Event::find($id);
     }
 
     public function delete($id) 
@@ -74,11 +91,6 @@ class DaftarAcara extends Component
         $this->name = Event::find($id)->name;
         $this->date = Event::find($id)->date;
         $this->description = Event::find($id)->description;
-    }
-
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
     }
 
     public function update() 
