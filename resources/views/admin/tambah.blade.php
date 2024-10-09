@@ -5,7 +5,11 @@
     <div class="app-content pt-3 p-md-3 p-lg-4">
 	    <div class="container-xl">
 
-            <livewire:tambah-admin />
+            @if (auth()->user()->is_admin === 1)
+                <livewire:tambah-admin />
+            @else
+                <h1>404 - Page Not Found</h1>
+            @endif
 
         </div>
 	</div>

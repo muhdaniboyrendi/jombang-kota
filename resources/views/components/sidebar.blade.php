@@ -58,7 +58,7 @@
                     </a><!--//nav-link-->
                 </li><!--//nav-item-->
 
-                {{-- @if (auth()->user()->role == "Super Admin") --}}
+                @if (auth()->user()->is_admin === 1)
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                         <a class="nav-link {{ $active == "admin" ? 'active' : '' }}" href="/admin">
@@ -71,7 +71,7 @@
                             <span class="nav-link-text">Admin</span>
                         </a>
                     </li><!--//nav-item-->
-                {{-- @endif --}}
+                @endif
 
                 <li class="nav-item">
                     <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->

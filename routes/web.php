@@ -6,6 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GenerusController;
 use App\Http\Controllers\DashboardController;
 
+// DASHBOARD
 Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
 
 
@@ -52,17 +53,17 @@ Route::get('/ms-tambah', function () {
 // ADMIN
 Route::get('/admin', function () {
     return view('admin.index', ['title' => 'Admin', 'active' => 'admin']);
-});
+})->middleware('auth');
 
 Route::get('/admin-tambah', function () {
     return view('admin.tambah', ['title' => 'Tambah Admin', 'active' => 'admin']);
-});
+})->middleware('auth');
 
 
 // ACARA
 Route::get('/acara', function () {
     return view('acara.index', ['title' => 'Acara', 'active' => 'acara']);
-});
+})->middleware('auth');
 
-Route::get('/acara/{event}', [EventController::class, 'showAttendance'])->name('acara.kehadiran');
-Route::post('/acara/{event}/absensi', [EventController::class, 'recordAttendance'])->name('acara.absensi');
+Route::get('/acara/{event}', [EventController::class, 'showAttendance'])->name('acara.kehadiran')->middleware('auth');
+Route::post('/acara/{event}/absensi', [EventController::class, 'recordAttendance'])->name('acara.absensi')->middleware('auth');

@@ -17,6 +17,14 @@ class Kelompok extends Model
         return $this->hasMany(Generus::class, 'kelompok_id');
     }
 
+    public function ms(): HasMany{
+        return $this->hasMany(Ms::class, 'kelompok_id');
+    }
+
+    public function mts(): HasMany{
+        return $this->hasMany(Mt::class, 'kelompok_id');
+    }
+
     public function desa(): BelongsTo{
         return $this->belongsTo(Desa::class);
     }
