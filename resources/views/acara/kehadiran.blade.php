@@ -35,16 +35,73 @@
                 </div>
             
                 <div id="message" class="alert mt-3" style="display:none;"></div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-md">
+                        <div class="app-card app-card-stat shadow-sm h-100">
+						    <div class="app-card-body p-3 p-lg-4">
+							    <h4 class="stats-type mb-1">Total Kehadiran</h4>
+							    <div class="stats-figure" id="totalAttendances">{{ $totalAttendances }}</div>
+								<div class="stats-meta text-success">
+								    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+										<path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+									</svg>
+								</div>
+						    </div>
+					    </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="app-card app-card-stat shadow-sm h-100">
+						    <div class="app-card-body p-3 p-lg-4">
+							    <h4 class="stats-type mb-1">Total Kehadiran Laki-laki</h4>
+							    <div class="stats-figure" id="attendanceMale">{{ $attendancesByGender['Laki-laki'] ?? 0 }}</div>
+								<div class="stats-meta text-success">
+								    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+										<path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+									</svg>
+								</div>
+						    </div>
+					    </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="app-card app-card-stat shadow-sm h-100">
+						    <div class="app-card-body p-3 p-lg-4">
+							    <h4 class="stats-type mb-1">Total Kehadiran Perempuan</h4>
+							    <div class="stats-figure" id="attendanceFemale">{{ $attendancesByGender['Perempuan'] ?? 0 }}</div>
+								<div class="stats-meta text-success">
+								    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+										<path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+									</svg>
+								</div>
+						    </div>
+					    </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="app-card app-card-stat shadow-sm h-100">
+						    <div class="app-card-body p-3 p-lg-4">
+							    <h4 class="stats-type mb-1">Kehadiran per Kelompok</h4>
+							    <div class="stats-figure">
+                                    <span id="totalGroupsPresent">
+                                        {{ $totalGroupsPresent }}
+                                    </span>
+                                    Kelompok
+                                </div>
+                                <div class="stats-meta text-success">
+                                    <button class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal">Lihat</button>
+								</div>
+						    </div>
+					    </div>
+                    </div>
+                </div>
             
                 <div class="card">
                     <div class="card-body">
                         <h3>Daftar Kehadiran</h3>
-                        <div class="card">
-                            <div class="card-body">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Nama Siswa</th>
+                                            <th>Nama Generus</th>
+                                            <th>Jenis-kelamin</th>
                                             <th>Kelompok</th>
                                             <th>Waktu Absensi</th>
                                         </tr>
@@ -53,19 +110,54 @@
                                         @foreach($attendances as $attendance)
                                         <tr>
                                             <td>{{ $attendance->generus->nama }}</td>
-                                            <td>{{ $attendance->generus->kelompok_id }}</td>
+                                            <td>{{ $attendance->generus->jenis_kelamin }}</td>
+                                            <td>{{ $attendance->generus->kelompok->nama }}</td>
                                             <td>{{ $attendance->created_at }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
 
 	</div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="detailModalLabel">Kehadiran per Kelompok</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-borderless mb-0" id="attendanceByGroupTable">
+                            <thead>
+                                <tr>
+                                    <th class="meta">Kelompok</th>
+                                    <th class="meta">Total</th>
+                                    <th class="meta stat-cell">Laki-laki</th>
+                                    <th class="meta stat-cell">Perempuan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($attendancesByGroup as $groupName => $stats)
+                                    <tr>
+                                        <td>{{ $groupName }}</td>
+                                        <td class="stat-cell">{{ $stats['total'] }}</td>
+                                        <td class="stat-cell">{{ $stats['laki-laki'] }}</td>
+                                        <td class="stat-cell">{{ $stats['perempuan'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.3.1/dist/jsQR.min.js"></script>
@@ -167,7 +259,8 @@
                     showMessage(data.error, 'danger');
                 } else {
                     showMessage(data.message, 'success');
-                    updateAttendanceList(data.generus_nama, data.attendance_time);
+                    updateAttendanceList(data.generus_nama, data.attendance_time, data.generus_kelompok, data.generus_jenis_kelamin);
+                    updateAttendanceStatistics(data);
                 }
             })
             .catch(error => {
@@ -186,17 +279,37 @@
             }, 3000);
         }
 
-        function updateAttendanceList(generusName, attendanceTime) {
+        function updateAttendanceList(generusName, attendanceTime, kelompok, jenisKelamin) {
             const attendanceList = document.getElementById('attendanceList');
             const newRow = attendanceList.insertRow(0);
-            const nameCell = newRow.insertCell(0);
-            const timeCell = newRow.insertCell(1);
-            nameCell.textContent = generusName;
-            timeCell.textContent = attendanceTime;
+            newRow.insertCell(0).textContent = generusName;
+            newRow.insertCell(1).textContent = jenisKelamin;
+            newRow.insertCell(2).textContent = kelompok;
+            newRow.insertCell(3).textContent = attendanceTime;
         }
+
+        function updateAttendanceStatistics(data) {
+            document.getElementById('totalAttendances').textContent = data.totalAttendances;
+            document.getElementById('totalGroupsPresent').textContent = data.totalGroupsPresent;
+            document.getElementById('attendanceMale').textContent = data.attendancesByGender['Laki-laki'];
+            document.getElementById('attendanceFemale').textContent = data.attendancesByGender['Perempuan'];
+
+            const attendanceByGroupTable = document.getElementById('attendanceByGroupTable');
+            const tbody = attendanceByGroupTable.querySelector('tbody');
+            tbody.innerHTML = '';
+
+            Object.entries(data.attendancesByGroup).forEach(([groupName, stats]) => {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = groupName;
+                row.insertCell(1).textContent = stats.total;
+                row.insertCell(2).textContent = stats['laki-laki'];
+                row.insertCell(3).textContent = stats['perempuan'];
+            });
+        }
+
+        
     });
     </script>
     @endpush
     
-
 </x-layout-dua>

@@ -11,10 +11,37 @@ class EventController extends Controller
 {
     public function showAttendance(Event $event)
     {
-        $attendances = $event->attendances()->with('generus')->latest()->get();
-        // $kelompok = Generus::with('kelompok')->where('kelompok_id', $attendances->generus->kelompok_id)->get();
+        $attendances = $event->attendances()
+        ->with(['generus' => function($query) {
+            $query->with('kelompok');
+        }])->latest()->get();
 
-        return view('acara.kehadiran', ['title' => 'Acara', 'active' => 'acara'], compact('event', 'attendances'));
+        $totalAttendances = $attendances->count();
+
+        $attendancesByGroup = $attendances->groupBy('generus.kelompok.nama')
+            ->map(function ($group) {
+                return [
+                    'total' => $group->count(),
+                    'laki-laki' => $group->where('generus.jenis_kelamin', 'Laki-laki')->count(),
+                    'perempuan' => $group->where('generus.jenis_kelamin', 'Perempuan')->count(),
+                ];
+            });
+
+        $totalGroupsPresent = $attendancesByGroup->count();
+        
+        $attendancesByGender = $attendances->groupBy('generus.jenis_kelamin')
+            ->map(function ($group) {
+                return $group->count();
+            });
+
+        return view('acara.kehadiran', [
+            'title' => 'Acara', 
+            'active' => 'acara',
+            'totalAttendances' => $totalAttendances,
+            'attendancesByGroup' => $attendancesByGroup,
+            'attendancesByGender' => $attendancesByGender,
+            'totalGroupsPresent' => $totalGroupsPresent,
+        ], compact('event', 'attendances'));
     }
 
     public function recordAttendance(Request $request, Event $event)
@@ -33,15 +60,61 @@ class EventController extends Controller
             return response()->json(['error' => $generus->nama . ' sudah melakukan absensi sebelumnya.'], 400);
         }
 
-        $attendance = Attendance::create([
-            'event_id' => $event->id,
-            'generus_id' => $generus->id,
-        ]);
+        $attendance = new Attendance();
+        $attendance->event_id = $event->id;
+        $attendance->generus_id = $generus->id;
+        $attendance->attended_at = now();
+        $attendance->save();
+
+        $updatedStats = $this->calculateAttendanceStatistics($event);
 
         return response()->json([
-            'message' => 'Absensi tercatat untuk ' . $generus->nama,
+            'message' => 'Kehadiran berhasil dicatat',
             'generus_nama' => $generus->nama,
-            'attendance_time' => $attendance->created_at->format('H:i:s')
+            'generus_kelompok' => $generus->kelompok->nama ?? 'Tidak ada kelompok',
+            'generus_jenis_kelamin' => $generus->jenis_kelamin,
+            'attendance_time' => $attendance->attended_at->format('Y-m-d H:i:s'),
+            'totalAttendances' => $updatedStats['totalAttendances'],
+            'totalGroupsPresent' => $updatedStats['totalGroupsPresent'],
+            'attendancesByGender' => $updatedStats['attendancesByGender'],
+            'attendancesByGroup' => $updatedStats['attendancesByGroup'],
         ]);
+    }
+
+    private function calculateAttendanceStatistics(Event $event)
+    {
+        $attendances = $event->attendances()->with(['generus' => function($query) {
+            $query->with('kelompok');
+        }])->get();
+
+        $totalAttendances = $attendances->count();
+
+        $attendancesByGroup = $attendances->groupBy('generus.kelompok.nama')
+            ->map(function ($group) {
+                return [
+                    'total' => $group->count(),
+                    'laki-laki' => $group->where('generus.jenis_kelamin', 'Laki-laki')->count(),
+                    'perempuan' => $group->where('generus.jenis_kelamin', 'Perempuan')->count(),
+                ];
+            });
+
+        $attendancesByGender = $attendances->groupBy('generus.jenis_kelamin')
+            ->map(function ($group) {
+                return $group->count();
+            })->toArray();
+
+        $attendancesByGender = array_merge([
+            'laki-laki' => 0,
+            'perempuan' => 0
+        ], $attendancesByGender);
+
+        $totalGroupsPresent = $attendancesByGroup->count();
+
+        return [
+            'totalAttendances' => $totalAttendances,
+            'totalGroupsPresent' => $totalGroupsPresent,
+            'attendancesByGender' => $attendancesByGender,
+            'attendancesByGroup' => $attendancesByGroup,
+        ];
     }
 }
