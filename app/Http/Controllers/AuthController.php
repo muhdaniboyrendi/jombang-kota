@@ -63,6 +63,7 @@ class AuthController extends Controller
             'profile' => $profile,
             'desa' => $desa,
             'kelompok' => $kelompok,
+            'userId' => $id,
         ]);
     }
 }
