@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot:title>{{ $title }}</x-slot>
+    <x-slot:title>{{ auth()->user()->is_admin === 1 ? $title : $title = '404 - Page Not Found' }}</x-slot>
     <x-slot:active>{{ $active }}</x-slot>
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
@@ -8,7 +8,14 @@
             @if (auth()->user()->is_admin === 1)
                 <livewire:daftar-admin />
             @else
-                <h1 class="text-center">404 - Page Not Found</h1>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="col-md-12 text-center">
+                        <h1>404</h1>
+                        <h2>Page Not Found</h2>
+                        <p>Sorry, the page you are looking for does not exist.</p>
+                        <h5><a href="/">&laquo; Click here to back to the main page</a></h5>
+                    </div>
+                </div>
             @endif
 
         </div>

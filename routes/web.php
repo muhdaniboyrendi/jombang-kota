@@ -11,11 +11,14 @@ Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
 
 
 // AUTH
-Route::get('/login', function () {
-    return view('auth.login', ['title' => 'Login', 'active' => 'login']);
-})->middleware('guest')->name('login');
-
+Route::get('/login', [AuthController::class, 'showLoginForm'])->middleware('guest')->name('login');
+Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+
+// PROFILE
+Route::get('/profile/{id}', [AuthController::class, 'profile'])->middleware('auth');
+Route::get('/profile-edit/{id}', [AuthController::class, 'edit'])->middleware('auth');
 
 
 // GENERUS
