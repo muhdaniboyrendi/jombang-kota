@@ -19,6 +19,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 // PROFILE
 Route::get('/profile/{id}', [AuthController::class, 'profile'])->middleware('auth');
 Route::get('/profile-edit/{id}', [AuthController::class, 'edit'])->middleware('auth');
+Route::delete('/account-delete/{id}', [AuthController::class, 'destroy'])->middleware('auth');
 
 
 // GENERUS

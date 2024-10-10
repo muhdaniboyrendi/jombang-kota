@@ -19,7 +19,7 @@
                         </svg>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                        <li><a class="dropdown-item" href="/profile/{{ auth()->user()->id }}">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Log Out</a></li>
                     </ul>

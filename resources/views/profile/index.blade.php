@@ -76,9 +76,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if (session()->has('error'))
+                            <div class="app-card-body px-4 w-100">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ session('error') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="app-card-footer p-4 mt-auto">
                             <a class="btn app-btn-secondary" href="/profile-edit/{{ $profile->id }}">Edit Profile</a>
-                            <button type="button" class="btn app-btn-secondary">Hapus Akun</button>
+                            <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus Akun</button>
                         </div>
                     </div>
 
@@ -88,5 +98,29 @@
 
         </div>
 	</div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel">Hapus Akun</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Anda yakin ingin menghapus akun anda?
+                </div>
+                <div class="modal-footer">
+                    <form action="/account-delete/{{ auth()->user()->id }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn app-btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn app-btn-primary">Hapus Akun</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </x-layout-dua>

@@ -25,7 +25,7 @@ class EditProfile extends Component
     protected $rules = [
         'name' => 'required|string|max:255|min:3',
         'email' => 'required|email|unique:users,email,',
-        'password' => 'nullable|string|min:8',
+        'password' => 'nullable|string|min:8|confirmed',
         'desa_id' => 'required|exists:desas,id',
         'kelompok_id' => 'required|exists:kelompoks,id',
     ];
@@ -59,7 +59,7 @@ class EditProfile extends Component
         $this->validate([
             'name' => 'required|string|max:255|min:3',
             'email' => 'required|email|unique:users,email,' . $this->userId,
-            'password' => 'nullable|string|min:6',
+            'password' => 'nullable|string|min:6|confirmed',
             'desa_id' => 'required|exists:desas,id',
             'kelompok_id' => 'required|exists:kelompoks,id',
         ]);

@@ -90,15 +90,14 @@
                                     <div class="col-md-6">
                                         <div class="mt-3">
                                             <label for="password" class="form-label">Password Baru</label>
-                                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" wire:model.lazy="password">
+                                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" wire:model="password">
                                             @error('password') <span class="invalid-feedback">{{ $message }}</span> @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mt-3">
                                             <label for="password_confirmation" class="form-label">Konfirmasi Password Baru</label>
-                                            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" wire:model.lazy="password_confirmation">
-                                            @error('password_confirmation') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password_confirmation" wire:model="password_confirmation">
                                         </div>
                                     </div>
                                 </div>

@@ -66,4 +66,18 @@ class AuthController extends Controller
             'userId' => $id,
         ]);
     }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        
+        if (Auth::id() === $user->id) {
+            $user->delete();
+            Auth::logout();
+
+            return redirect('/login')->with('message', 'Akun Anda telah dihapus.');
+        }
+
+        return redirect()->back()->with('error', 'Anda tidak berhak menghapus akun ini.');
+    }
 }

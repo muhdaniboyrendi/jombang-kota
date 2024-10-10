@@ -22,7 +22,7 @@ class TambahAdmin extends Component
     protected $rules = [
         'name' => 'required|string|max:255|min:3',
         'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:8|confirmed',
+        'password' => 'required|string|min:8|confirmed',
         'is_admin' => 'boolean',
         'desa_id' => 'required',
         'kelompok_id' => 'required',
