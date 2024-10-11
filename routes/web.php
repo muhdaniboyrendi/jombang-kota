@@ -77,6 +77,10 @@ Route::get('/ms-tambah', function () {
     return view('ms.tambah', ['title' => 'Tambah MS', 'active' => 'ms']);
 })->middleware(['auth', 'verified']);
 
+Route::get('/ms-insert', function () {
+    return view('ms.insert', ['title' => 'Form Mubaligh Setempat Jombang Kota']);
+});
+
 
 // ADMIN
 Route::get('/admin', function () {
