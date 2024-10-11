@@ -55,7 +55,8 @@ Route::get('/generus-edit', function () {
     return view('generus.edit', ['title' => 'Form Edit Data Generus Jombang Kota']);
 });
 
-Route::get('/print-generus-data', [GenerusController::class, 'print'])->middleware(['auth', 'verified']);
+Route::get('/prints-generus-data', [GenerusController::class, 'prints'])->middleware(['auth', 'verified']);
+Route::get('/print-generus-data/{id}', [GenerusController::class, 'print'])->middleware(['auth', 'verified']);
 
 
 // MT

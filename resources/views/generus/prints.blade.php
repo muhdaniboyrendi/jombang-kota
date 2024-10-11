@@ -80,26 +80,31 @@
 
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div>
-                <div class="card-siswa text-center">
-                    <div class="header">
-                        <h6>Kartu Generus</h6>
-                    </div>
+            @foreach ($generuses as $generus)
+                <div>
+                    <div class="card-siswa text-center">
+                        <!-- Header (Judul Kartu) -->
+                        <div class="header">
+                            <h6>Kartu Generus</h6>
+                        </div>
                     
-                    <div class="student-info text-start mt-3">
-                        <p><strong>Nama:</strong> {{ $generus->nama }}</p>
-                        <p><strong>Jenis Kelamin:</strong> {{ $generus->jenis_kelamin }}</p>
-                        <p><strong>Desa:</strong> {{ $generus->desa->nama }}</p>
-                        <p><strong>Kelompok:</strong> {{ $generus->kelompok->nama }}</p>
-                    </div>
+                        <!-- Informasi Siswa -->
+                        <div class="student-info text-start mt-3">
+                            <p><strong>Nama:</strong> {{ $generus->nama }}</p>
+                            <p><strong>Jenis Kelamin:</strong> {{ $generus->jenis_kelamin }}</p>
+                            <p><strong>Desa:</strong> {{ $generus->desa->nama }}</p>
+                            <p><strong>Kelompok:</strong> {{ $generus->kelompok->nama }}</p>
+                        </div>
                     
-                    <div class="footer">
-                        {!! $generus->qr_code_image !!}
-                        <p class="mt-2" style="font-size: 10px;">{{ $generus->qr_code }}</p>
-                        <p class="mt-2" style="font-size: 10px;">Scan untuk Absensi</p>
+                        <!-- QR Code -->
+                        <div class="footer">
+                            {!! $generus->qr_code_image !!}
+                            <p class="mt-2" style="font-size: 10px;">{{ $generus->qr_code }}</p>
+                            <p class="mt-2" style="font-size: 10px;">Scan untuk Absensi</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 

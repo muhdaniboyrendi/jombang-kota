@@ -32,7 +32,7 @@
                                     <a class="btn app-btn-primary" href="/generus-tambah">
                                         Tambah Generus
                                     </a>
-                                    <a class="btn app-btn-secondary" href="/print-generus-data">
+                                    <a class="btn app-btn-secondary" href="/prints-generus-data">
                                         Cetak QR Code
                                     </a>
                                     <input type="text" id="linkToCopy" value="{{ url('/generus-edit') }}" hidden>
@@ -144,7 +144,7 @@
     {{-- Info Modal --}}
     <div>
         <div wire:ignore.self class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="infoModalLabel">Detail Generus</h5>
@@ -211,8 +211,9 @@
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <button onclick="window.print()" class="btn app-btn-primary">Print QR Code</button>
-                        {{-- <a href="/print-generus-data/{{ $dataId }}" class="btn btn-sm app-btn-primary">Cetak</a> --}}
+                        <a class="btn app-btn-primary" href="/print-generus-data/{{ $dataId }}">
+                            Cetak QR Code
+                        </a>
                         <button type="button" wire:click="edit({{ $dataId }})" class="btn app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                         <button type="button" wire:click="delete({{ $dataId }})" class="btn app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                     </div>
