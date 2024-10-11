@@ -261,36 +261,34 @@
 
     <!-- Modal -->
     <div class="modal fade" id="allGenerusModal" tabindex="-1" aria-labelledby="allGenerusModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="allGenerusModalLabel">Jumlah Generus Per Kelompok</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="app-card-body p-3 p-lg-4">
-                        <div class="table-responsive">
-                            <table class="table mb-0 table-hover">
-                                <thead>
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="meta">Kelompok</th>
+                                    <th class="meta stat-cell">Laki-laki</th>
+                                    <th class="meta stat-cell">Perempuan</th>
+                                    <th class="meta stat-cell">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($totalGenerusPerKelompok as $kelompok)
                                     <tr>
-                                        <th class="meta">Kelompok</th>
-                                        <th class="meta stat-cell">Laki-laki</th>
-                                        <th class="meta stat-cell">Perempuan</th>
-                                        <th class="meta stat-cell">Total</th>
+                                        <td>{{ $kelompok->nama }}</td>
+                                        <td class="stat-cell">{{ $kelompok->total_laki_laki }}</td>
+                                        <td class="stat-cell">{{ $kelompok->total_perempuan }}</td>
+                                        <td class="stat-cell">{{ $kelompok->total_generus }}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($totalGenerusPerKelompok as $kelompok)
-                                        <tr>
-                                            <td>{{ $kelompok->nama }}</td>
-                                            <td class="stat-cell">{{ $kelompok->total_laki_laki }}</td>
-                                            <td class="stat-cell">{{ $kelompok->total_perempuan }}</td>
-                                            <td class="stat-cell">{{ $kelompok->total_generus }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -302,36 +300,34 @@
 
     <!-- Modal -->
     <div class="modal fade" id="allMsModal" tabindex="-1" aria-labelledby="allMsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="allMsModalLabel">Jumlah Generus Per Kelompok</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="app-card-body p-3 p-lg-4">
-                        <div class="table-responsive">
-                            <table class="table mb-0 table-hover">
-                                <thead>
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="meta">Kelompok</th>
+                                    <th class="meta stat-cell">Laki-laki</th>
+                                    <th class="meta stat-cell">Perempuan</th>
+                                    <th class="meta stat-cell">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($totalMsPerKelompok as $kelompok)
                                     <tr>
-                                        <th class="meta">Kelompok</th>
-                                        <th class="meta stat-cell">Laki-laki</th>
-                                        <th class="meta stat-cell">Perempuan</th>
-                                        <th class="meta stat-cell">Total</th>
+                                        <td>{{ $kelompok->nama }}</td>
+                                        <td class="stat-cell">{{ $kelompok->total_ms_laki_laki }}</td>
+                                        <td class="stat-cell">{{ $kelompok->total_ms_perempuan }}</td>
+                                        <td class="stat-cell">{{ $kelompok->total_ms }}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($totalMsPerKelompok as $kelompok)
-                                        <tr>
-                                            <td>{{ $kelompok->nama }}</td>
-                                            <td class="stat-cell">{{ $kelompok->total_ms_laki_laki }}</td>
-                                            <td class="stat-cell">{{ $kelompok->total_ms_perempuan }}</td>
-                                            <td class="stat-cell">{{ $kelompok->total_ms }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer">

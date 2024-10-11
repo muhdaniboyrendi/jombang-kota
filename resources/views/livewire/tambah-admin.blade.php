@@ -70,7 +70,8 @@
                 </div>
                 <div class="row mb-4">
                     <div class="col-md">
-                        <div class="form-check">
+                        <span class="text-danger">Jangan di checklist jika anda tidak ingin menjadikan user tersebut menjadi super admin!</span>
+                        <div class="form-check mt-2">
                             <input wire:model="is_admin" class="form-check-input @error('is_admin') is-invalid @enderror" type="checkbox" value="1" id="is_admin">
                             <label class="form-check-label" for="is_admin">
                                 Super Admin

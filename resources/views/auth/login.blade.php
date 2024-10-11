@@ -5,7 +5,6 @@
         <div class="row justify-content-center align-items-center">
             <div class="col-md-5">
                 <div class="card">
-                    <div class="container">
                         <div class="card-body">
                             <h2 class="text-center mt-2">Login</h2>
     
@@ -43,7 +42,6 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

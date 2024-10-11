@@ -1,7 +1,6 @@
 <div>
-    <h2>Tambah Generus</h2>
     <div class="card">
-        <div class="card-body">
+        <div class="card-body p-4">
 
             @if (session()->has('message'))
                 <div class="alert alert-success alert-dismissible fade show">
@@ -9,6 +8,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+
+            <h2 class="text-center mb-4">Form Data Generus Daerah Jombang Kota</h2>
+
+            <hr class="mb-4">
 
             <form wire:submit.prevent="store">
                 <div class="row">
@@ -138,9 +141,7 @@
                     </div>
                 </div>
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn app-btn-primary">Simpan</button>
-                    <a href="/generus" class="btn app-btn-secondary">&laquo; Kembali</a>
-                    <a href="/generus" class="btn app-btn-secondary">Salin Link Form Tambah Generus</a>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
 

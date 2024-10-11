@@ -47,6 +47,10 @@ Route::get('/generus-tambah', function () {
     return view('generus.tambah', ['title' => 'Tambah Generus', 'active' => 'generus']);
 })->middleware(['auth', 'verified']);
 
+Route::get('/generus-insert', function () {
+    return view('generus.insert', ['title' => 'Form Generus Jombang Kota']);
+});
+
 Route::get('/print-generus-data/{generus:id}', [GenerusController::class, 'print'])->middleware(['auth', 'verified']);
 
 
