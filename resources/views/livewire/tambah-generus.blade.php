@@ -123,14 +123,15 @@
                         <div class="mb-3">
                             <label for="jenis_kelamin">Jenis Kelamin</label>
                         </div>
+                        @error('jenis_kelamin') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin">
+                            <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin" >
                             <label class="form-check-label" for="laki-laki">
                                 Laki-laki
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin">
+                            <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin" >
                             <label class="form-check-label" for="perempuan">
                                 Perempuan
                             </label>
@@ -140,10 +141,38 @@
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn app-btn-primary">Simpan</button>
                     <a href="/generus" class="btn app-btn-secondary">&laquo; Kembali</a>
-                    <a href="/generus" class="btn app-btn-secondary">Salin Link Form Tambah Generus</a>
+                    <input type="text" id="linkToCopy" value="{{ url('/generus-insert') }}" hidden>
+                    <a id="copyLinkButton" class="btn app-btn-secondary">Salin Link Form Tambah Generus</a>
                 </div>
             </form>
 
         </div>
     </div>
+
+    <!-- Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="successToast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Link berhasil disalin!
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("copyLinkButton").addEventListener("click", function() {
+            var linkToCopy = document.getElementById("linkToCopy").value;
+    
+            navigator.clipboard.writeText(linkToCopy).then(function() {
+                var toastEl = document.getElementById("successToast");
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            }).catch(function(error) {
+                alert("Gagal menyalin link: " + error);
+            });
+        });
+    </script>       
+
 </div>

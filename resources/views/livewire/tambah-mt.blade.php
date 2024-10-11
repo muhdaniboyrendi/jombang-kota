@@ -118,9 +118,38 @@
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn app-btn-primary">Simpan</button>
                     <a href="/mt" class="btn app-btn-secondary">Kembali</a>
+                    <input type="text" id="linkToCopy" value="{{ url('/mt-insert') }}" hidden>
+                    <a id="copyLinkButton" class="btn app-btn-secondary">Salin Link Form Tambah Generus</a>
                 </div>
             </form>
 
         </div>
     </div>
+
+    <!-- Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="successToast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Link berhasil disalin!
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("copyLinkButton").addEventListener("click", function() {
+            var linkToCopy = document.getElementById("linkToCopy").value;
+    
+            navigator.clipboard.writeText(linkToCopy).then(function() {
+                var toastEl = document.getElementById("successToast");
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            }).catch(function(error) {
+                alert("Gagal menyalin link: " + error);
+            });
+        });
+    </script>  
+
 </div>

@@ -63,6 +63,10 @@ Route::get('/mt-tambah', function () {
     return view('mt.tambah', ['title' => 'Tambah MT', 'active' => 'mt']);
 })->middleware(['auth', 'verified']);
 
+Route::get('/mt-insert', function () {
+    return view('mt.insert', ['title' => 'Form Mubaligh Tugasan Jombang Kota']);
+});
+
 
 // MS
 Route::get('/ms', function () {

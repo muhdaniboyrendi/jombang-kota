@@ -1,6 +1,6 @@
 <div>
     <div class="card">
-        <div class="card-body p-4">
+        <div class="card-body">
 
             @if (session()->has('message'))
 
@@ -17,7 +17,7 @@
 
             @else
 
-                <h2 class="text-center mb-4">Form Data Generus Daerah Jombang Kota</h2>
+                <h2 class="text-center mb-4">Form Data Mubaligh Tugasan Daerah Jombang Kota</h2>
 
                 <hr class="mb-4">
 
@@ -32,26 +32,9 @@
                         </div>
                         <div class="col-md">
                             <div class="mb-3">
-                                <label for="kelas" class="form-label">Kelas / Status</label>
-                                <select class="form-select  @error('kelas') is-invalid @enderror" name="kelas" id="kelas" wire:model.lazy="kelas">
-                                    <option value="PAUD">PAUD</option>
-                                    <option value="1 SD">1 SD</option>
-                                    <option value="2 SD">2 SD</option>
-                                    <option value="3 SD">3 SD</option>
-                                    <option value="4 SD">4 SD</option>
-                                    <option value="5 SD">5 SD</option>
-                                    <option value="6 SD">6 SD</option>
-                                    <option value="1 SMP">1 SMP</option>
-                                    <option value="2 SMP">2 SMP</option>
-                                    <option value="3 SMP">3 SMP</option>
-                                    <option value="1 SMA/SMK">1 SMA/SMK</option>
-                                    <option value="2 SMA/SMK">2 SMA/SMK</option>
-                                    <option value="3 SMA/SMK">3 SMA/SMK</option>
-                                    <option value="Kuliah">Kuliah</option>
-                                    <option value="Bekerja">Bekerja</option>
-                                    <option value="Mondok">Mondok</option>
-                                </select>
-                                @error('kelas') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <label for="no_hp" class="form-label">Nomor HP</label>
+                                <input type="text" inputmode="numeric" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" wire:model.lazy="no_hp">
+                                @error('no_hp') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
                     </div>
@@ -74,36 +57,50 @@
                     <div class="row">
                         <div class="col-md">
                             <div class="mb-3">
-                                <label for="sekolah" class="form-label">Sekolah <span class="text-info">(opsional)</span></label>
-                                <input type="text" class="form-control @error('sekolah') is-invalid @enderror" id="sekolah" wire:model.lazy="sekolah">
-                                @error('sekolah') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <label for="daerah" class="form-label">Asal Daerah</label>
+                                <input type="text" class="form-control @error('daerah') is-invalid @enderror" id="daerah" wire:model.lazy="daerah">
+                                @error('daerah') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
                         <div class="col-md">
                             <div class="mb-3">
-                                <label for="pekerjaan" class="form-label">Pekerjaan <span class="text-info">(opsional)</span></label>
-                                <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" wire:model.lazy="pekerjaan">
-                                @error('pekerjaan') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <label for="pondok" class="form-label">Asal Pondok</label>
+                                <input type="text" class="form-control @error('pondok') is-invalid @enderror" id="pondok" wire:model.lazy="pondok">
+                                @error('pondok') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md">
                             <div class="mb-3">
-                                <label for="bapak" class="form-label">Nama Bapak</label>
-                                <input type="text" class="form-control @error('bapak') is-invalid @enderror" id="bapak" wire:model.lazy="bapak">
-                                @error('bapak') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <label for="mulai_tugas" class="form-label">Mulai Tugas</label>
+                                <input type="date" class="form-control @error('mulai_tugas') is-invalid @enderror" id="mulai_tugas" wire:model.lazy="mulai_tugas">
+                                @error('mulai_tugas') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
-                        <div class="col-md">
+                        <div class="col md">
                             <div class="mb-3">
-                                <label for="ibu" class="form-label">Nama Ibu</label>
-                                <input type="text" class="form-control @error('ibu') is-invalid @enderror" id="ibu" wire:model.lazy="ibu">
-                                @error('ibu') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <div class="mb-3">
+                                    <label for="jenis_kelamin">Jenis Kelamin</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin">
+                                    <label class="form-check-label" for="laki-laki">
+                                        Laki-laki
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin">
+                                    <label class="form-check-label" for="perempuan">
+                                        Perempuan
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <hr>
+                    <h5 class="mb-3 mt-0">Tempat Tugas</h5>
+                    <div class="row mb-3">
                         <div class="col-md">
                             <div class="mb-3">
                                 <label for="desa" class="form-label">Desa</label>
@@ -129,30 +126,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col mb-4">
-                            <div class="mb-3">
-                                <label for="jenis_kelamin">Jenis Kelamin</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin">
-                                <label class="form-check-label" for="laki-laki">
-                                    Laki-laki
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin">
-                                <label class="form-check-label" for="perempuan">
-                                    Perempuan
-                                </label>
-                            </div>
-                        </div>
-                    </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
-
+            
             @endif
 
         </div>
