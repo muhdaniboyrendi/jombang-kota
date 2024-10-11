@@ -6,63 +6,105 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cetak Data Generus</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        .card-siswa {
+            width: 53.98mm; /* KTP size width */
+            height: 85.60mm; /* KTP size height */
+            border: 1px solid #000;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px auto;
+            page-break-inside: avoid; /* Avoid breaking inside the card */
+        }
+        .header {
+            text-align: center;
+            font-weight: bold;
+        }
+        .qr-code {
+            width: 60px;
+            height: 60px;
+        }
+        .student-info {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .student-info p {
+            margin-bottom: 4px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Style specifically for printing */
+        @media print {
+            .print-btn {
+                display: none;
+            }
+
+            /* Ensure 6 cards per page (2 rows, 3 columns) */
+            .container-fluid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+                grid-template-rows: repeat(2, auto);   /* 2 rows per page */
+                gap: 10px;
+                justify-items: center;
+                align-items: center;
+                padding: 0;
+            }
+
+            /* Ensure consistent card sizing for printing */
+            .card-siswa {
+                margin: 0;
+                width: 53.98mm;
+                height: 85.60mm;
+            }
+
+            /* Prevent page breaks inside the card */
+            .container-fluid > div {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+
+            /* Ensure exactly 6 cards per page */
+            .container-fluid > div:nth-of-type(6n+1) {
+                page-break-before: always;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container d-flex align-items-center vh-100">
-        <div class="card" style="width: 65rem">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="table-responsive">
-                            <table class="table mb-0 table-hover">
-                                <tr>
-                                    <td>Nama</td>
-                                    <th>{{ $generus->nama }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Tempat dan Tanggal Lahir</td>
-                                    <th>{{ $generus->tempat_lahir }}, {{ $generus->tanggal_lahir }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Jenis Kelamin</td>
-                                    <th>{{ $generus->jenis_kelamin }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Kelas / Status</td>
-                                    <th>{{ $generus->kelas }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Sekolah</td>
-                                    <th>{{ $generus->sekolah }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Pekerjaan</td>
-                                    <th>{{ $generus->pekerjaan }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Nama Ayah</td>
-                                    <th>{{ $generus->bapak }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Nama Ibu</td>
-                                    <th>{{ $generus->ibu }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Desa</td>
-                                    <th>{{ $generus->desa->nama }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Kelompok</td>
-                                    <th>{{ $generus->kelompok->nama }}</th>
-                                </tr>
-                            </table>
+    <button class="btn btn-primary mb-4 print-btn" onclick="window.print()">Cetak</button>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            @foreach ($generuses as $generus)
+                <div>
+                    <div class="card-siswa text-center">
+                        <!-- Header (Judul Kartu) -->
+                        <div class="header">
+                            <h6>Kartu Generus</h6>
+                        </div>
+                    
+                        <!-- Informasi Siswa -->
+                        <div class="student-info text-start mt-3">
+                            <p><strong>Nama:</strong> {{ $generus->nama }}</p>
+                            <p><strong>Jenis Kelamin:</strong> {{ $generus->jenis_kelamin }}</p>
+                            <p><strong>Desa:</strong> {{ $generus->desa->nama }}</p>
+                            <p><strong>Kelompok:</strong> {{ $generus->kelompok->nama }}</p>
+                        </div>
+                    
+                        <!-- QR Code -->
+                        <div class="footer">
+                            {!! $generus->qr_code_image !!}
+                            <p class="mt-2" style="font-size: 10px;">{{ $generus->qr_code }}</p>
+                            <p class="mt-2" style="font-size: 10px;">Scan untuk Absensi</p>
                         </div>
                     </div>
-                    <div class="col-md-4 mt-4">
-                        <div>{!! $generus->qr_code_image !!}</div>
-                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 

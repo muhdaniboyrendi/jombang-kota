@@ -1,5 +1,6 @@
 <div>
     <h2>Generus</h2>
+    
     <div class="card">
 
         <div class="card-body">
@@ -31,7 +32,7 @@
                                     <a class="btn app-btn-primary" href="/generus-tambah">
                                         Tambah Generus
                                     </a>
-                                    <a class="btn app-btn-secondary" href="/generus-cetak-qr-code">
+                                    <a class="btn app-btn-secondary" href="/print-generus-data">
                                         Cetak QR Code
                                     </a>
                                     <input type="text" id="linkToCopy" value="{{ url('/generus-edit') }}" hidden>
@@ -201,7 +202,6 @@
                                     </div><!--//table-responsive-->
                                 </div>
                                 <div class="col-md-4">
-                                    {{-- <img src="data:image/png;base64,{{ $dataDetails->qr_code }}" alt="QR Code"> --}}
                                     <div>{!! $dataDetails->qr_code_image !!}</div>
                                 </div>
                             </div>

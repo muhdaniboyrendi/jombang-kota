@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class GenerusController extends Controller
 {
-    public function print($id) {
-        $generus = Generus::find($id);
+    public function print() {
+        $generuses = Generus::with('desa', 'kelompok')->get();
 
-        return view('generus.print', ['generus' => $generus]);
+        return view('generus.print', ['generuses' => $generuses]);
     }
 }

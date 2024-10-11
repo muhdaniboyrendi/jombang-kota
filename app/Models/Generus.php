@@ -34,6 +34,6 @@ class Generus extends Model
 
     public function getQrCodeImageAttribute()
     {
-        return QrCode::size(300)->generate($this->qr_code);
+        return QrCode::size(105)->generate($this->qr_code);
     }
 }
