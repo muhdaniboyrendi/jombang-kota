@@ -144,7 +144,7 @@
     {{-- Info Modal --}}
     <div>
         <div wire:ignore.self class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="infoModalLabel">Detail Generus</h5>
@@ -155,7 +155,7 @@
                         @if($dataDetails)
 
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col">
                                     <div class="table-responsive">
                                         <table class="table mb-0 table-hover">
                                             <tr>
@@ -201,8 +201,11 @@
                                         </table>
                                     </div><!--//table-responsive-->
                                 </div>
-                                <div class="col-md-4">
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col text-center">
                                     <div>{!! $dataDetails->qr_code_image !!}</div>
+                                    <span>{{ $dataDetails->qr_code }}</span>
                                 </div>
                             </div>
 							

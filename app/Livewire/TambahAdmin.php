@@ -7,6 +7,7 @@ use App\Models\User;
 use Livewire\Component;
 use App\Models\Kelompok;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class TambahAdmin extends Component
 {
@@ -35,7 +36,7 @@ class TambahAdmin extends Component
 
     public function store()
     {
-        User::create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
@@ -44,7 +45,9 @@ class TambahAdmin extends Component
             'kelompok_id' => $this->kelompok_id,
         ]);
 
-        session()->flash('message', 'Admin baru berhasil ditambahkan. Silahkan minta pengguna untuk memberivikasi email');
+        event(new Registered($user));
+
+        session()->flash('message', 'Admin baru berhasil ditambahkan. Silahkan minta pengguna untuk memverifikasi email');
 
         $this->reset();
     }
