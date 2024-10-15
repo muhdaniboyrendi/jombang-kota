@@ -18,35 +18,10 @@
 
     <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    {{-- qr code library html5/qr-code --}}
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <script>
-        let html5QrcodeScanner;
+    <script src="js/guest_qr_code.js"></script>
 
-        function initializeScanner() {
-            html5QrcodeScanner = new Html5QrcodeScanner(
-                "qr-reader", { fps: 10, qrbox: { width: 250, height: 250 } }
-            );
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-        }
-
-        function onScanSuccess(decodedText, decodedResult) {
-            // Kirim hasil scan ke komponen Livewire
-            Livewire.dispatch('qrCodeScanned', { qrCode: decodedText });
-        }
-
-        function onScanFailure(error) {
-            console.warn(`QR code scanning failed: ${error}`);
-        }
-
-        document.addEventListener('livewire:init', () => {
-            initializeScanner();
-
-            Livewire.on('qrCodeScanned', () => {
-                if (html5QrcodeScanner) {
-                    html5QrcodeScanner.clear();
-                }
-            });
-        });
-    </script>
 </body>
 </html>
