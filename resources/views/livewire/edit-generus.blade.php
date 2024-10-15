@@ -18,12 +18,17 @@
             @else
 
                 @if ($showScanner)
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Scan QR Code Generus</h3>
-                        </div>
-                        <div class="card-body">
-                            <div id="qr-reader"></div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-7">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Scan QR Code Generus</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="qr-reader"></div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 @endif

@@ -6,8 +6,15 @@
             <div class="col-md-5">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="text-center mt-2">Login</h2>
+                        <h2 class="text-center">Login</h2>
     
+                        @if (session()->has('warning'))
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ session('warning') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
                         @if (session()->has('error'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 {{ session('error') }}

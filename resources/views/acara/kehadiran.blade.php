@@ -15,8 +15,8 @@
                                 <video id="video" class="w-100" autoplay></video>
                                 <canvas id="canvas" style="display:none;"></canvas>
                                 <div class="d-grid gap-2">
-                                    <button id="startButton" class="btn app-btn-primary mt-2">Mulai Kamera</button>
-                                    <button id="stopButton" class="btn app-btn-secondary mt-2" style="display:none;">Hentikan Kamera</button>
+                                    <button id="startButton" class="btn app-btn-primary mt-2">Scan QR Code</button>
+                                    <button id="stopButton" class="btn app-btn-secondary mt-2" style="display:none;">Stop Scanning</button>
                                 </div>
                             </div>
                         </div>

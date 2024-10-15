@@ -260,6 +260,8 @@
 
 
     <!-- Modal -->
+
+    {{-- Generus per kelompok Modal --}}
     <div class="modal fade" id="allGenerusModal" tabindex="-1" aria-labelledby="allGenerusModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -298,12 +300,12 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- MS per kelompok Modal -->
     <div class="modal fade" id="allMsModal" tabindex="-1" aria-labelledby="allMsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="allMsModalLabel">Jumlah Generus Per Kelompok</h1>
+                    <h1 class="modal-title fs-5" id="allMsModalLabel">Jumlah MS Per Kelompok</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -336,5 +338,7 @@
             </div>
         </div>
     </div>
+
+    {{-- End Modal --}}
 
 </div>
