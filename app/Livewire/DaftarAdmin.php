@@ -20,6 +20,7 @@ class DaftarAdmin extends Component
     public $name;
     public $email;
     public $is_admin;
+    public $user_verified;
     public $desa_id;
     public $kelompok_id;
 
@@ -67,7 +68,14 @@ class DaftarAdmin extends Component
     {
         User::find($this->dataId)->delete();
 
-        session()->flash('message', 'Admin berhasil dihapus.');
+        session()->flash('message', 'User berhasil dihapus.');
+    }
+
+    public function verify($id) 
+    {
+        $this->dataId = $id;
+        $this->name = User::find($id)->name;
+        $this->user_verified = User::find($id)->user_verified;
     }
 
     public function edit($id) 
@@ -77,11 +85,23 @@ class DaftarAdmin extends Component
         $this->is_admin = User::find($id)->is_admin;
     }
 
-    protected $rules = ['is_admin' => 'boolean'];
+    protected $rules = [
+        'is_admin' => 'boolean|nullable', 
+        'user_verified' => 'boolean|nullable'
+    ];
 
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+    }
+
+    public function verified() 
+    {
+        $this->validate();
+
+        User::find($this->dataId)->update(['user_verified' => true]);
+
+        session()->flash('verified', 'User telah diverifikasi.');
     }
 
     public function update() 

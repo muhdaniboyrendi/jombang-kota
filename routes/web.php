@@ -103,10 +103,6 @@ Route::get('/admin', function () {
     return view('admin.index', ['title' => 'Admin', 'active' => 'admin']);
 })->middleware(['auth', 'verified']);
 
-Route::get('/admin-tambah', function () {
-    return view('admin.tambah', ['title' => 'Tambah Admin', 'active' => 'admin']);
-})->middleware(['auth', 'verified']);
-
 
 // ACARA
 Route::get('/acara', function () {

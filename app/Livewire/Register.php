@@ -38,8 +38,6 @@ class Register extends Component
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            // 'is_admin' => false,
-            // 'user_verified' => false,
             'desa_id' => $this->desa_id,
             'kelompok_id' => $this->kelompok_id,
         ]);

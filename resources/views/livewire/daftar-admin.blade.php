@@ -1,5 +1,5 @@
 <div>
-    <h2>Admin</h2>
+    <h2>Users</h2>
     <div class="card">
 
         <div class="card-body">
@@ -27,25 +27,17 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-auto">						    
-                                    <a class="btn app-btn-primary" href="/admin-tambah">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
-                                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
-                                        </svg>
-                                        Tambah Admin
-                                    </a>
-                                </div>
                             </div>
                                 
-                        </div><!--//col-->
+                        </div>
                         
-                    </div><!--//row-->
-                </div><!--//table-utilities-->
-            </div><!--//col-auto-->
+                    </div>
+                </div>
+            </div>
 
             <div class="card my-3">
                 <div class="card-body">
+
                     <div class="table-responsive">
                         <table class="table app-table-hover text-left">
                             <thead>
@@ -70,13 +62,23 @@
                                     <tr wire:key="{{ $user->id }}">
                                         <td class="align-middle">{{ $user->name }}</td>
                                         <td class="align-middle">{{ $user->kelompok->nama }}</td>
-                                        <td class="align-middle">{{ $user->is_admin == 1 ? 'Super Admin' : 'Admin' }}</td>
+                                        <td class="align-middle">
+                                            @if ($user->user_verified === 0)
+                                                User
+                                            @else
+                                                {{ $user->is_admin == 1 ? 'Super Admin' : 'Admin' }}</td>
+                                            @endif
                                         <td class="align-middle">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button type="button" wire:click="modal({{ $user->id }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
-                                                @if ($user->is_admin == 0)
-                                                    <button type="button" wire:click="edit({{ $user->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Set Super Admin</button>
+                                                @if ($user->user_verified === 0)
+                                                    <button type="button" wire:click="verify({{ $user->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#verifyModal">Verify User</button>
                                                     <button type="button" wire:click="delete({{ $user->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                                @else
+                                                    @if ($user->is_admin == 0)
+                                                        <button type="button" wire:click="edit({{ $user->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#setSuperAdminModal">Set Super Admin</button>
+                                                        <button type="button" wire:click="delete({{ $user->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </td>
@@ -84,7 +86,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        
                     </div>
 
                 </div>
@@ -138,7 +139,12 @@
                                     </tr>
                                     <tr>
                                         <td>Role</td>
-                                        <th>{{ $dataDetails->is_admin == 1 ? 'Super Admin' : 'Admin' }}</th>
+                                        <th>
+                                            @if ($dataDetails->user_verified === 0)
+                                                User
+                                            @else
+                                                {{ $dataDetails->is_admin == 1 ? 'Super Admin' : 'Admin' }}</th>
+                                            @endif
                                     </tr>
                                         <td>Desa</td>
                                         <th>{{ $dataDetails->desa->nama }}</th>
@@ -148,17 +154,24 @@
                                         <th>{{ $dataDetails->kelompok->nama }}</th>
                                     </tr>
 								</table>
-							</div><!--//table-responsive-->
+							</div>
                         @else
                             <span>Loading...</span>
                         @endif
                     </div>
                     @if ($dataDetails)
-                        @if ($dataDetails->is_admin == 0)
+                        @if ($dataDetails->user_verified === 0)
                             <div class="modal-footer">
-                                <button type="button" wire:click="edit({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Set Super Admin</button>
+                                <button type="button" wire:click="verify({{ $dataId }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#verifyModal">Verify User</button>
                                 <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                             </div>
+                        @else
+                            @if ($dataDetails->is_admin === 0)
+                                <div class="modal-footer">
+                                    <button type="button" wire:click="edit({{ $dataId }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#setSuperAdminModal">Set Super Admin</button>
+                                    <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                </div>
+                            @endif
                         @endif
                     @endif
                 </div>
@@ -172,28 +185,66 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border border-danger">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Hapus Admin</h5>
+                        <h5 class="modal-title" id="deleteModalLabel">Hapus User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <span>Anda yakin ingin menghapus <strong>{{ $name }}</strong> sebagai admin?</span>
+                        <span>Anda yakin ingin menghapus <strong>{{ $name }}</strong>?</span>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" wire:click="destroy" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Hapus</button>
-                        <button type="button" class="btn btn-sm app-btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="button" wire:click="destroy" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Delete</button>
+                        <button type="button" class="btn btn-sm app-btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Edit Modal --}}
+    {{-- Verify User Modal --}}
     <div>
-        <div wire:ignore.self class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div wire:ignore.self class="modal fade" id="verifyModal" tabindex="-1" aria-labelledby="verifyModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Super Admin</h5>
+                        <h5 class="modal-title" id="verifyModalLabel">Verify User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        @if (session()->has('verified'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                {{ session('verified') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        <form wire:submit.prevent="verified">
+                            <span>Anda yakin untuk memverifikasi <strong>{{ $name }}</strong>?</span>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" value="1" id="user_verified" checked disabled>
+                                <label class="form-check-label" for="user_verified">
+                                    Verify
+                                </label>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn app-btn-primary">Yes</button>
+                                <button type="button" class="btn app-btn-secondary" data-bs-dismiss="modal">No</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Set Super Admin Modal --}}
+    <div>
+        <div wire:ignore.self class="modal fade" id="setSuperAdminModal" tabindex="-1" aria-labelledby="setSuperAdminModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="setSuperAdminModalLabel">Super Admin</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
