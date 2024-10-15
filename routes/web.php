@@ -15,6 +15,10 @@ Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'ver
 
 
 // AUTH
+Route::get('/register', function () {
+    return view('auth.register', ['title' => 'Register', 'active' => 'register']);
+})->middleware('guest');
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth', 'verified']);

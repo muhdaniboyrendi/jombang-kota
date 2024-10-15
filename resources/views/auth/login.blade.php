@@ -36,6 +36,8 @@
                             </div>
                             <div class="mb-4 text-center">
                                 <a href="{{ route('password.request') }}">Forgot your password?</a>
+                                <br>
+                                <a href="/register">Don't have an account? Register</a>
                             </div>
                             <div class="d-grid gap-2">
                                 <button class="btn btn-success" type="submit">Login</button>
