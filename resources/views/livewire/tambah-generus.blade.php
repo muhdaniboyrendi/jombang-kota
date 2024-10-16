@@ -10,6 +10,12 @@
                 </div>
             @endif
 
+            @if (session()->has('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <form wire:submit.prevent="store">
                 <div class="row">
                     <div class="col-md">
@@ -119,7 +125,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col mb-4">
+                    <div class="col-md">
                         <div class="mb-3">
                             <label for="jenis_kelamin">Jenis Kelamin</label>
                         </div>
@@ -137,8 +143,42 @@
                             </label>
                         </div>
                     </div>
+                    <div class="col md">
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Foto</label>
+                            <input type="file" class="form-control-file @error('foto') is-invalid @enderror" id="foto" wire:model.lazy="foto">
+                            @error('foto') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
                 </div>
-                <div class="d-grid gap-2">
+                <hr>
+                <span class="text-danger">*</span> <span class="text-info">Diisi jika sedang diluar kota (tempat sambung daerah yang ditempati)</span>
+                <div class="row mt-2">
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label for="daerah" class="form-label"><span class="text-danger">*</span> Daerah</label>
+                            <input type="text" class="form-control @error('daerah') is-invalid @enderror" id="daerah" wire:model.lazy="daerah">
+                            @error('daerah') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label for="desa" class="form-label"><span class="text-danger">*</span> Desa</label>
+                            <input type="text" class="form-control @error('desa') is-invalid @enderror" id="desa" wire:model.lazy="desa">
+                            @error('desa') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="kelompok" class="form-label"><span class="text-danger">*</span> Kelompok</label>
+                            <input type="text" class="form-control @error('kelompok') is-invalid @enderror" id="kelompok" wire:model.lazy="kelompok">
+                            @error('kelompok') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 mt-2">
                     <button type="submit" class="btn app-btn-primary">Simpan</button>
                     <a href="/generus" class="btn app-btn-secondary">&laquo; Kembali</a>
                     <input type="text" id="linkToCopy" value="{{ url('/generus-insert') }}" hidden>

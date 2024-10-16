@@ -199,7 +199,30 @@
                                                 <th>{{ $dataDetails->kelompok->nama }}</th>
                                             </tr>
                                         </table>
-                                    </div><!--//table-responsive-->
+
+                                        @if ($dataDetails->guest)
+                                            <h6 class="mt-4">Temmpat sambung bagi yang diluar kota</h6>
+                                            <table class="table mb-0 table-hover">
+                                                <tr>
+                                                    <td>Daerah</td>
+                                                    <th>{{ $dataDetails->guest->daerah }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Desa</td>
+                                                    <th>{{ $dataDetails->guest->desa }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Kelompok</td>
+                                                    <th>{{ $dataDetails->guest->kelompok }}</th>
+                                                </tr>
+                                            </table>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col text-center">
+                                    <img src="{{ asset('storage/' . $dataDetails->foto) }}" alt="Foto Generus" class="img-fluid">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -329,7 +352,7 @@
                                 <div class="col-md">
                                     <div class="mb-3">
                                         <label for="desa" class="form-label">Desa</label>
-                                        <select class="form-select" id="desa" wire:model.live="desa_id">
+                                        <select class="form-select @error('desa_id') is-invalid @enderror" id="desa" wire:model.live="desa_id">
                                             <option value="">Pilih Desa</option>
                                             @foreach ($editDesas as $desa)
                                                 <option value="{{ $desa->id }}">{{ $desa->nama }}</option>

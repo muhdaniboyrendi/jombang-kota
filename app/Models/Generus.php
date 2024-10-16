@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,6 +21,10 @@ class Generus extends Model
 
     public function desa(): BelongsTo{
         return $this->belongsTo(Desa::class);
+    }
+
+    public function guest(): HasOne{
+        return $this->hasOne(Guest::class, 'generus_id');
     }
 
     protected static function boot()

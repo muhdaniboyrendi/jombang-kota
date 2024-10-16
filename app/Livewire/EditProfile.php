@@ -6,8 +6,6 @@ use App\Models\Desa;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Kelompok;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class EditProfile extends Component

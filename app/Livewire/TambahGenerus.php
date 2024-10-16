@@ -3,14 +3,16 @@
 namespace App\Livewire;
 
 use App\Models\Desa;
+use App\Models\Guest;
 use App\Models\Generus;
 use Livewire\Component;
 use App\Models\Kelompok;
-use Illuminate\Support\Facades\DB;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Livewire\WithFileUploads;
 
 class TambahGenerus extends Component
 {
+    use WithFileUploads;
+    
     public $nama;
     public $tanggal_lahir;
     public $tempat_lahir;
@@ -20,8 +22,12 @@ class TambahGenerus extends Component
     public $pekerjaan;
     public $bapak;
     public $ibu;
+    public $foto;
     public $desa_id;
     public $kelompok_id;
+    public $daerah;
+    public $desa;
+    public $kelompok;
 
 
     protected $rules = [
@@ -34,8 +40,12 @@ class TambahGenerus extends Component
         'pekerjaan' => 'nullable|string|max:255|min:3',
         'bapak' => 'required|string|max:255|min:3',
         'ibu' => 'required|string|max:255|min:3',
+        'foto' => 'nullable|image|max:1024',
         'desa_id' => 'required',
         'kelompok_id' => 'required',
+        'daerah' => 'nullable|string|max:255|min:3',
+        'desa' => 'nullable|string|max:255|min:3',
+        'kelompok' => 'nullable|string|max:255|min:3',
     ];
 
     public function updated($propertyName)
@@ -47,23 +57,47 @@ class TambahGenerus extends Component
     {
         $this->validate();
 
-        $generus = Generus::create([
-            'nama' => $this->nama,
-            'tanggal_lahir' => $this->tanggal_lahir,
-            'tempat_lahir' => $this->tempat_lahir,
-            'jenis_kelamin' => $this->jenis_kelamin,
-            'kelas' => $this->kelas,
-            'sekolah' => $this->sekolah,
-            'pekerjaan' => $this->pekerjaan,
-            'bapak' => $this->bapak,
-            'ibu' => $this->ibu,
-            'desa_id' => $this->desa_id,
-            'kelompok_id' => $this->kelompok_id,
-        ]);
+        try {
+            if (!$this->foto) {
+                throw new \Exception('File foto tidak ditemukan.');
+            }
 
-        session()->flash('message', 'Data generus berhasil ditambahkan.');
+            $fotoPath = $this->foto->store('fotos', 'public');
+            if (!$fotoPath) {
+                throw new \Exception('Gagal menyimpan file foto.');
+            }
 
-        $this->reset();
+            $generus = Generus::create([
+                'nama' => $this->nama,
+                'tanggal_lahir' => $this->tanggal_lahir,
+                'tempat_lahir' => $this->tempat_lahir,
+                'jenis_kelamin' => $this->jenis_kelamin,
+                'kelas' => $this->kelas,
+                'sekolah' => $this->sekolah,
+                'pekerjaan' => $this->pekerjaan,
+                'bapak' => $this->bapak,
+                'ibu' => $this->ibu,
+                'foto' => $fotoPath,
+                'desa_id' => $this->desa_id,
+                'kelompok_id' => $this->kelompok_id,
+            ]);
+    
+            // Membuat data guest hanya jika daerah diisi
+            if ($this->daerah && $this->desa && $this->kelompok) {
+                Guest::create([
+                    'daerah' => $this->daerah,
+                    'desa' => $this->desa,
+                    'kelompok' => $this->kelompok,
+                    'generus_id' => $generus->id,
+                ]);
+            }
+
+            session()->flash('message', 'Data generus berhasil ditambahkan.');
+    
+            $this->reset();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function render()

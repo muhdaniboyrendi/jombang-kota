@@ -7,7 +7,6 @@ use App\Models\Generus;
 use Livewire\Component;
 use App\Models\Kelompok;
 use Livewire\WithPagination;
-use Livewire\Attributes\Rule;
 
 class DaftarGenerus extends Component
 {
@@ -61,7 +60,7 @@ class DaftarGenerus extends Component
     public function modal($id)
     {
         $this->dataId = $id;
-        $this->dataDetails = Generus::with(['kelompok', 'desa'])->find($id);
+        $this->dataDetails = Generus::with(['kelompok', 'desa', 'guest'])->find($id);
     }
 
     public function delete($id) 
@@ -79,18 +78,19 @@ class DaftarGenerus extends Component
 
     public function edit($id) 
     {
-        $this->dataId = $id;
-        $this->nama = Generus::find($id)->nama;
-        $this->tempat_lahir = Generus::find($id)->tempat_lahir;
-        $this->tanggal_lahir = Generus::find($id)->tanggal_lahir;
-        $this->jenis_kelamin = Generus::find($id)->jenis_kelamin;
-        $this->kelas = Generus::find($id)->kelas;
-        $this->sekolah = Generus::find($id)->sekolah;
-        $this->pekerjaan = Generus::find($id)->pekerjaan;
-        $this->bapak = Generus::find($id)->bapak;
-        $this->ibu = Generus::find($id)->ibu;
-        $this->desa_id = Generus::find($id)->desa_id;
-        $this->kelompok_id = Generus::find($id)->kelompok_id;
+        $generus = Generus::findOrFail($id);
+        $this->dataId = $generus->id;
+        $this->nama = $generus->nama;
+        $this->tempat_lahir = $generus->tempat_lahir;
+        $this->tanggal_lahir = $generus->tanggal_lahir;
+        $this->jenis_kelamin = $generus->jenis_kelamin;
+        $this->kelas = $generus->kelas;
+        $this->sekolah = $generus->sekolah;
+        $this->pekerjaan = $generus->pekerjaan;
+        $this->bapak = $generus->bapak;
+        $this->ibu = $generus->ibu;
+        $this->desa_id = $generus->desa_id;
+        $this->kelompok_id = $generus->kelompok_id;
     }
 
     protected $rules = [
