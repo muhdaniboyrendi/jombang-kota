@@ -21,7 +21,7 @@
                                     <input wire:model.live.debounce.300ms="search" type="text" class="form-control" placeholder="Cari Generus...">
                                 </div>
                                 <div class="col-md">
-                                    <select wire:model.live="kelompok" class="form-select" >
+                                    <select wire:model.live="searchKelompok" class="form-select" >
                                         <option value="">All</option>
                                         @foreach ($kelompoks as $kelompok)
                                             <option value="{{ $kelompok->nama }}">{{ $kelompok->nama }}</option>
@@ -375,21 +375,59 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col mb-4">
-                                    <div>
-                                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                                <div class="col-md">
+                                    <div class="col-md">
+                                        <div class="mb-3">
+                                            <label for="jenis_kelamin">Jenis Kelamin</label>
+                                        </div>
+                                        @error('jenis_kelamin') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin" >
+                                            <label class="form-check-label" for="laki-laki">
+                                                Laki-laki
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin" >
+                                            <label class="form-check-label" for="perempuan">
+                                                Perempuan
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin">
-                                        <label class="form-check-label" for="laki-laki">
-                                            Laki-laki
-                                        </label>
+                                </div>
+
+                                <div class="col-md">
+                                    <div class="mb-3">
+                                        <label for="foto" class="form-label">Foto</label>
+                                        <input class="form-control @error('foto') is-invalid @enderror" type="file" id="foto" wire:model.lazy="foto">
+                                        @error('foto') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin">
-                                        <label class="form-check-label" for="perempuan">
-                                            Perempuan
-                                        </label>
+                                </div>
+                            </div>
+                            <hr>
+                            <span class="text-danger">*</span> <span class="text-info">Diisi jika sedang diluar kota (tempat sambung daerah yang ditempati)</span>
+                            <div class="row mt-2">
+                                <div class="col-md">
+                                    <div class="mb-3">
+                                        <label for="daerah" class="form-label"><span class="text-danger">*</span> Daerah</label>
+                                        <input type="text" class="form-control @error('daerah') is-invalid @enderror" id="daerah" wire:model.lazy="daerah">
+                                        @error('daerah') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="mb-3">
+                                        <label for="desa" class="form-label"><span class="text-danger">*</span> Desa</label>
+                                        <input type="text" class="form-control @error('desa') is-invalid @enderror" id="desa" wire:model.lazy="desa">
+                                        @error('desa') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="kelompok" class="form-label"><span class="text-danger">*</span> Kelompok</label>
+                                        <input type="text" class="form-control @error('kelompok') is-invalid @enderror" id="kelompok" wire:model.lazy="kelompok">
+                                        @error('kelompok') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
                             </div>

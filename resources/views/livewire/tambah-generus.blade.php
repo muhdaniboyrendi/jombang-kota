@@ -146,7 +146,7 @@
                     <div class="col md">
                         <div class="mb-3">
                             <label for="foto" class="form-label">Foto</label>
-                            <input type="file" class="form-control-file @error('foto') is-invalid @enderror" id="foto" wire:model.lazy="foto">
+                            <input class="form-control @error('foto') is-invalid @enderror" type="file" id="foto" wire:model.lazy="foto">
                             @error('foto') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
