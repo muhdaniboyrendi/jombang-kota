@@ -58,13 +58,16 @@ class TambahGenerus extends Component
         $this->validate();
 
         try {
-            if (!$this->foto) {
-                throw new \Exception('File foto tidak ditemukan.');
-            }
-
-            $fotoPath = $this->foto->store('fotos', 'public');
-            if (!$fotoPath) {
-                throw new \Exception('Gagal menyimpan file foto.');
+            // Cek apakah file foto diunggah
+            if ($this->foto) {
+                // Jika ada file foto, simpan ke storage
+                $fotoPath = $this->foto->store('fotos', 'public');
+                if (!$fotoPath) {
+                    throw new \Exception('Gagal menyimpan file foto.');
+                }
+            } else {
+                // Jika tidak ada foto, set ke null
+                $fotoPath = null;
             }
 
             $generus = Generus::create([

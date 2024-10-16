@@ -126,26 +126,26 @@
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        <div class="mb-3">
-                            <label for="jenis_kelamin">Jenis Kelamin</label>
-                        </div>
-                        @error('jenis_kelamin') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin" >
-                            <label class="form-check-label" for="laki-laki">
-                                Laki-laki
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin" >
-                            <label class="form-check-label" for="perempuan">
-                                Perempuan
-                            </label>
+                        <label for="jenis_kelamin" class="form-label mb-3">Jenis Kelamin</label>
+                        <div class="form-check">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input @error('jenis_kelamin') is_invalid @enderror" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin" >
+                                <label class="form-check-label" for="laki-laki">
+                                    Laki-laki
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input @error('jenis_kelamin') is_invalid @enderror" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin" >
+                                <label class="form-check-label" for="perempuan">
+                                    Perempuan
+                                </label>
+                            </div>
+                            @error('jenis_kelamin') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                     </div>
                     <div class="col md">
                         <div class="mb-3">
-                            <label for="foto" class="form-label">Foto</label>
+                            <label for="foto" class="form-label">Foto <span class="text-info">(opsional)</span></label>
                             <input class="form-control @error('foto') is-invalid @enderror" type="file" id="foto" wire:model.lazy="foto">
                             @error('foto') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>

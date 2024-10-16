@@ -8,10 +8,12 @@ use App\Models\Generus;
 use Livewire\Component;
 use App\Models\Kelompok;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 
 class DaftarGenerus extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     // menangkap data
     public $dataId;
@@ -76,9 +78,21 @@ class DaftarGenerus extends Component
 
     public function destroy()
     {
-        Generus::find($this->dataId)->delete();
+        try {
+            // Hapus data dari tabel guests terlebih dahulu
+            $guest = Guest::where('generus_id', $this->dataId)->first();
+            if ($guest) {
+                $guest->delete();
+            }
 
-        session()->flash('message', 'Data generus berhasil dihapus.');
+            // Hapus data dari tabel generuses
+            $generus = Generus::findOrFail($this->dataId);
+            $generus->delete();
+
+            session()->flash('message', 'Data generus berhasil dihapus.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
+        }
     }
 
     public function edit($id) 
@@ -96,6 +110,7 @@ class DaftarGenerus extends Component
         $this->pekerjaan = $generus->pekerjaan;
         $this->bapak = $generus->bapak;
         $this->ibu = $generus->ibu;
+        $this->foto = $generus->foto;
         $this->desa_id = $generus->desa_id;
         $this->kelompok_id = $generus->kelompok_id;
         $this->daerah = optional($generus->guest)->daerah;
@@ -113,6 +128,7 @@ class DaftarGenerus extends Component
         'pekerjaan' => 'nullable|string|max:255|min:3',
         'bapak' => 'required|string|max:255|min:3',
         'ibu' => 'required|string|max:255|min:3',
+        'foto' => 'nullable|image|max:1024',
         'desa_id' => 'required',
         'kelompok_id' => 'required',
         'daerah' => 'nullable|string|max:255|min:3',

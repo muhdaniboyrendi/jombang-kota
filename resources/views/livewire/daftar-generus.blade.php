@@ -12,6 +12,13 @@
                 </div>
             @endif
 
+            @if (session()->has('error'))
+                <div class="alert alert-danger alert-dismissible fade show">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
             <div class="col-auto">
                 <div class="page-utilities">
                     <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
@@ -40,11 +47,11 @@
                                 </div>
                             </div>
                                 
-                        </div><!--//col-->
+                        </div>
                         
-                    </div><!--//row-->
-                </div><!--//table-utilities-->
-            </div><!--//col-auto-->
+                    </div>
+                </div>
+            </div>
 
             <div class="card my-3">
                 <div class="card-body">
@@ -144,7 +151,7 @@
     {{-- Info Modal --}}
     <div>
         <div wire:ignore.self class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="infoModalLabel">Detail Generus</h5>
@@ -154,83 +161,89 @@
 
                         @if($dataDetails)
 
-                            <div class="row">
-                                <div class="col">
-                                    <div class="table-responsive">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-hover">
+                                        <tr>
+                                            <td>Nama</td>
+                                            <th>{{ $dataDetails->nama }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Tempat dan Tanggal Lahir</td>
+                                            <th>{{ $dataDetails->tempat_lahir }}, {{ $dataDetails->tanggal_lahir }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Jenis Kelamin</td>
+                                            <th>{{ $dataDetails->jenis_kelamin }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Kelas / Status</td>
+                                            <th>{{ $dataDetails->kelas }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Sekolah</td>
+                                            <th>{{ $dataDetails->sekolah }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Pekerjaan</td>
+                                            <th>{{ $dataDetails->pekerjaan }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Nama Ayah</td>
+                                            <th>{{ $dataDetails->bapak }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Nama Ibu</td>
+                                            <th>{{ $dataDetails->ibu }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Desa</td>
+                                            <th>{{ $dataDetails->desa->nama }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Kelompok</td>
+                                            <th>{{ $dataDetails->kelompok->nama }}</th>
+                                        </tr>
+                                    </table>
+        
+                                    @if ($dataDetails->guest)
+                                        <h6 class="mt-4">Tempat sambung bagi yang diluar kota</h6>
                                         <table class="table mb-0 table-hover">
                                             <tr>
-                                                <td>Nama</td>
-                                                <th>{{ $dataDetails->nama }}</th>
-                                            </tr>
-                                            <tr>
-                                                <td>Tempat dan Tanggal Lahir</td>
-                                                <th>{{ $dataDetails->tempat_lahir }}, {{ $dataDetails->tanggal_lahir }}</th>
-                                            </tr>
-                                            <tr>
-                                                <td>Jenis Kelamin</td>
-                                                <th>{{ $dataDetails->jenis_kelamin }}</th>
-                                            </tr>
-                                            <tr>
-                                                <td>Kelas / Status</td>
-                                                <th>{{ $dataDetails->kelas }}</th>
-                                            </tr>
-                                            <tr>
-                                                <td>Sekolah</td>
-                                                <th>{{ $dataDetails->sekolah }}</th>
-                                            </tr>
-                                            <tr>
-                                                <td>Pekerjaan</td>
-                                                <th>{{ $dataDetails->pekerjaan }}</th>
-                                            </tr>
-                                            <tr>
-                                                <td>Nama Ayah</td>
-                                                <th>{{ $dataDetails->bapak }}</th>
-                                            </tr>
-                                            <tr>
-                                                <td>Nama Ibu</td>
-                                                <th>{{ $dataDetails->ibu }}</th>
+                                                <td>Daerah</td>
+                                                <th>{{ $dataDetails->guest->daerah }}</th>
                                             </tr>
                                             <tr>
                                                 <td>Desa</td>
-                                                <th>{{ $dataDetails->desa->nama }}</th>
+                                                <th>{{ $dataDetails->guest->desa }}</th>
                                             </tr>
                                             <tr>
                                                 <td>Kelompok</td>
-                                                <th>{{ $dataDetails->kelompok->nama }}</th>
+                                                <th>{{ $dataDetails->guest->kelompok }}</th>
                                             </tr>
                                         </table>
-
-                                        @if ($dataDetails->guest)
-                                            <h6 class="mt-4">Temmpat sambung bagi yang diluar kota</h6>
-                                            <table class="table mb-0 table-hover">
-                                                <tr>
-                                                    <td>Daerah</td>
-                                                    <th>{{ $dataDetails->guest->daerah }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <th>{{ $dataDetails->guest->desa }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>Kelompok</td>
-                                                    <th>{{ $dataDetails->guest->kelompok }}</th>
-                                                </tr>
-                                            </table>
-                                        @endif
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col">
+                                @if ($dataDetails->foto)
+                                    <div class="row mb-4">
+                                        <div class="col text-center">
+                                            <img src="{{ asset('storage/' . $dataDetails->foto) }}" alt="Foto Generus" class="img-fluid">
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <div>{!! $dataDetails->qr_code_image !!}</div>
+                                        <span>{{ $dataDetails->qr_code }}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-3">
-                                <div class="col text-center">
-                                    <img src="{{ asset('storage/' . $dataDetails->foto) }}" alt="Foto Generus" class="img-fluid">
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col text-center">
-                                    <div>{!! $dataDetails->qr_code_image !!}</div>
-                                    <span>{{ $dataDetails->qr_code }}</span>
-                                </div>
-                            </div>
+                        </div>
+
+
 							
                         @else
                             <span>Loading...</span>
@@ -376,26 +389,25 @@
                             </div>
                             <div class="row">
                                 <div class="col-md">
-                                    <div class="col-md">
-                                        <div class="mb-3">
-                                            <label for="jenis_kelamin">Jenis Kelamin</label>
-                                        </div>
-                                        @error('jenis_kelamin') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin" >
-                                            <label class="form-check-label" for="laki-laki">
-                                                Laki-laki
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin" >
-                                            <label class="form-check-label" for="perempuan">
-                                                Perempuan
-                                            </label>
+                                    <div class="mb-3">
+                                        <label for="jenis_kelamin" class="form-label mb-3">Jenis Kelamin</label>
+                                        <div class="form-check">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input @error('jenis_kelamin') is_invalid @enderror" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin" >
+                                                <label class="form-check-label" for="laki-laki">
+                                                    Laki-laki
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input @error('jenis_kelamin') is_invalid @enderror" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin" >
+                                                <label class="form-check-label" for="perempuan">
+                                                    Perempuan
+                                                </label>
+                                            </div>
+                                            @error('jenis_kelamin') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-md">
                                     <div class="mb-3">
                                         <label for="foto" class="form-label">Foto</label>
@@ -422,7 +434,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="kelompok" class="form-label"><span class="text-danger">*</span> Kelompok</label>
