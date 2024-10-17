@@ -30,7 +30,7 @@
                                 <div class="col-md">
                                     <select wire:model.live="searchKelompok" class="form-select" >
                                         <option value="">All</option>
-                                        @foreach ($kelompoks as $kelompok)
+                                        @foreach ($searchKelompoks as $kelompok)
                                             <option value="{{ $kelompok->nama }}">{{ $kelompok->nama }}</option>
                                         @endforeach
                                     </select>
@@ -242,8 +242,6 @@
                                 </div>
                             </div>
                         </div>
-
-
 							
                         @else
                             <span>Loading...</span>
@@ -365,9 +363,9 @@
                                 <div class="col-md">
                                     <div class="mb-3">
                                         <label for="desa" class="form-label">Desa</label>
-                                        <select class="form-select @error('desa_id') is-invalid @enderror" id="desa" wire:model.live="desa_id">
+                                        <select class="form-select @error('desa_id') is-invalid @enderror" name="desa_id" id="desa" wire:model.live="desa_id">
                                             <option value="">Pilih Desa</option>
-                                            @foreach ($editDesas as $desa)
+                                            @foreach ($desas as $desa)
                                                 <option value="{{ $desa->id }}">{{ $desa->nama }}</option>
                                             @endforeach
                                         </select>
@@ -379,7 +377,7 @@
                                         <label for="kelompok" class="form-label">Kelompok</label>
                                         <select class="form-select @error('kelompok_id') is-invalid @enderror" name="kelompok_id" id="kelompok" wire:model.live="kelompok_id">
                                             <option value="">Pilih Kelompok</option>
-                                            @foreach ($editKelompoks as $kelompok)
+                                            @foreach ($kelompoks as $kelompok)
                                                 <option value="{{ $kelompok->id }}">{{ $kelompok->nama }}</option>
                                             @endforeach
                                         </select>

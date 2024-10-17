@@ -35,6 +35,8 @@ class DaftarGenerus extends Component
     public $daerah;
     public $desa;
     public $kelompok;
+    public $desas = [];
+    public $kelompoks = [];
 
     public $desaId;
 
@@ -102,35 +104,37 @@ class DaftarGenerus extends Component
         // Set data ke properti form berdasarkan data yang diambil
         $this->dataId = $generus->id;
         $this->nama = $generus->nama;
-        $this->tanggal_lahir = $generus->tanggal_lahir;
         $this->tempat_lahir = $generus->tempat_lahir;
+        $this->tanggal_lahir = $generus->tanggal_lahir;
         $this->jenis_kelamin = $generus->jenis_kelamin;
         $this->kelas = $generus->kelas;
         $this->sekolah = $generus->sekolah;
         $this->pekerjaan = $generus->pekerjaan;
         $this->bapak = $generus->bapak;
         $this->ibu = $generus->ibu;
-        $this->foto = $generus->foto;
         $this->desa_id = $generus->desa_id;
         $this->kelompok_id = $generus->kelompok_id;
         $this->daerah = optional($generus->guest)->daerah;
         $this->desa = optional($generus->guest)->desa;
         $this->kelompok = optional($generus->guest)->kelompok;
+
+        $this->desas = Desa::all();
+        $this->kelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
     }
 
     protected $rules = [
         'nama' => 'required|string|max:255|min:3',
-        'tanggal_lahir' => 'required|date',
         'tempat_lahir' => 'required|string|max:255|min:3',
-        'jenis_kelamin' => 'required',
-        'kelas' => 'required',
+        'tanggal_lahir' => 'required|date',
+        'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+        'kelas' => 'required|string|max:50',
         'sekolah' => 'nullable|string|max:255|min:3',
         'pekerjaan' => 'nullable|string|max:255|min:3',
         'bapak' => 'required|string|max:255|min:3',
         'ibu' => 'required|string|max:255|min:3',
         'foto' => 'nullable|image|max:1024',
-        'desa_id' => 'required',
-        'kelompok_id' => 'required',
+        'desa_id' => 'required|exists:desas,id',
+        'kelompok_id' => 'required|exists:kelompoks,id',
         'daerah' => 'nullable|string|max:255|min:3',
         'desa' => 'nullable|string|max:255|min:3',
         'kelompok' => 'nullable|string|max:255|min:3',
@@ -195,16 +199,11 @@ class DaftarGenerus extends Component
             ->orderBy($this->sortBy, $this->sortDir)
             ->paginate($this->perPage);
 
-        $kelompoks = Kelompok::all();
-
-        $editDesas = Desa::all();
-        $editKelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
+        $searchKelompoks = Kelompok::all();
 
         return view('livewire.daftar-generus', [
             'generuses' => $generuses,
-            'kelompoks' => $kelompoks,
-            'editDesas' => $editDesas,
-            'editKelompoks' => $editKelompoks,
+            'searchKelompoks' => $searchKelompoks,
             'nama' => $this->nama
         ]);
     }

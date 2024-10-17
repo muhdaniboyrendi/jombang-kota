@@ -44,11 +44,11 @@
                 display: none;
             }
 
-            /* Ensure 6 cards per page (2 rows, 3 columns) */
+            /* Ensure 9 cards per page (3 rows, 3 columns) */
             .container-fluid {
                 display: grid;
-                grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
-                grid-template-rows: repeat(2, auto);   /* 2 rows per page */
+                grid-template-columns: repeat(3); /* 3 cards per row */
+                grid-template-rows: repeat(3, auto);   /* 2 rows per page */
                 gap: 10px;
                 justify-items: center;
                 align-items: center;
@@ -81,7 +81,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             @foreach ($generuses as $generus)
-                <div>
+                <div class="col-4">
                     <div class="card-siswa text-center">
                         <!-- Header (Judul Kartu) -->
                         <div class="header">
