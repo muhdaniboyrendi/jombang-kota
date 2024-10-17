@@ -1,21 +1,21 @@
 <div>
-    <div class="card">
-        <div class="card-body p-4">
+    @if (session()->has('message'))
 
-            @if (session()->has('message'))
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Terima Kasih!</h4>
+            <p>
+                Data yang anda masukan sudah kami terima dan akan kami cek kevalidan data anda
+            </p>
+            <hr>
+            <a href="/generus-insert" class="mb-0">
+                Kirim masukan lain
+            </a>
+        </div>
 
-                <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading">Terima Kasih!</h4>
-                    <p>
-                        Data yang anda masukan sudah kami terima dan akan kami cek kevalidan data anda
-                    </p>
-                    <hr>
-                    <a href="/generus-insert" class="mb-0">
-                        Kirim masukan lain
-                    </a>
-                </div>
+    @else
 
-            @else
+        <div class="card">
+            <div class="card-body p-4">
 
                 <h2 class="text-center mb-4">Form Data Generus Daerah Jombang Kota</h2>
 
@@ -130,31 +130,69 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-4">
+                        <div class="col-md">
                             <div class="mb-3">
-                                <label for="jenis_kelamin">Jenis Kelamin</label>
+                                <label for="jenis_kelamin" class="form-label mb-3">Jenis Kelamin</label>
+                                <div class="form-check">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input @error('jenis_kelamin') is_invalid @enderror" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin" >
+                                        <label class="form-check-label" for="laki-laki">
+                                            Laki-laki
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input @error('jenis_kelamin') is_invalid @enderror" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin" >
+                                        <label class="form-check-label" for="perempuan">
+                                            Perempuan
+                                        </label>
+                                    </div>
+                                    @error('jenis_kelamin') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" value="Laki-laki" type="radio" name="jenis_kelamin" id="laki-laki" wire:model.lazy="jenis_kelamin">
-                                <label class="form-check-label" for="laki-laki">
-                                    Laki-laki
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" value="Perempuan" type="radio" name="jenis_kelamin" id="perempuan" wire:model.lazy="jenis_kelamin">
-                                <label class="form-check-label" for="perempuan">
-                                    Perempuan
-                                </label>
+                        </div>
+                        <div class="col md">
+                            <div class="mb-3">
+                                <label for="foto" class="form-label">Foto <span class="text-info">(opsional)</span></label>
+                                <input class="form-control @error('foto') is-invalid @enderror" type="file" id="foto" wire:model.lazy="foto">
+                                @error('foto') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
-                    <div class="d-grid gap-2">
+                    <hr>
+                    <span class="text-danger">*</span> <span class="text-info">Diisi jika sedang diluar kota (tempat sambung daerah yang ditempati)</span>
+                    <div class="row mt-2">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <label for="daerah" class="form-label"><span class="text-danger">*</span> Daerah</label>
+                                <input type="text" class="form-control @error('daerah') is-invalid @enderror" id="daerah" wire:model.lazy="daerah">
+                                @error('daerah') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <label for="desa" class="form-label"><span class="text-danger">*</span> Desa</label>
+                                <input type="text" class="form-control @error('desa') is-invalid @enderror" id="desa" wire:model.lazy="desa">
+                                @error('desa') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="kelompok" class="form-label"><span class="text-danger">*</span> Kelompok</label>
+                                <input type="text" class="form-control @error('kelompok') is-invalid @enderror" id="kelompok" wire:model.lazy="kelompok">
+                                @error('kelompok') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 mt-3">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
-
-            @endif
-
+                
+            </div>
         </div>
-    </div>
+
+    @endif
+    
 </div>
