@@ -8,8 +8,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ForgotPasswordController;
 
-// DASHBOARD
-Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
+
+// WELCOME
+Route::get('/', function () {
+    return view('welcome', ['title' => 'Jombang Kota | Selamat Datang']);
+})->middleware('guest');
 
 
 // AUTH
@@ -30,6 +33,10 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 Route::get('/profile/{id}', [AuthController::class, 'profile'])->middleware('auth');
 Route::get('/profile-edit/{id}', [AuthController::class, 'edit'])->middleware('auth');
 Route::delete('/account-delete/{id}', [AuthController::class, 'destroy'])->middleware('auth');
+
+
+// DASHBOARD
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 
 // GENERUS

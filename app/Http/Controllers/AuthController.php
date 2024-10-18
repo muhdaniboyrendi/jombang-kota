@@ -29,7 +29,7 @@ class AuthController extends Controller
                 return redirect("/profile/$userId")->with('warning', 'Akun Anda belum diverifikasi. Maka dari itu anda belum bisa mengakses apapun');
             }
     
-            return redirect('/');
+            return redirect('/dashboard');
         }
 
         return back()->with('error', 'Email or password is incorrect.');
