@@ -5,9 +5,9 @@
     <div class="app-content pt-3 p-md-3 p-lg-4">
 	    <div class="container-xl">
 
-            @if (session()->has('warning'))
+            @if (auth()->user()->user_verified === 0)
                 <div class="alert alert-warning fade show" role="alert">
-                    {{ session('warning') }}
+                    Akun Anda belum diverifikasi. Maka dari itu anda belum bisa mengakses apapun.
                 </div>
             @endif
 
