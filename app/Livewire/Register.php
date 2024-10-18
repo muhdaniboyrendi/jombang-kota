@@ -42,9 +42,7 @@ class Register extends Component
             'kelompok_id' => $this->kelompok_id,
         ]);
 
-        event(new Registered($user));
-
-        session()->flash('message', 'Akun anda telah berhasil dibuat, silahkan verifikasi email anda dan menunggu admin memverifikasi akun anda.');
+        session()->flash('message', 'Akun anda telah berhasil dibuat, silahkan tunggu admin untuk memverifikasi akun anda.');
 
         $this->reset();
     }

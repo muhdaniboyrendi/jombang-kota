@@ -24,8 +24,9 @@ class AuthController extends Controller
             $request->session()->regenerate();
     
             if (Auth::user()->user_verified === 0) {
-                Auth::logout();
-                return redirect('/login')->with('warning', 'Akun Anda belum diverifikasi.');
+                $userId = Auth::id();
+
+                return redirect("/profile/$userId")->with('warning', 'Akun Anda belum diverifikasi. Maka dari itu anda belum bisa mengakses apapun');
             }
     
             return redirect('/');

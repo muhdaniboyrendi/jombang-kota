@@ -5,12 +5,17 @@
     <div class="app-content pt-3 p-md-3 p-lg-4">
 	    <div class="container-xl">
 
+            @if (session()->has('warning'))
+                <div class="alert alert-warning fade show" role="alert">
+                    {{ session('warning') }}
+                </div>
+            @endif
+
             <h1 class="app-page-title">My Account</h1>
 
             <div class="row gy-4">
 
                 <div class="col-12 col-lg-6">
-
                     <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
                         <div class="app-card-header p-3 border-bottom-0">
                             <div class="row align-items-center gx-3">
@@ -76,16 +81,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        @if (session()->has('error'))
-                            <div class="app-card-body px-4 w-100">
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    {{ session('error') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            </div>
-                        @endif
-
                         <div class="app-card-footer p-4 mt-auto">
                             <a class="btn app-btn-secondary" href="/profile-edit/{{ $profile->id }}">Edit Profile</a>
                             <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus Akun</button>
