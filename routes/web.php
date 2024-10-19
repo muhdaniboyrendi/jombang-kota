@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MtController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GenerusController;
@@ -54,13 +55,7 @@ Route::get('/mt', function () {
     return view('mt.index', ['title' => 'MT', 'active' => 'mt']);
 })->middleware('auth');
 
-Route::get('/mt-tambah', function () {
-    return view('mt.tambah', ['title' => 'Tambah MT', 'active' => 'mt']);
-})->middleware('auth');
-
-// Route::get('/mt-insert', function () {
-//     return view('mt.insert', ['title' => 'Form Mubaligh Tugasan Jombang Kota']);
-// });
+Route::get('/mt-edit/{id}', [MtController::class, 'edit'])->middleware('auth');
 
 
 // MS

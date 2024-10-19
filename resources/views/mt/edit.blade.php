@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout-dua>
     <x-slot:title>{{ auth()->user()->user_verified === 1 ? $title : $title = '404 - Page Not Found' }}</x-slot>
     <x-slot:active>{{ $active }}</x-slot>
 
@@ -6,7 +6,7 @@
 	    <div class="container-xl">
 
             @if (auth()->user()->user_verified === 1)
-                <livewire:tambah-generus />
+                <livewire:edit-mt :mtId="$mtId" />
             @else
                 <div class="d-flex justify-content-center align-items-center mt-4">
                     <div class="col-md-12 text-center">
@@ -21,4 +21,4 @@
         </div>
 	</div>
 
-</x-layout>
+</x-layout-dua>

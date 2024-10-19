@@ -22,27 +22,19 @@
                                 <div class="col-md">
                                     <select wire:model.live="kelompok" class="form-select" >
                                         <option value="">All</option>
-                                        @foreach ($kelompoks as $kelompok)
+                                        @foreach ($searchKelompoks as $kelompok)
                                             <option value="{{ $kelompok->nama }}">{{ $kelompok->nama }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-auto">
-                                    <a class="btn app-btn-primary" href="/mt-tambah">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
-                                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
-                                        </svg>
-                                        Tambah MT
-                                    </a>
+                                    <button type="button" class="btn app-btn-primary" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah MT</button>
                                 </div>
                             </div>
-                                
-                        </div><!--//col-->
-                        
-                    </div><!--//row-->
-                </div><!--//table-utilities-->
-            </div><!--//col-auto-->
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="card my-3">
                 <div class="card-body">
@@ -74,7 +66,7 @@
                                         <td class="align-middle">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button type="button" wire:click="modal({{ $mt->id }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
-                                                <button type="button" wire:click="edit({{ $mt->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                                                <a href="/mt-edit/{{ $mt->id }}" class="btn btn-sm app-btn-secondary">Edit</a>
                                                 <button type="button" wire:click="delete({{ $mt->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                             </div>
                                         </td>
@@ -194,7 +186,7 @@
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <button type="button" wire:click="edit({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                        <a href="/generus-edit/{{ $dataId }}" class="btn btn-sm app-btn-secondary">Edit</a>
                         <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                     </div>
                 </div>
@@ -202,25 +194,25 @@
         </div>
     </div>
 
-    {{-- Edit Modal --}}
+    {{-- Tambah Modal --}}
     <div>
-        <div wire:ignore.self class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div wire:ignore.self class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Data MT</h5>
+                        <h5 class="modal-title" id="tambahModalLabel">Tambah Data MT</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
-                        @if (session()->has('updated'))
+                        @if (session()->has('created'))
                             <div class="alert alert-success alert-dismissible fade show">
-                                {{ session('updated') }}
+                                {{ session('created') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
-                        <form wire:submit.prevent="update">
+                        <form wire:submit.prevent="store">
                             <div class="row">
                                 <div class="col-md">
                                     <div class="mb-3">
@@ -279,15 +271,6 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="mb-3">
-                                        <label for="selesai_tugas" class="form-label">Selesai Tugas (Opsional)</label>
-                                        <input type="date" class="form-control @error('selesai_tugas') is-invalid @enderror" id="selesai_tugas" wire:model.lazy="selesai_tugas">
-                                        @error('selesai_tugas') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="mb-3">
                                         <label for="jenis_kelamin">Jenis Kelamin</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -312,7 +295,7 @@
                                         <label for="desa" class="form-label">Desa</label>
                                         <select class="form-select" id="desa" wire:model.live="desa_id">
                                             <option value="">Pilih Desa</option>
-                                            @foreach ($editDesas as $desa)
+                                            @foreach ($desas as $desa)
                                                 <option value="{{ $desa->id }}">{{ $desa->nama }}</option>
                                             @endforeach
                                         </select>
@@ -324,7 +307,7 @@
                                         <label for="kelompok" class="form-label">Kelompok</label>
                                         <select class="form-select @error('kelompok_id') is-invalid @enderror" name="kelompok_id" id="kelompok" wire:model.live="kelompok_id">
                                             <option value="">Pilih Kelompok</option>
-                                            @foreach ($editKelompoks as $kelompok)
+                                            @foreach ($kelompoks as $kelompok)
                                                 <option value="{{ $kelompok->id }}">{{ $kelompok->nama }}</option>
                                             @endforeach
                                         </select>
