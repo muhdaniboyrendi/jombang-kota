@@ -33,9 +33,6 @@ class EditGenerus extends Component
     public $desas = [];
     public $kelompoks = [];
 
-    public $showScanner = true;
-    public $showForm = false;
-
     protected $rules = [
         'nama' => 'required|string|max:255|min:3',
         'tempat_lahir' => 'required|string|max:255|min:3',
@@ -54,9 +51,27 @@ class EditGenerus extends Component
         'kelompok' => 'nullable|string|max:255|min:3',
     ];
 
-    public function render()
+    public function mount($generusId)
     {
-        return view('livewire.edit-generus');
+        $generus = Generus::findOrFail($generusId);
+        $this->generusId = $generus->id;
+        $this->nama = $generus->nama;
+        $this->tempat_lahir = $generus->tempat_lahir;
+        $this->tanggal_lahir = $generus->tanggal_lahir;
+        $this->jenis_kelamin = $generus->jenis_kelamin;
+        $this->kelas = $generus->kelas;
+        $this->sekolah = $generus->sekolah;
+        $this->pekerjaan = $generus->pekerjaan;
+        $this->bapak = $generus->bapak;
+        $this->ibu = $generus->ibu;
+        $this->desa_id = $generus->desa_id;
+        $this->kelompok_id = $generus->kelompok_id;
+        $this->daerah = $generus->guest->daerah;
+        $this->desa = $generus->guest->desa;
+        $this->kelompok = $generus->guest->kelompok;
+
+        $this->desas = Desa::all();
+        $this->kelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
     }
 
     public function updated($propertyName)
@@ -64,39 +79,13 @@ class EditGenerus extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function scanQrCode($qrCode)
+    public function updatedDesaId($value)
     {
-        $generus = Generus::where('qr_code', $qrCode)->first();
-
-        if ($generus) {
-            $this->generusId = $generus->id;
-            $this->nama = $generus->nama;
-            $this->tempat_lahir = $generus->tempat_lahir;
-            $this->tanggal_lahir = $generus->tanggal_lahir;
-            $this->jenis_kelamin = $generus->jenis_kelamin;
-            $this->kelas = $generus->kelas;
-            $this->sekolah = $generus->sekolah;
-            $this->pekerjaan = $generus->pekerjaan;
-            $this->bapak = $generus->bapak;
-            $this->ibu = $generus->ibu;
-            $this->qr_code = $generus->qr_code;
-            $this->desa_id = $generus->desa_id;
-            $this->kelompok_id = $generus->kelompok_id;
-            $this->daerah = optional($generus->guest)->daerah;
-            $this->desa = optional($generus->guest)->desa;
-            $this->kelompok = optional($generus->guest)->kelompok;
-
-            $this->desas = Desa::all();
-            $this->kelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
-
-            $this->showScanner = false;
-            $this->showForm = true;
-        } else {
-            $this->addError('qrCode', 'Data generus tidak ditemukan');
-        }
+        $this->kelompoks = Kelompok::where('desa_id', $value)->get();
+        $this->kelompok_id = null;
     }
 
-    public function updateGenerus()
+    public function update()
     {
         $this->validate();
 
@@ -133,15 +122,15 @@ class EditGenerus extends Component
                 );
             }
 
-            session()->flash('message', 'Data generus berhasil diperbarui.');
+            session()->flash('updated', 'Data generus berhasil diperbarui.');
 
         } catch (\Exception $e) {
             session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
-    public function getListeners()
+    public function render()
     {
-        return ['qrCodeScanned' => 'scanQrCode'];
+        return view('livewire.edit-generus');
     }
 }

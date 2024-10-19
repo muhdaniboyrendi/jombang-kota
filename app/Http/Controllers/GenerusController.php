@@ -2,11 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Generus;
-use Illuminate\Http\Request;
+use App\Models\Kelompok;
 
 class GenerusController extends Controller
 {
+    public function edit($id) {
+        $generus = Generus::find($id);
+        $desa = Desa::find($generus->desa_id);
+        $kelompok = Kelompok::find($generus->kelompok_id);
+        
+        return view('generus.edit', [
+            'title' => 'Edit Data Generus', 
+            'active' => 'generus',
+            'generus' => $generus,
+            'desa' => $desa,
+            'kelompok' => $kelompok,
+            'generusId' => $id,
+        ]);
+    }
+
     public function prints() {
         $generuses = Generus::with('desa', 'kelompok')->get();
 

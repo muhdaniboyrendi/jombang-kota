@@ -35,15 +35,9 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-auto">						    
-                                    <a class="btn app-btn-primary" href="/generus-tambah">
-                                        Tambah Generus
-                                    </a>
-                                    <a class="btn app-btn-secondary" href="/prints-generus-data">
-                                        Cetak QR Code
-                                    </a>
-                                    <input type="text" id="linkToCopy" value="{{ url('/generus-edit') }}" hidden>
-                                    <a id="copyLinkButton" class="btn app-btn-secondary">Salin Link Form Edit Generus</a>
+                                <div class="col-auto">
+                                    <button type="button" class="btn app-btn-primary" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Generus</button>
+                                    <a class="btn app-btn-secondary" href="/prints-generus-data">Cetak QR Code</a>
                                 </div>
                             </div>
                                 
@@ -88,7 +82,7 @@
                                         <td class="align-middle">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button type="button" wire:click="modal({{ $generus->id }})" class="btn btn-sm app-btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
-                                                <button type="button" wire:click="edit({{ $generus->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                                                <a href="/generus-edit/{{ $generus->id }}" class="btn btn-sm app-btn-secondary">Edit</a>
                                                 <button type="button" wire:click="delete({{ $generus->id }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                             </div>
                                         </td>
@@ -251,7 +245,7 @@
                         <a class="btn app-btn-primary" href="/print-generus-data/{{ $dataId }}">
                             Cetak QR Code
                         </a>
-                        <button type="button" wire:click="edit({{ $dataId }})" class="btn app-btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                        <a href="/generus-edit/{{ $dataId }}" class="btn btn-sm app-btn-secondary">Edit</a>
                         <button type="button" wire:click="delete({{ $dataId }})" class="btn app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                     </div>
                 </div>
@@ -259,25 +253,25 @@
         </div>
     </div>
 
-    {{-- Edit Modal --}}
+    {{-- Tambah Modal --}}
     <div>
-        <div wire:ignore.self class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div wire:ignore.self class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Data Generus</h5>
+                        <h5 class="modal-title" id="tambahModalLabel">Tambah Data Generus</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
-                        @if (session()->has('updated'))
+                        @if (session()->has('created'))
                             <div class="alert alert-success alert-dismissible fade show">
-                                {{ session('updated') }}
+                                {{ session('created') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
-                        <form wire:submit.prevent="update">
+                        <form wire:submit.prevent="store">
                             <div class="row">
                                 <div class="col-md">
                                     <div class="mb-3">

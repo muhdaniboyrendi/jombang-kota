@@ -20,16 +20,13 @@
                                     <input wire:model.live.debounce.300ms="search" type="text" class="form-control" placeholder="Cari Acara...">
                                 </div>
                                 <div class="col-auto">	
-                                    <!-- Button trigger modal -->
                                     <a href="/acara-tambah" class="btn app-btn-primary" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Acara</a>
                                 </div>
                             </div>
-                                
-                        </div><!--//col-->
-                        
-                    </div><!--//row-->
-                </div><!--//table-utilities-->
-            </div><!--//col-auto-->
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="card my-3">
                 <div class="card-body">

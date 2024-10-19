@@ -19,7 +19,7 @@ class DaftarGenerus extends Component
     public $dataId;
     public $dataDetails;
 
-    // update form
+    // insert form
     public $nama;
     public $tempat_lahir;
     public $tanggal_lahir;
@@ -35,10 +35,8 @@ class DaftarGenerus extends Component
     public $daerah;
     public $desa;
     public $kelompok;
-    public $desas = [];
-    public $kelompoks = [];
 
-    public $desaId;
+    // public $desaId;
 
     // search
     public $search = '';
@@ -97,31 +95,6 @@ class DaftarGenerus extends Component
         }
     }
 
-    public function edit($id) 
-    {
-        $generus = Generus::findOrFail($id);
-
-        // Set data ke properti form berdasarkan data yang diambil
-        $this->dataId = $generus->id;
-        $this->nama = $generus->nama;
-        $this->tempat_lahir = $generus->tempat_lahir;
-        $this->tanggal_lahir = $generus->tanggal_lahir;
-        $this->jenis_kelamin = $generus->jenis_kelamin;
-        $this->kelas = $generus->kelas;
-        $this->sekolah = $generus->sekolah;
-        $this->pekerjaan = $generus->pekerjaan;
-        $this->bapak = $generus->bapak;
-        $this->ibu = $generus->ibu;
-        $this->desa_id = $generus->desa_id;
-        $this->kelompok_id = $generus->kelompok_id;
-        $this->daerah = optional($generus->guest)->daerah;
-        $this->desa = optional($generus->guest)->desa;
-        $this->kelompok = optional($generus->guest)->kelompok;
-
-        $this->desas = Desa::all();
-        $this->kelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
-    }
-
     protected $rules = [
         'nama' => 'required|string|max:255|min:3',
         'tempat_lahir' => 'required|string|max:255|min:3',
@@ -145,48 +118,50 @@ class DaftarGenerus extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function update() 
+    public function store()
     {
         $this->validate();
 
-        try {
-            $generus = Generus::findOrFail($this->dataId);
-            
-            if ($this->foto) {
-                $fotoPath = $this->foto->store('fotos', 'public');
-                $generus->update(['foto' => $fotoPath]);
+        // Cek apakah file foto diunggah
+        if ($this->foto) {
+                // Jika ada file foto, simpan ke storage
+            $fotoPath = $this->foto->store('fotos', 'public');
+            if (!$fotoPath) {
+                throw new \Exception('Gagal menyimpan file foto.');
             }
-
-            $generus->update([
-                'nama' => $this->nama,
-                'tanggal_lahir' => $this->tanggal_lahir,
-                'tempat_lahir' => $this->tempat_lahir,
-                'jenis_kelamin' => $this->jenis_kelamin,
-                'kelas' => $this->kelas,
-                'sekolah' => $this->sekolah,
-                'pekerjaan' => $this->pekerjaan,
-                'bapak' => $this->bapak,
-                'ibu' => $this->ibu,
-                'desa_id' => $this->desa_id,
-                'kelompok_id' => $this->kelompok_id,
-            ]);
-
-            if ($this->daerah && $this->desa && $this->kelompok) {
-                Guest::updateOrCreate(
-                    ['generus_id' => $generus->id],
-                    [
-                        'daerah' => $this->daerah,
-                        'desa' => $this->desa,
-                        'kelompok' => $this->kelompok,
-                    ]
-                );
-            }
-
-            session()->flash('updated', 'Data generus berhasil diperbarui.');
-
-        } catch (\Exception $e) {
-            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        } else {
+            // Jika tidak ada foto, set ke null
+            $fotoPath = null;
         }
+
+        $generus = Generus::create([
+            'nama' => $this->nama,
+            'tanggal_lahir' => $this->tanggal_lahir,
+            'tempat_lahir' => $this->tempat_lahir,
+            'jenis_kelamin' => $this->jenis_kelamin,
+            'kelas' => $this->kelas,
+            'sekolah' => $this->sekolah,
+            'pekerjaan' => $this->pekerjaan,
+            'bapak' => $this->bapak,
+            'ibu' => $this->ibu,
+            'foto' => $fotoPath,
+            'desa_id' => $this->desa_id,
+            'kelompok_id' => $this->kelompok_id,
+        ]);
+    
+        // Membuat data guest hanya jika daerah diisi
+        if ($this->daerah && $this->desa && $this->kelompok) {
+            Guest::create([
+                'daerah' => $this->daerah,
+                'desa' => $this->desa,
+                'kelompok' => $this->kelompok,
+                'generus_id' => $generus->id,
+            ]);
+        }
+
+        session()->flash('created', 'Data generus berhasil ditambahkan.');
+    
+        $this->reset();
     }
 
     public function render()
@@ -201,10 +176,15 @@ class DaftarGenerus extends Component
 
         $searchKelompoks = Kelompok::all();
 
+        $desas = Desa::all();
+        $kelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
+
         return view('livewire.daftar-generus', [
             'generuses' => $generuses,
             'searchKelompoks' => $searchKelompoks,
-            'nama' => $this->nama
+            'nama' => $this->nama,
+            'desas' => $desas,
+            'kelompoks' => $kelompoks
         ]);
     }
 }

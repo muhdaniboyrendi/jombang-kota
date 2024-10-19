@@ -44,18 +44,7 @@ Route::get('/generus', function () {
     return view('generus.index', ['title' => 'Generus', 'active' => 'generus']);
 })->middleware('auth');
 
-Route::get('/generus-tambah', function () {
-    return view('generus.tambah', ['title' => 'Tambah Generus', 'active' => 'generus']);
-})->middleware('auth');
-
-Route::get('/generus-insert', function () {
-    return view('generus.insert', ['title' => 'Form Generus Jombang Kota']);
-});
-
-Route::get('/generus-edit', function () {
-    return view('generus.edit', ['title' => 'Form Edit Data Generus Jombang Kota']);
-});
-
+Route::get('/generus-edit/{id}', [GenerusController::class, 'edit'])->middleware('auth');
 Route::get('/prints-generus-data', [GenerusController::class, 'prints'])->middleware('auth');
 Route::get('/print-generus-data/{id}', [GenerusController::class, 'print'])->middleware('auth');
 
@@ -69,9 +58,9 @@ Route::get('/mt-tambah', function () {
     return view('mt.tambah', ['title' => 'Tambah MT', 'active' => 'mt']);
 })->middleware('auth');
 
-Route::get('/mt-insert', function () {
-    return view('mt.insert', ['title' => 'Form Mubaligh Tugasan Jombang Kota']);
-});
+// Route::get('/mt-insert', function () {
+//     return view('mt.insert', ['title' => 'Form Mubaligh Tugasan Jombang Kota']);
+// });
 
 
 // MS
@@ -83,9 +72,9 @@ Route::get('/ms-tambah', function () {
     return view('ms.tambah', ['title' => 'Tambah MS', 'active' => 'ms']);
 })->middleware('auth');
 
-Route::get('/ms-insert', function () {
-    return view('ms.insert', ['title' => 'Form Mubaligh Setempat Jombang Kota']);
-});
+// Route::get('/ms-insert', function () {
+//     return view('ms.insert', ['title' => 'Form Mubaligh Setempat Jombang Kota']);
+// });
 
 
 // ADMIN

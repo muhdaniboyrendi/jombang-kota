@@ -48,6 +48,7 @@
                             </div>
                             <div class="d-grid gap-2">
                                 <button class="btn btn-success" type="submit">Login</button>
+                                <a class="btn btn-outline-success" href="/">&laquo; Back</a>
                             </div>
                         </form>
                         
