@@ -30,6 +30,7 @@ class EditGenerus extends Component
     public $daerah;
     public $desa;
     public $kelompok;
+    public $no_hp;
     public $desas = [];
     public $kelompoks = [];
 
@@ -49,6 +50,7 @@ class EditGenerus extends Component
         'daerah' => 'nullable|string|max:255|min:3',
         'desa' => 'nullable|string|max:255|min:3',
         'kelompok' => 'nullable|string|max:255|min:3',
+        'no_hp' => 'nullable|numeric|digits_between:9, 14',
     ];
 
     public function mount($generusId)
@@ -69,6 +71,7 @@ class EditGenerus extends Component
         $this->daerah = $generus->guest->daerah;
         $this->desa = $generus->guest->desa;
         $this->kelompok = $generus->guest->kelompok;
+        $this->no_hp = $generus->guest->no_hp;
 
         $this->desas = Desa::all();
         $this->kelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
@@ -93,6 +96,11 @@ class EditGenerus extends Component
             $generus = Generus::findOrFail($this->generusId);
             
             if ($this->foto) {
+                // Jika ada foto lama, hapus dari storage
+                if ($generus->foto) {
+                    \Storage::disk('public')->delete($generus->foto);
+                }
+
                 $fotoPath = $this->foto->store('fotos', 'public');
                 $generus->update(['foto' => $fotoPath]);
             }
@@ -118,6 +126,7 @@ class EditGenerus extends Component
                         'daerah' => $this->daerah,
                         'desa' => $this->desa,
                         'kelompok' => $this->kelompok,
+                        'no_hp' => $this->no_hp,
                     ]
                 );
             }

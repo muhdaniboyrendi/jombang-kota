@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('daerah')->nullable();
             $table->string('desa')->nullable();
             $table->string('kelompok')->nullable();
+            $table->string('no_hp')->nullable();
             $table->foreignId('generus_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

@@ -131,7 +131,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <span>Anda yakin ingin menghapus data <strong>{{ $nama }}</strong> ?</span>
+                        <span>Anda yakin ingin menghapus data <strong>{{ $infoNama }}</strong> ?</span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" wire:click="destroy" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Hapus</button>
@@ -148,7 +148,7 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="infoModalLabel">Detail Generus</h5>
+                        <h5 class="modal-title" id="infoModalLabel">Detail Data Generus</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -215,6 +215,10 @@
                                             <tr>
                                                 <td>Kelompok</td>
                                                 <th>{{ $dataDetails->guest->kelompok }}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>No. HP Pengurus</td>
+                                                <th>{{ $dataDetails->guest->no_hp }}</th>
                                             </tr>
                                         </table>
                                     @endif
@@ -427,11 +431,18 @@
                                 </div>
                             </div>
                             <div class="row mb-4">
-                                <div class="col-md-6">
+                                <div class="col-md">
                                     <div class="mb-3">
                                         <label for="kelompok" class="form-label"><span class="text-danger">*</span> Kelompok</label>
                                         <input type="text" class="form-control @error('kelompok') is-invalid @enderror" id="kelompok" wire:model.lazy="kelompok">
                                         @error('kelompok') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="mb-3">
+                                        <label for="no_hp" class="form-label"><span class="text-danger">*</span> No. HP Pengurus Setempat</label>
+                                        <input type="text" inputmode="numeric" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" wire:model.lazy="no_hp">
+                                        @error('no_hp') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
                             </div>

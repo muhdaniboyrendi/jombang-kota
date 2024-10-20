@@ -170,11 +170,18 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md">
                         <div class="mb-3">
                             <label for="kelompok" class="form-label"><span class="text-danger">*</span> Kelompok</label>
                             <input type="text" class="form-control @error('kelompok') is-invalid @enderror" id="kelompok" wire:model.lazy="kelompok">
                             @error('kelompok') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label for="no_hp" class="form-label"><span class="text-danger">*</span> No. HP Pengurus Setempat</label>
+                            <input type="text" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" wire:model.lazy="no_hp">
+                            @error('no_hp') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                     </div>
                 </div>

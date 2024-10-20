@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('daerah');
             $table->string('pondok');
             $table->string('no_hp');
-            $table->string('mulai_tugas');
-            $table->string('selesai_tugas')->nullable();
+            $table->date('mulai_tugas');
+            $table->date('selesai_tugas')->nullable();
             $table->foreignId('desa_id')->constrained()->onDelete('cascade');
             $table->foreignId('kelompok_id')->constrained()->onDelete('cascade');
             $table->timestamps();

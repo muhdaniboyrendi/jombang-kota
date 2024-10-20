@@ -35,8 +35,9 @@ class DaftarGenerus extends Component
     public $daerah;
     public $desa;
     public $kelompok;
+    public $no_hp;
 
-    // public $desaId;
+    public $infoNama;
 
     // search
     public $search = '';
@@ -73,7 +74,7 @@ class DaftarGenerus extends Component
     public function delete($id) 
     {
         $this->dataId = $id;
-        $this->nama = Generus::find($id)->nama;
+        $this->infoNama = Generus::find($id)->nama;
     }
 
     public function destroy()
@@ -87,6 +88,13 @@ class DaftarGenerus extends Component
 
             // Hapus data dari tabel generuses
             $generus = Generus::findOrFail($this->dataId);
+
+            // Cek apakah generus memiliki foto yang tersimpan
+            if ($generus->foto) {
+                // Hapus file foto dari storage
+                \Storage::disk('public')->delete($generus->foto);
+            }
+
             $generus->delete();
 
             session()->flash('message', 'Data generus berhasil dihapus.');
@@ -111,6 +119,7 @@ class DaftarGenerus extends Component
         'daerah' => 'nullable|string|max:255|min:3',
         'desa' => 'nullable|string|max:255|min:3',
         'kelompok' => 'nullable|string|max:255|min:3',
+        'no_hp' => 'nullable|numeric|digits_between:9, 14',
     ];
 
     public function updated($propertyName)
@@ -155,6 +164,7 @@ class DaftarGenerus extends Component
                 'daerah' => $this->daerah,
                 'desa' => $this->desa,
                 'kelompok' => $this->kelompok,
+                'no_hp' => $this->no_hp,
                 'generus_id' => $generus->id,
             ]);
         }
@@ -182,7 +192,6 @@ class DaftarGenerus extends Component
         return view('livewire.daftar-generus', [
             'generuses' => $generuses,
             'searchKelompoks' => $searchKelompoks,
-            'nama' => $this->nama,
             'desas' => $desas,
             'kelompoks' => $kelompoks
         ]);
