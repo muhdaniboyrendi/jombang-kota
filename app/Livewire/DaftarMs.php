@@ -25,6 +25,8 @@ class DaftarMs extends Component
     public $desa_id;
     public $kelompok_id;
 
+    public $infoNama;
+
     // search
     public $search = '';
     public $kelompok = '';
@@ -60,7 +62,7 @@ class DaftarMs extends Component
     public function delete($id) 
     {
         $this->dataId = $id;
-        $this->nama = Ms::find($id)->nama;
+        $this->infoNama = Ms::find($id)->nama;
     }
 
     public function destroy()
@@ -124,7 +126,6 @@ class DaftarMs extends Component
             'searchKelompoks' => $searchKelompoks,
             'desas' => $desas,
             'kelompoks' => $kelompoks,
-            'nama' => $this->nama
         ]);
     }
 }

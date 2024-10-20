@@ -113,7 +113,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <span>Anda yakin ingin menghapus data <strong>{{ $nama }}</strong> ?</span>
+                        <span>Anda yakin ingin menghapus data <strong>{{ $infoNama }}</strong> ?</span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" wire:click="destroy" class="btn btn-sm app-btn-primary" data-bs-dismiss="modal">Hapus</button>

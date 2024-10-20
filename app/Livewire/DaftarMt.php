@@ -29,6 +29,8 @@ class DaftarMt extends Component
     public $desa_id;
     public $kelompok_id;
 
+    public $infoNama;
+
     // search
     public $search = '';
     public $kelompok = '';
@@ -64,7 +66,7 @@ class DaftarMt extends Component
     public function delete($id) 
     {
         $this->dataId = $id;
-        $this->nama = Mt::find($id)->nama;
+        $this->infoNama = Mt::find($id)->nama;
     }
 
     public function destroy()
@@ -134,7 +136,6 @@ class DaftarMt extends Component
         return view('livewire.daftar-mt', [
             'mts' => $mts,
             'searchKelompoks' => $searchKelompoks,
-            'nama' => $this->nama,
             'desas' => $desas,
             'kelompoks' => $kelompoks
         ]);
