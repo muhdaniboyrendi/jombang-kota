@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    public function index() {
+        return view('acara.index', ['title' => 'Acara', 'active' => 'acara']);
+    }
+
     public function showAttendance(Event $event)
     {
         $attendances = $event->attendances()

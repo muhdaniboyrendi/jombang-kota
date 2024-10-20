@@ -25,8 +25,6 @@ class DaftarMs extends Component
     public $desa_id;
     public $kelompok_id;
 
-    public $desaId;
-
     // search
     public $search = '';
     public $kelompok = '';
@@ -72,22 +70,10 @@ class DaftarMs extends Component
         session()->flash('message', 'Data MS berhasil dihapus.');
     }
 
-    public function edit($id) 
-    {
-        $this->dataId = $id;
-        $this->nama = Ms::find($id)->nama;
-        $this->tempat_lahir = Ms::find($id)->tempat_lahir;
-        $this->tanggal_lahir = Ms::find($id)->tanggal_lahir;
-        $this->jenis_kelamin = Ms::find($id)->jenis_kelamin;
-        $this->no_hp = Ms::find($id)->no_hp;
-        $this->desa_id = Ms::find($id)->desa_id;
-        $this->kelompok_id = Ms::find($id)->kelompok_id;
-    }
-
     protected $rules = [
         'nama' => 'required|string|max:255|min:3',
-        'tanggal_lahir' => 'required|date',
         'tempat_lahir' => 'required|string|max:255|min:3',
+        'tanggal_lahir' => 'required|date',
         'jenis_kelamin' => 'required',
         'no_hp' => 'numeric|digits_between:9, 14',
         'desa_id' => 'required',
@@ -99,23 +85,23 @@ class DaftarMs extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function update() 
+    public function store()
     {
         $this->validate();
 
-        Ms::find($this->dataId)->update(
-            [
-                'nama' => $this->nama,
-                'tempat_lahir' => $this->tempat_lahir,
-                'tanggal_lahir' => $this->tanggal_lahir,
-                'jenis_kelamin' => $this->jenis_kelamin,
-                'no_hp' => $this->no_hp,
-                'desa_id' => $this->desa_id,
-                'kelompok_id' => $this->kelompok_id,
-            ]
-        );
+        $ms = Ms::create([
+            'nama' => $this->nama,
+            'tempat_lahir' => $this->tempat_lahir,
+            'tanggal_lahir' => $this->tanggal_lahir,
+            'jenis_kelamin' => $this->jenis_kelamin,
+            'no_hp' => $this->no_hp,
+            'desa_id' => $this->desa_id,
+            'kelompok_id' => $this->kelompok_id,
+        ]);
 
-        session()->flash('updated', 'Data MS berhasil diperbarui.');
+        session()->flash('created', 'Data MS berhasil ditambahkan.');
+    
+        $this->reset();
     }
 
     public function render()
@@ -128,16 +114,16 @@ class DaftarMs extends Component
             ->orderBy($this->sortBy, $this->sortDir)
             ->paginate($this->perPage);
 
-        $kelompoks = Kelompok::all();
+        $searchKelompoks = Kelompok::all();
 
-        $editDesas = Desa::all();
-        $editKelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
+        $desas = Desa::all();
+        $kelompoks = Kelompok::where('desa_id', $this->desa_id)->get();
 
         return view('livewire.daftar-ms', [
             'mses' => $mses,
+            'searchKelompoks' => $searchKelompoks,
+            'desas' => $desas,
             'kelompoks' => $kelompoks,
-            'editDesas' => $editDesas,
-            'editKelompoks' => $editKelompoks,
             'nama' => $this->nama
         ]);
     }

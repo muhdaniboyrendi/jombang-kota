@@ -29,8 +29,6 @@ class DaftarMt extends Component
     public $desa_id;
     public $kelompok_id;
 
-    // public $desaId;
-
     // search
     public $search = '';
     public $kelompok = '';

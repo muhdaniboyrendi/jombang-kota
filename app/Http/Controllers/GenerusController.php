@@ -8,6 +8,10 @@ use App\Models\Kelompok;
 
 class GenerusController extends Controller
 {
+    public function index() {
+        return view('generus.index', ['title' => 'Generus', 'active' => 'generus']);
+    }
+
     public function edit($id) {
         $generus = Generus::find($id);
         $desa = Desa::find($generus->desa_id);

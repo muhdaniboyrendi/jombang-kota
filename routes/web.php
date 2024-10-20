@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MsController;
 use App\Http\Controllers\MtController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
@@ -17,10 +18,7 @@ Route::get('/', function () {
 
 
 // AUTH
-Route::get('/register', function () {
-    return view('auth.register', ['title' => 'Register', 'active' => 'register']);
-})->middleware('guest');
-
+Route::get('/register', [AuthController::class, 'register'])->middleware('guest');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
@@ -41,35 +39,20 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 
 
 // GENERUS
-Route::get('/generus', function () {
-    return view('generus.index', ['title' => 'Generus', 'active' => 'generus']);
-})->middleware('auth');
-
+Route::get('/generus', [GenerusController::class, 'index'])->middleware('auth');
 Route::get('/generus-edit/{id}', [GenerusController::class, 'edit'])->middleware('auth');
 Route::get('/prints-generus-data', [GenerusController::class, 'prints'])->middleware('auth');
 Route::get('/print-generus-data/{id}', [GenerusController::class, 'print'])->middleware('auth');
 
 
 // MT
-Route::get('/mt', function () {
-    return view('mt.index', ['title' => 'MT', 'active' => 'mt']);
-})->middleware('auth');
-
+Route::get('/mt', [MtController::class, 'index'])->middleware('auth');
 Route::get('/mt-edit/{id}', [MtController::class, 'edit'])->middleware('auth');
 
 
 // MS
-Route::get('/ms', function () {
-    return view('ms.index', ['title' => 'MS', 'active' => 'ms']);
-})->middleware('auth');
-
-Route::get('/ms-tambah', function () {
-    return view('ms.tambah', ['title' => 'Tambah MS', 'active' => 'ms']);
-})->middleware('auth');
-
-// Route::get('/ms-insert', function () {
-//     return view('ms.insert', ['title' => 'Form Mubaligh Setempat Jombang Kota']);
-// });
+Route::get('/ms', [MsController::class, 'index'])->middleware('auth');
+Route::get('/ms-edit/{id}', [MsController::class, 'edit'])->middleware('auth');
 
 
 // ADMIN
@@ -79,9 +62,6 @@ Route::get('/admin', function () {
 
 
 // ACARA
-Route::get('/acara', function () {
-    return view('acara.index', ['title' => 'Acara', 'active' => 'acara']);
-})->middleware('auth');
-
+Route::get('/acara', [EventController::class, 'index'])->middleware('auth');
 Route::get('/acara/{event}', [EventController::class, 'showAttendance'])->name('acara.kehadiran')->middleware('auth');
 Route::post('/acara/{event}/absensi', [EventController::class, 'recordAttendance'])->name('acara.absensi')->middleware('auth');

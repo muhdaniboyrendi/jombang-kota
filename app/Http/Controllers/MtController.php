@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class MtController extends Controller
 {
+    public function index() {
+        return view('mt.index', ['title' => 'MT', 'active' => 'mt']);
+    }
+
     public function edit($id) {
         $mt = Mt::find($id);
         $desa = Desa::find($mt->desa_id);

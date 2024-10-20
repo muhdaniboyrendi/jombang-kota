@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function register() {
+        return view('auth.register', ['title' => 'Register']);
+    }
+
     public function showLoginForm() {
         return view('auth.login', ['title' => 'Login']);
     }
