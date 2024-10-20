@@ -1,5 +1,8 @@
 <?php
 
+use App\Exports\GenerusExport;
+use App\Exports\MultiSheetExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MsController;
 use App\Http\Controllers\MtController;
@@ -43,6 +46,7 @@ Route::get('/generus', [GenerusController::class, 'index'])->middleware('auth');
 Route::get('/generus-edit/{id}', [GenerusController::class, 'edit'])->middleware('auth');
 Route::get('/prints-generus-data', [GenerusController::class, 'prints'])->middleware('auth');
 Route::get('/print-generus-data/{id}', [GenerusController::class, 'print'])->middleware('auth');
+Route::get('/export-generus', [GenerusController::class, 'export']);
 
 
 // MT

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Desa;
 use App\Models\Generus;
 use App\Models\Kelompok;
+use App\Exports\MultiSheetExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GenerusController extends Controller
 {
@@ -37,5 +39,10 @@ class GenerusController extends Controller
         $generus = Generus::with('desa', 'kelompok')->find($id);
 
         return view('generus.print', ['generus' => $generus]);
+    }
+
+    public function export()
+    {
+        return Excel::download(new MultiSheetExport, 'data-generus-jombang-kota.xlsx');
     }
 }

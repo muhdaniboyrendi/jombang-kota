@@ -4,7 +4,8 @@
         <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
         <div class="app-branding">
             <a class="app-logo" href="index.html">
-                <span class="logo-text">Karanganyar Timur 1</span>
+                <img class="logo-icon me-2" src="{{ asset('favicon.png') }}" alt="logo">
+                <span class="logo-text">PPG Jombang Kota</span>
             </a>
         </div>
         

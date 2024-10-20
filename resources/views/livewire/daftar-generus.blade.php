@@ -38,6 +38,7 @@
                                 <div class="col-auto">
                                     <button type="button" class="btn app-btn-primary" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Generus</button>
                                     <a class="btn app-btn-secondary" href="/prints-generus-data">Cetak QR Code</a>
+                                    <a class="btn app-btn-secondary" href="/export-generus" class="btn btn-success">Export Data Generus</a>
                                 </div>
                             </div>
                                 
