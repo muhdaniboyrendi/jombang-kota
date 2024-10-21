@@ -30,7 +30,7 @@ class DaftarAcara extends Component
     protected $rules = [
         'name' => 'required|string|max:255|min:3',
         'date' => 'required|date',
-        'description' => 'required|string|max:255|min:3',
+        'description' => 'nullable|string|max:255|min:3',
     ];
 
     public function updated($propertyName)
@@ -48,7 +48,7 @@ class DaftarAcara extends Component
             'description' => $this->description,
         ]);
 
-        session()->flash('message', 'Acara baru berhasil ditambahkan.');
+        session()->flash('created', 'Acara baru berhasil ditambahkan.');
 
         $this->reset();
     }

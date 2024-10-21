@@ -122,7 +122,7 @@ class EditGenerus extends Component
                 'kelompok_id' => $this->kelompok_id,
             ]);
 
-            if ($this->daerah && $this->desa && $this->kelompok) {
+            if ($this->daerah || $this->desa || $this->kelompok || $this->no_hp) {
                 Guest::updateOrCreate(
                     ['generus_id' => $generus->id],
                     [

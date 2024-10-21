@@ -168,7 +168,7 @@
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <a href="/mt-edit/{{ $dataId }}" class="btn btn-sm app-btn-secondary">Edit</a>
+                        <a href="/ms-edit/{{ $dataId }}" class="btn btn-sm app-btn-secondary">Edit</a>
                         <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                     </div>
                 </div>
@@ -176,7 +176,7 @@
         </div>
     </div>
 
-    {{-- Edit Modal --}}
+    {{-- Tambah Modal --}}
     <div>
         <div wire:ignore.self class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">

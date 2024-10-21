@@ -6,6 +6,7 @@
         <div class="container-xl">
 
             @if (auth()->user()->user_verified === 0)
+
                 <div class="d-flex justify-content-center align-items-center mt-4">
                     <div class="col-md-12 text-center">
                         <h1>404</h1>
@@ -14,11 +15,14 @@
                         <h5><a href="/profile/{{ auth()->id() }}">&laquo; Click here to back to the main page</a></h5>
                     </div>
                 </div>
+
             @else
-                <h2>{{ $event->name }}</h2>
-                <h6>Tanggal: {{ $event->date }}</h6>
+
+                <h4>{{ $event->name }} | {{ $event->date }}</h4>
+
+                <div id="message" class="alert mt-3" style="display:none;"></div>
                 
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-md-6 mb-3">
                         <div class="card">
                             <div class="card-body">
@@ -32,6 +36,21 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="text-center">Foto Generus</span>
+                            </div>
+                            <div class="card-body text-center">
+                                <img id="generusFoto" src="" class="img-fluid" style="max-height: 200px;">
+                            </div>
+                            <div class="card-footer">
+                                <span class="text-center" id="generus__nama"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
                         <form id="manualForm">
                             <div class="form-group mb-2">
                                 <label for="scannedCode">Kode QR</label>
@@ -44,8 +63,6 @@
                     </div>
                 </div>
                 
-                <div id="message" class="alert mt-3" style="display:none;"></div>
-
                 <div class="row g-2 mb-3">
                     <div class="col-md">
                         <div class="app-card app-card-stat shadow-sm h-100">
@@ -240,13 +257,17 @@
                 var code = jsQR(imageData.data, imageData.width, imageData.height, {
                     inversionAttempts: "dontInvert",
                 });
+
                 if (code) {
                     recordAttendance(code.data);
+                    stopCamera();
+                    setTimeout(() => {
+                        startCamera();
+                    }, 1000);
+                    return;
                 }
             }
-            setTimeout(() => {
-                requestAnimationFrame(scanQRCode);
-            }, 1500);
+            requestAnimationFrame(scanQRCode);
         }
 
         function handleManualSubmit(e) {
@@ -272,6 +293,11 @@
                     showMessage(data.message, 'success');
                     updateAttendanceList(data.generus_nama, data.attendance_time, data.generus_kelompok, data.generus_jenis_kelamin);
                     updateAttendanceStatistics(data);
+
+                    const generusFoto = document.getElementById('generusFoto');
+                    generusFoto.src = data.foto;
+
+                    document.getElementById('generus__nama').innerText = data.generus_nama;
                 }
             })
             .catch(error => {
@@ -287,7 +313,7 @@
             messageDiv.style.display = 'block';
             setTimeout(() => {
                 messageDiv.style.display = 'none';
-            }, 3000);
+            }, 4000);
         }
 
         function updateAttendanceList(generusName, attendanceTime, kelompok, jenisKelamin) {

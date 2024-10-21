@@ -154,7 +154,7 @@
                         @if($dataDetails)
 
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-8 mb-3">
                                 <div class="table-responsive">
                                     <table class="table mb-0 table-hover">
                                         <tr>

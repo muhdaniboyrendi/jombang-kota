@@ -186,7 +186,7 @@
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <a href="/generus-edit/{{ $dataId }}" class="btn btn-sm app-btn-secondary">Edit</a>
+                        <a href="/mt-edit/{{ $dataId }}" class="btn btn-sm app-btn-secondary">Edit</a>
                         <button type="button" wire:click="delete({{ $dataId }})" class="btn btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                     </div>
                 </div>

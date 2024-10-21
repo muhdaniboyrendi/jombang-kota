@@ -70,6 +70,8 @@ class EventController extends Controller
         $attendance->attended_at = now();
         $attendance->save();
 
+        $fotoPath = $generus->foto ? asset('storage/' . $generus->foto) : asset('favicon.png');
+
         $updatedStats = $this->calculateAttendanceStatistics($event);
 
         return response()->json([
@@ -82,6 +84,7 @@ class EventController extends Controller
             'totalGroupsPresent' => $updatedStats['totalGroupsPresent'],
             'attendancesByGender' => $updatedStats['attendancesByGender'],
             'attendancesByGroup' => $updatedStats['attendancesByGroup'],
+            'foto' => $fotoPath
         ]);
     }
 

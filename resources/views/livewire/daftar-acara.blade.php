@@ -117,15 +117,15 @@
     <div>
         <div wire:ignore.self class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content border border-danger">
+                <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="tambahModalLabel">Tambah Acara</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        @if (session()->has('message'))
+                        @if (session()->has('created'))
                             <div class="alert alert-success alert-dismissible fade show">
-                                {{ session('message') }}
+                                {{ session('created') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
@@ -142,8 +142,8 @@
                                 @error('date') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="description" class="form-label">Deskripsi Acara</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" wire:model.lazy="description" rows="3"></textarea>
+                                <label for="description" class="form-label">Deskripsi Acara <span class="text-info">(opsional)</span></label>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" wire:model.lazy="description"></textarea>
                                 @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                             <div class="d-grid gap-2">
