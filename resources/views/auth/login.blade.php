@@ -41,14 +41,14 @@
                                 <input type="password" name="password" class="form-control" id="password" required>
                                 @error('password') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            <div class="mb-4 text-center">
+                            <div class="mb-3 text-end">
                                 <a href="{{ route('password.request') }}">Forgot your password?</a>
-                                <br>
-                                <a href="/register">Don't have an account? Register</a>
                             </div>
                             <div class="d-grid gap-2">
                                 <button class="btn btn-success" type="submit">Login</button>
-                                <a class="btn btn-outline-success" href="/">&laquo; Back</a>
+                            </div>
+                            <div class="my-3 text-center">
+                                <span>Don't have an account?<a href="/register"> Register</a></span>
                             </div>
                         </form>
                         

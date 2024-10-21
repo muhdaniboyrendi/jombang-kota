@@ -16,7 +16,7 @@ class Dashboard extends Component
         $totalGenerus = Generus::count();
         $totalMt = Mt::where('selesai_tugas', null)->count();
         $totalMs = Ms::count();
-        $totalAdmin = User::count();
+        $totalAdmin = User::where('user_verified', 1)->count();
 
         $totalGenerusLakiLaki = Generus::where('jenis_kelamin', 'Laki-laki')->count();
         $totalGenerusPerempuan = Generus::where('jenis_kelamin', 'Perempuan')->count();

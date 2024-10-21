@@ -6,9 +6,8 @@
                 <h2 class="text-center">Register</h2>
             
                 @if (session()->has('message'))
-                    <div class="alert alert-success alert-dismissible fade show">
+                    <div class="alert alert-success fade show">
                         {{ session('message') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
             
@@ -70,11 +69,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-4 text-center">
-                        <a href="/login">Already have an account? Login</a>
-                    </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-success">Register</button>
+                    </div>
+                    <div class="my-3 text-center">
+                        <span>Already have an account?<a href="/login"> Login</a></span>
                     </div>
                 </form>
 
