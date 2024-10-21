@@ -38,12 +38,11 @@
                                 <div class="col-auto">
                                     <button type="button" class="btn app-btn-primary" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Generus</button>
                                     <a class="btn app-btn-secondary" href="/prints-generus-data">Cetak QR Code</a>
-                                    <a class="btn app-btn-secondary" href="/export-generus" class="btn btn-success">Export Data Generus</a>
+                                    <a class="btn app-btn-secondary" href="/export-generus">Export</a>
+                                    <button class="btn app-btn-secondary" type="button"  data-bs-toggle="modal" data-bs-target="#importModal">Import</button>
                                 </div>
                             </div>
-                                
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -91,9 +90,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        
                     </div>
-
                 </div>
             </div>
 
@@ -128,7 +125,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border border-danger">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Hapus Generus</h5>
+                        <h5 class="modal-title" id="deleteModalLabel">Hapus Data Generus</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -452,6 +449,57 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Import Modal --}}
+    <div>
+        <div wire:ignore.self class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="importModalLabel">Import Data Generus</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    @if (session()->has('error-import'))
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            {{ session('error-import') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if (session()->has('imported'))
+                        <div class="alert alert-success alert-dismissible fade show">
+                            {{ session('imported') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    <form wire:submit.prevent="import">
+                        <div class="modal-body">
+                            <label class="form-label">Upload file yang akan anda import dengan format (.xlsx / .xls / .csv)</label>
+                            <input class="form-control @error('file') is-invalid @enderror" wire.model="file" type="file" id="formFile">
+                            @error('file') 
+                                <div class="invalid-feedback">{{ $message }}</div> 
+                            @enderror
+
+                            @if ($isImporting)
+                                <div>Importing... Please wait.</div>
+                            @endif
+
+                            @if ($importFinished)
+                                <div class="text-success">Import completed! {{ $importedRows }} rows imported.</div>
+                            @endif
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-sm app-btn-primary" @if($isImporting) disabled @endif>Import</button>
+                            <button type="button" class="btn btn-sm app-btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -68,10 +68,13 @@ class EditGenerus extends Component
         $this->ibu = $generus->ibu;
         $this->desa_id = $generus->desa_id;
         $this->kelompok_id = $generus->kelompok_id;
-        $this->daerah = $generus->guest->daerah;
-        $this->desa = $generus->guest->desa;
-        $this->kelompok = $generus->guest->kelompok;
-        $this->no_hp = $generus->guest->no_hp;
+
+        if($generus->guest) {
+            $this->daerah = $generus->guest->daerah;
+            $this->desa = $generus->guest->desa;
+            $this->kelompok = $generus->guest->kelompok;
+            $this->no_hp = $generus->guest->no_hp;
+        }
 
         $this->desas = Desa::all();
         $this->kelompoks = Kelompok::where('desa_id', $this->desa_id)->get();

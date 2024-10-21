@@ -9,6 +9,8 @@ use Livewire\Component;
 use App\Models\Kelompok;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use App\Imports\GenerusesImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DaftarGenerus extends Component
 {
@@ -36,6 +38,12 @@ class DaftarGenerus extends Component
     public $desa;
     public $kelompok;
     public $no_hp;
+
+    // import
+    public $file;
+    public $importedRows = 0;
+    public $isImporting = false;
+    public $importFinished = false;
 
     public $infoNama;
 
@@ -104,6 +112,7 @@ class DaftarGenerus extends Component
     }
 
     protected $rules = [
+        // generuses
         'nama' => 'required|string|max:255|min:3',
         'tempat_lahir' => 'required|string|max:255|min:3',
         'tanggal_lahir' => 'required|date',
@@ -116,6 +125,8 @@ class DaftarGenerus extends Component
         'foto' => 'nullable|image|max:1024',
         'desa_id' => 'required|exists:desas,id',
         'kelompok_id' => 'required|exists:kelompoks,id',
+
+        // guests
         'daerah' => 'nullable|string|max:255|min:3',
         'desa' => 'nullable|string|max:255|min:3',
         'kelompok' => 'nullable|string|max:255|min:3',
@@ -159,7 +170,7 @@ class DaftarGenerus extends Component
         ]);
     
         // Membuat data guest hanya jika daerah diisi
-        if ($this->daerah && $this->desa && $this->kelompok) {
+        if ($this->daerah || $this->desa || $this->kelompok || $this->no_hp) {
             Guest::create([
                 'daerah' => $this->daerah,
                 'desa' => $this->desa,
@@ -172,6 +183,28 @@ class DaftarGenerus extends Component
         session()->flash('created', 'Data generus berhasil ditambahkan.');
     
         $this->reset();
+    }
+
+    public function import()
+    {
+        $this->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
+        ]);
+
+        $this->isImporting = true;
+        $this->importFinished = false;
+
+        try {
+            $import = new GenerusesImport($this);
+            Excel::import($import, $this->file);
+
+            $this->importedRows = $import->getRowCount();
+            $this->importFinished = true;
+        } catch (\Exception $e) {
+            session()->flash('error-import', 'Error: ' . $e->getMessage());
+        }
+
+        $this->isImporting = false;
     }
 
     public function render()

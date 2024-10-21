@@ -61,7 +61,7 @@ Route::get('/ms-edit/{id}', [MsController::class, 'edit'])->middleware('auth');
 
 // ADMIN
 Route::get('/admin', function () {
-    return view('admin.index', ['title' => 'Admin', 'active' => 'admin']);
+    return view('admin.index', ['title' => 'Users', 'active' => 'admin']);
 })->middleware('auth');
 
 
